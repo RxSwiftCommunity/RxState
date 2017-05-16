@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TaskTableViewCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="TaskTableViewCell" id="AbC-Km-Unf" customClass="TaskTableViewCell" customModule="RxStateExample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AbC-Km-Unf" id="WFF-dE-ZrT">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gBU-Iy-b6J" userLabel="Top View">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="moV-6A-Bxy" customClass="TextField" customModule="RxStateExample" customModuleProvider="target">
+                                <rect key="frame" x="8" y="6" width="311" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oHV-hM-DfJ">
+                                <rect key="frame" x="327" y="2" width="40" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gZW-Qc-D1l" customClass="Button" customModule="RxStateExample" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <state key="normal" image="diselected"/>
+                                        <state key="selected" image="selected"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="gZW-Qc-D1l" secondAttribute="trailing" id="MTc-0e-dZo"/>
+                                    <constraint firstAttribute="width" secondItem="oHV-hM-DfJ" secondAttribute="height" multiplier="1:1" id="Z6S-Ht-1Ys"/>
+                                    <constraint firstItem="gZW-Qc-D1l" firstAttribute="leading" secondItem="oHV-hM-DfJ" secondAttribute="leading" id="jkK-3A-9J7"/>
+                                    <constraint firstAttribute="width" constant="40" id="lsQ-8i-rLO"/>
+                                    <constraint firstAttribute="bottom" secondItem="gZW-Qc-D1l" secondAttribute="bottom" id="nMr-Qe-29g"/>
+                                    <constraint firstItem="gZW-Qc-D1l" firstAttribute="top" secondItem="oHV-hM-DfJ" secondAttribute="top" id="xLF-SA-KZ2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="moV-6A-Bxy" firstAttribute="centerY" secondItem="gBU-Iy-b6J" secondAttribute="centerY" id="HSq-tS-cev"/>
+                            <constraint firstItem="oHV-hM-DfJ" firstAttribute="leading" secondItem="moV-6A-Bxy" secondAttribute="trailing" constant="8" id="cCY-yO-6Cs"/>
+                            <constraint firstItem="oHV-hM-DfJ" firstAttribute="centerY" secondItem="gBU-Iy-b6J" secondAttribute="centerY" id="hY0-GU-9m6"/>
+                            <constraint firstItem="moV-6A-Bxy" firstAttribute="leading" secondItem="gBU-Iy-b6J" secondAttribute="leading" constant="8" id="kd8-0O-39f"/>
+                            <constraint firstAttribute="trailing" secondItem="oHV-hM-DfJ" secondAttribute="trailing" constant="8" id="u3k-ZS-DI5"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="gBU-Iy-b6J" secondAttribute="bottom" id="Q9y-gX-lYe"/>
+                    <constraint firstItem="gBU-Iy-b6J" firstAttribute="top" secondItem="WFF-dE-ZrT" secondAttribute="top" id="RCT-QD-XPt"/>
+                    <constraint firstItem="gBU-Iy-b6J" firstAttribute="leading" secondItem="WFF-dE-ZrT" secondAttribute="leading" id="deu-aQ-knh"/>
+                    <constraint firstAttribute="trailing" secondItem="gBU-Iy-b6J" secondAttribute="trailing" id="t1G-4r-rYd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="summaryTextField" destination="moV-6A-Bxy" id="E8b-vN-5v1"/>
+                <outlet property="toggleTaskStatusButton" destination="gZW-Qc-D1l" id="wFZ-fb-NpG"/>
+            </connections>
+            <point key="canvasLocation" x="13.5" y="-110"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="diselected" width="80" height="80"/>
+        <image name="selected" width="80" height="80"/>
+    </resources>
+</document>
