@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TasksViewController" customModule="RxStateExample" customModuleProvider="target">
+            <connections>
+                <outlet property="tasksTableView" destination="vJr-sY-ae6" id="sCW-4k-PAD"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ivG-1H-HFt" userLabel="Top View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vJr-sY-ae6" customClass="TableView" customModule="RxStateExample" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="vJr-sY-ae6" secondAttribute="bottom" id="2N3-an-Ed3"/>
+                        <constraint firstItem="vJr-sY-ae6" firstAttribute="leading" secondItem="ivG-1H-HFt" secondAttribute="leading" id="K45-Qv-9nq"/>
+                        <constraint firstAttribute="trailing" secondItem="vJr-sY-ae6" secondAttribute="trailing" id="Q4c-nk-oQM"/>
+                        <constraint firstItem="vJr-sY-ae6" firstAttribute="top" secondItem="ivG-1H-HFt" secondAttribute="top" id="s5u-Lt-wiI"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ivG-1H-HFt" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="6Yc-aK-cqG"/>
+                <constraint firstItem="ivG-1H-HFt" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="Xt0-nQ-OQF"/>
+                <constraint firstItem="ivG-1H-HFt" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="d9p-W0-u43"/>
+                <constraint firstItem="ivG-1H-HFt" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="vga-IQ-bM5"/>
+            </constraints>
+            <point key="canvasLocation" x="29" y="30"/>
+        </view>
+    </objects>
+</document>
