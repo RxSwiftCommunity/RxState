@@ -13,10 +13,11 @@ final class TaskTableViewCell: TableViewCell {
 
     // MARK: - @IBOutlet
     @IBOutlet private weak var summaryTextField: TextField!
-    @IBOutlet private weak var togglingTaskStatusActivityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var toggleTaskStatusButton: Button!
+    @IBOutlet private weak var openTaskStatusButton: Button!
 
-    var viewModel: TaskTableViewCellViewModelType! {
+    
+    fileprivate(set) var viewModel: TaskTableViewCellViewModelType! {
         didSet {
             bindViewModel()
             configureUI()
@@ -28,7 +29,12 @@ final class TaskTableViewCell: TableViewCell {
 
     private func bindViewModel() {
 
-        let viewModelInputs = TaskTableViewCellViewModelInputs(toggleTaskStatusButtonDidTap: toggleTaskStatusButton.rx.tap, summary: summaryTextField.rx.text)
+        let viewModelInputs = TaskTableViewCellViewModelInputs(
+            toggleTaskStatusButtonDidTap: toggleTaskStatusButton.rx.tap
+            , openTaskButtonDidTap: openTaskStatusButton.rx.tap
+            , summary: summaryTextField.rx.text
+            , disposeBag: disposeBag
+        )
 
         let viewModelOutputs = viewModel.transform(inputs: viewModelInputs)
 
@@ -36,12 +42,16 @@ final class TaskTableViewCell: TableViewCell {
             .drive(summaryTextField.rx.text)
             .disposed(by: disposeBag)
 
-        viewModelOutputs.isSelected
+        viewModelOutputs.toggleTaskStatusButtonIsSelected
             .drive(toggleTaskStatusButton.rx.isSelected)
             .disposed(by: disposeBag)
 
         viewModelOutputs.toggleTaskStatusButtonIsEnabled
             .drive(toggleTaskStatusButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModelOutputs.toggleTaskStatusButtonActivityIndicatorISAnimating
+            .drive(toggleTaskStatusButton.rx.activityIndicatorIsAnimating)
             .disposed(by: disposeBag)
     }
 }

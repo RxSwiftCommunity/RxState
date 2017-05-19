@@ -14,6 +14,7 @@ final class AddTaskTableViewCell: TableViewCell {
     // MARK: - @IBOutlet
     @IBOutlet private weak var addTaskButton: Button!
 
+
     var viewModel: AddTaskTableViewCellViewModelType! {
         didSet {
             bindViewModel()
@@ -25,8 +26,12 @@ final class AddTaskTableViewCell: TableViewCell {
     }
 
     private func bindViewModel() {
-        let viewModelInputs = AddTaskTableViewCellViewModelInputs(addTaskStatusButtonDidTap: addTaskButton.rx.tap)
-        _ = viewModel.transform(inputs: viewModelInputs)
+        let viewModelInputs = AddTaskTableViewCellViewModelInputs(addTaskStatusButtonDidTap: addTaskButton.rx.tap, disposeBag: disposeBag)
+        let viewModelOutputs = viewModel.transform(inputs: viewModelInputs)
+        
+        viewModelOutputs.addTaskButtonActivityIndicatorISAnimating
+            .drive(addTaskButton.rx.activityIndicatorIsAnimating)
+            .disposed(by: disposeBag)
     }
 }
 

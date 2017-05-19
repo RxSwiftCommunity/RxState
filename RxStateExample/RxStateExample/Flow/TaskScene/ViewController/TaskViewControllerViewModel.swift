@@ -1,34 +1,34 @@
 //
-//  TaskTableViewCellViewModel.swift
+//  TaskViewControllerViewModel.swift
 //
 //  Copyright © 2017 Nazih Shoura. All rights reserved.
 //  See LICENSE.txt for license information
 //
 
-import Foundation
-import RxCocoa
+import UIKit
 import RxSwift
+import RxCocoa
 import RxState
 
-struct TaskTableViewCellViewModelInputs: ViewModelInputsType {
+struct TaskViewControllerViewModelInputs: ViewModelInputsType {
     let toggleTaskStatusButtonDidTap: ControlEvent<Void>
-    let openTaskButtonDidTap: ControlEvent<Void>
     let summary: ControlProperty<String?>
-    let disposeBag: DisposeBag
+    let backButtonDidTap: ControlEvent<Void>?
 }
 
-struct TaskTableViewCellViewModelOutputs: ViewModelOutputsType {
+struct TaskViewControllerViewModelOutputs: ViewModelOutputsType {
     let summary: Driver<String>
     let toggleTaskStatusButtonIsSelected: Driver<Bool>
     let toggleTaskStatusButtonIsEnabled: Driver<Bool>
     let toggleTaskStatusButtonActivityIndicatorISAnimating: Driver<Bool>
 }
 
-protocol TaskTableViewCellViewModelType: ViewModelType {
-    func transform(inputs: TaskTableViewCellViewModelInputs) -> TaskTableViewCellViewModelOutputs
+protocol TaskViewControllerViewModelType: ViewModelType {
+    func transform(inputs: TaskViewControllerViewModelInputs) -> TaskViewControllerViewModelOutputs
 }
 
-struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
+struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
+    var disposeBag = DisposeBag()
     let id = Foundation.UUID().uuidString
 
     fileprivate let taskProvider: TaskProvider
@@ -48,7 +48,7 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
         self.store = store
     }
 
-    func transform(inputs: TaskTableViewCellViewModelInputs) -> TaskTableViewCellViewModelOutputs {
+    func transform(inputs: TaskViewControllerViewModelInputs) -> TaskViewControllerViewModelOutputs {
 
         // Setup needed properties
         let task = taskProvider.taskProviderState
@@ -61,21 +61,8 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
                 return Driver.of(task)
             }
             .distinctUntilChanged()
-
-        // Handle input
         
-        inputs.openTaskButtonDidTap
-            .withLatestFrom(task)
-            .flatMapLatest { (task: Task) -> Observable<CoordinatingService.Action> in
-                return self.coordinatingService.transission(toRoute: Route.task(id: task.id))
-            }
-            .subscribe(
-                onNext: { (action: CoordinatingService.Action) in
-                    self.store.dispatch(action: action)
-            }, onError: nil, onCompleted: nil, onDisposed: nil
-            )
-            .disposed(by: inputs.disposeBag)
-
+        // Handle input
         inputs.toggleTaskStatusButtonDidTap
             .withLatestFrom(task)
             .flatMapLatest { (task: Task) -> Observable<TaskProvider.Action> in
@@ -90,13 +77,13 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
             .subscribe(
                 onNext: { (action: TaskProvider.Action) in
                     self.store.dispatch(action: action)
-                }
+            }
                 , onError: nil
                 , onCompleted: nil
                 , onDisposed: nil
             )
-            .disposed(by: inputs.disposeBag)
-
+            .disposed(by: disposeBag)
+        
         inputs.summary
             .orEmpty
             .skip(1) // The first value is the TextField initial text
@@ -107,30 +94,43 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
             .subscribe(
                 onNext: { (action: TaskProvider.Action) in
                     self.store.dispatch(action: action)
-                }
+            }
                 , onError: nil
                 , onCompleted: nil
                 , onDisposed: nil
             )
-            .disposed(by: inputs.disposeBag)
-
+            .disposed(by: disposeBag)
+        
+        inputs.backButtonDidTap?
+            .flatMapLatest { (_) -> Observable<CoordinatingService.Action> in
+                return self.coordinatingService.transission(toRoute: Route.tasks)
+            }
+            .subscribe(
+                onNext: { (action: CoordinatingService.Action)in
+                    self.store.dispatch(action: action)
+                }
+                , onError: nil, onCompleted: nil, onDisposed: nil)
+            .disposed(by: disposeBag)
+        
         // Setup output
         let summary = task
             .map { (task: Task) -> String in task.summary }
-
+        
         let toggleTaskStatusButtonIsSelected = task
             .map { (task: Task) -> Bool in
                 return task.status == .done
-            }
-
+        }
+        
         let toggleTaskStatusButtonIsEnabled = taskProvider.taskProviderState
+            .debug("taskProviderState")
             .map { (taskProviderState: TaskProvider.State) -> Bool in
                 return !taskProviderState.togglingTaskStatusForTasksWithIds.contains(self.taskId)
         }
+
         
         let toggleTaskStatusButtonActivityIndicatorISAnimating = toggleTaskStatusButtonIsEnabled.map(!)
 
-        return TaskTableViewCellViewModelOutputs(
+        return TaskViewControllerViewModelOutputs(
             summary: summary
             , toggleTaskStatusButtonIsSelected: toggleTaskStatusButtonIsSelected
             , toggleTaskStatusButtonIsEnabled: toggleTaskStatusButtonIsEnabled

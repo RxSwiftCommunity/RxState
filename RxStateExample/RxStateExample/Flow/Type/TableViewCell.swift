@@ -12,7 +12,7 @@ protocol TableViewCellType: HasDisposeBag, ResusableView {}
 
 class TableViewCell: UITableViewCell, TableViewCellType {
     var disposeBag = DisposeBag()
-
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeOnReuse()

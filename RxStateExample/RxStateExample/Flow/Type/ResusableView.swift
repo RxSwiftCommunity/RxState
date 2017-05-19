@@ -13,14 +13,16 @@ protocol ResusableView: class {
     func disposeOnReuse()
 }
 
-extension ResusableView where Self: UIView, Self: HasDisposeBag {
+extension ResusableView where Self: UIView {
     func disposeOnReuse() {
 
-        var hasDisposeBag = self as HasDisposeBag
-        hasDisposeBag.disposeBag = DisposeBag()
+        if var hasDisposeBag = self as? HasDisposeBag {
+            hasDisposeBag.disposeBag = DisposeBag()
+        }
 
         for case let resusableView as ResusableView in subviews {
             resusableView.disposeOnReuse()
         }
     }
 }
+

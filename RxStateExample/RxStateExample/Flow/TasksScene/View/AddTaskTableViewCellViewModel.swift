@@ -12,9 +12,11 @@ import RxState
 
 struct AddTaskTableViewCellViewModelInputs: ViewModelInputsType {
     let addTaskStatusButtonDidTap: ControlEvent<Void>
+    let disposeBag: DisposeBag
 }
 
 struct AddTaskTableViewCellViewModelOutputs: ViewModelOutputsType {
+    let addTaskButtonActivityIndicatorISAnimating: Driver<Bool>
 }
 
 protocol AddTaskTableViewCellViewModelType: ViewModelType {
@@ -22,8 +24,18 @@ protocol AddTaskTableViewCellViewModelType: ViewModelType {
 }
 
 struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
-    var disposeBag = DisposeBag()
     let id = Foundation.UUID().uuidString
+
+    fileprivate let taskProvider: TaskProvider
+    fileprivate let store: StoreType
+    
+    init(
+        store: StoreType
+        , taskProvider: TaskProvider
+        ) {
+        self.store = store
+        self.taskProvider = taskProvider
+    }
 
     func transform(inputs: AddTaskTableViewCellViewModelInputs) -> AddTaskTableViewCellViewModelOutputs {
 
@@ -39,19 +51,14 @@ struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
                 , onCompleted: nil
                 , onDisposed: nil
             )
-            .addDisposableTo(disposeBag)
+            .disposed(by: inputs.disposeBag)
 
-        return AddTaskTableViewCellViewModelOutputs()
+        let addTaskButtonActivityIndicatorISAnimating = taskProvider.taskProviderState
+            .map { (taskProviderState: TaskProvider.State) -> Bool in
+                return taskProviderState.addingTask
+        }
+
+        return AddTaskTableViewCellViewModelOutputs(addTaskButtonActivityIndicatorISAnimating: addTaskButtonActivityIndicatorISAnimating)
     }
 
-    let taskProvider: TaskProvider
-    let store: StoreType
-
-    init(
-        store: StoreType
-        , taskProvider: TaskProvider
-    ) {
-        self.store = store
-        self.taskProvider = taskProvider
-    }
 }

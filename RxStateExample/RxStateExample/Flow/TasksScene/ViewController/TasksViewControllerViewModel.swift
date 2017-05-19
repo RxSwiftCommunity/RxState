@@ -28,26 +28,23 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
     let id = Foundation.UUID().uuidString
 
     // Mark: - Dependancy
-    let taskProvider: TaskProvider
-
+    fileprivate let taskProvider: TaskProvider
+    fileprivate let coordinatingService: CoordinatingService
+    fileprivate let store: StoreType
+    
     init(
-        taskProvider: TaskProvider
+        store: StoreType
+        , taskProvider: TaskProvider
+        , coordinatingService: CoordinatingService
     ) {
+        self.store = store
+        self.coordinatingService = coordinatingService
         self.taskProvider = taskProvider
     }
 
     func transform(inputs _: TasksViewControllerViewModelInputs) -> TasksViewControllerViewModelOutputs {
 
-        let taskProviderState = store.state
-            .flatMap { (states: [SubstateType]) -> Driver<TaskProvider.State> in
-                for state in states {
-                    guard let value = state as? TaskProvider.State else { continue }
-                    return Driver<TaskProvider.State>.just(value)
-                }
-                fatalError("You need to register `TaskProvider.State` first")
-            }
-
-        let sectionsModels = taskProviderState
+        let sectionsModels = taskProvider.taskProviderState
             .map { (taskProviderState: TaskProvider.State) -> [Task] in
                 return taskProviderState.tasks
             }
@@ -58,7 +55,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
                 // Tasks
                 let tasksTableViewModelSectionItems = tasks
                     .map { (task: Task) -> TasksTableViewModelSectionItem in
-                        let vm = TaskTableViewCellViewModel(store: store, taskId: task.id, taskProvider: self.taskProvider)
+                        let vm = TaskTableViewCellViewModel(store: self.store, taskId: task.id, taskProvider: self.taskProvider, coordinatingService: self.coordinatingService)
                         return TasksTableViewModelSectionItem.taskTableViewModelSectionItem(viewModel: vm)
                     }
                     .reduce([], { (result: [TasksTableViewModelSectionItem], tasksTableViewModelSectionItem: TasksTableViewModelSectionItem) -> [TasksTableViewModelSectionItem] in
@@ -68,7 +65,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
                     })
 
                 // Adding a task
-                let vm = AddTaskTableViewCellViewModel(store: store, taskProvider: self.taskProvider)
+                let vm = AddTaskTableViewCellViewModel(store: self.store, taskProvider: self.taskProvider)
                 let addTaskTableViewModelSectionItem = TasksTableViewModelSectionItem.addTaskTableViewModelSectionItem(viewModel: vm)
 
                 let items: [TasksTableViewModelSectionItem] = tasksTableViewModelSectionItems + [addTaskTableViewModelSectionItem]
@@ -80,9 +77,11 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
 
         skinTableViewDataSource(dataSource)
 
-        let title = taskProviderState
+        let title = taskProvider.taskProviderState
             .map { (taskProviderState: TaskProvider.State) -> Bool in
-                taskProviderState.addingTask || !taskProviderState.togglingTaskStatusForTasksWithIds.isEmpty
+                taskProviderState.addingTask
+                    || !taskProviderState.togglingTaskStatusForTasksWithIds.isEmpty
+                    || taskProviderState.updatingSummaryForTasksWithId != nil
             }
             .map { (loading: Bool) -> String in
                 if loading {
