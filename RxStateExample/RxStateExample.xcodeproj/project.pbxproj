@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		1D1323951ECAE77D00C78884 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D1323941ECAE77D00C78884 /* Info.plist */; };
+		1D13239B1ECBF7BB00C78884 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323981ECBF7BB00C78884 /* TaskViewController.swift */; };
+		1D13239C1ECBF7BB00C78884 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1323991ECBF7BB00C78884 /* TaskViewController.xib */; };
+		1D13239D1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D13239A1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift */; };
+		1D13239F1ECC621600C78884 /* UINavigationController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D13239E1ECC621600C78884 /* UINavigationController+Rx.swift */; };
+		1D1323A21ECC630900C78884 /* CoordinatingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323A11ECC630900C78884 /* CoordinatingService.swift */; };
+		1D1323A41ECE010900C78884 /* ResusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323A31ECE010900C78884 /* ResusableView.swift */; };
+		1D1323AC1ECEA35F00C78884 /* UIView+ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323AB1ECEA35F00C78884 /* UIView+ActivityIndicator.swift */; };
 		1DF45B2D1EC366090029F787 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1DF45B2C1EC366090029F787 /* Assets.xcassets */; };
 		1DF45B301EC366090029F787 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DF45B2E1EC366090029F787 /* LaunchScreen.storyboard */; };
 		1DF45B3B1EC366090029F787 /* RxStateExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45B3A1EC366090029F787 /* RxStateExampleTests.swift */; };
@@ -24,7 +31,6 @@
 		1DF45BB21EC3694E0029F787 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BA01EC3694D0029F787 /* Label.swift */; };
 		1DF45BB31EC3694E0029F787 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BA11EC3694D0029F787 /* NavigationController.swift */; };
 		1DF45BB41EC3694E0029F787 /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BA21EC3694D0029F787 /* NibLoadable.swift */; };
-		1DF45BB51EC3694E0029F787 /* ResusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BA31EC3694D0029F787 /* ResusableView.swift */; };
 		1DF45BB61EC3694E0029F787 /* ReuseIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BA41EC3694D0029F787 /* ReuseIdentifiable.swift */; };
 		1DF45BB71EC3694E0029F787 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BA51EC3694D0029F787 /* TableView.swift */; };
 		1DF45BB81EC3694E0029F787 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BA61EC3694D0029F787 /* TableViewCell.swift */; };
@@ -50,7 +56,6 @@
 		1DF45BEC1EC37A2F0029F787 /* AddTaskTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BEB1EC37A2F0029F787 /* AddTaskTableViewCellViewModel.swift */; };
 		1DF45BEE1EC37A380029F787 /* AddTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DF45BED1EC37A380029F787 /* AddTaskTableViewCell.xib */; };
 		1DF45BF61EC430790029F787 /* ProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45BF51EC430790029F787 /* ProviderType.swift */; };
-		1DF45C011EC555C70029F787 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DF45C001EC555C70029F787 /* R.generated.swift */; };
 		6253F3408DBF5610C03927F4 /* Pods_RxStateExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 052AED29B97F0FFABC9A5277 /* Pods_RxStateExample.framework */; };
 		BED823A564B0F7AAFEC0F3EE /* Pods_RxStateExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7952E5C57B4CA47BAF224726 /* Pods_RxStateExampleUITests.framework */; };
 		E0863E882E2FE1F82915A8E6 /* Pods_RxStateExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45139D0B43336D9B67F39D3 /* Pods_RxStateExampleTests.framework */; };
@@ -76,6 +81,13 @@
 /* Begin PBXFileReference section */
 		052AED29B97F0FFABC9A5277 /* Pods_RxStateExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxStateExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D1323941ECAE77D00C78884 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = RxStateExample/Resource/Info.plist; sourceTree = SOURCE_ROOT; };
+		1D1323981ECBF7BB00C78884 /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
+		1D1323991ECBF7BB00C78884 /* TaskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TaskViewController.xib; sourceTree = "<group>"; };
+		1D13239A1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskViewControllerViewModel.swift; sourceTree = "<group>"; };
+		1D13239E1ECC621600C78884 /* UINavigationController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Rx.swift"; sourceTree = "<group>"; };
+		1D1323A11ECC630900C78884 /* CoordinatingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinatingService.swift; sourceTree = "<group>"; };
+		1D1323A31ECE010900C78884 /* ResusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResusableView.swift; sourceTree = "<group>"; };
+		1D1323AB1ECEA35F00C78884 /* UIView+ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ActivityIndicator.swift"; sourceTree = "<group>"; };
 		1DAE0BF0435AD24E3B877790 /* Pods-RxStateExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxStateExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxStateExampleTests/Pods-RxStateExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		1DF45B221EC366090029F787 /* RxStateExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxStateExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF45B2C1EC366090029F787 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -98,7 +110,6 @@
 		1DF45BA01EC3694D0029F787 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		1DF45BA11EC3694D0029F787 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		1DF45BA21EC3694D0029F787 /* NibLoadable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
-		1DF45BA31EC3694D0029F787 /* ResusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResusableView.swift; sourceTree = "<group>"; };
 		1DF45BA41EC3694D0029F787 /* ReuseIdentifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReuseIdentifiable.swift; sourceTree = "<group>"; };
 		1DF45BA51EC3694D0029F787 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		1DF45BA61EC3694D0029F787 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
@@ -125,7 +136,6 @@
 		1DF45BED1EC37A380029F787 /* AddTaskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTaskTableViewCell.xib; sourceTree = "<group>"; };
 		1DF45BF11EC42B7F0029F787 /* RxStateExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RxStateExample-Bridging-Header.h"; sourceTree = "<group>"; };
 		1DF45BF51EC430790029F787 /* ProviderType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProviderType.swift; path = Type/ProviderType.swift; sourceTree = "<group>"; };
-		1DF45C001EC555C70029F787 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = SOURCE_ROOT; };
 		7952E5C57B4CA47BAF224726 /* Pods_RxStateExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RxStateExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F5EACD4531EEAADF41C1B6A /* Pods-RxStateExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxStateExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RxStateExampleTests/Pods-RxStateExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		96A84B5BCE7478E2625E01C0 /* Pods-RxStateExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxStateExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxStateExample/Pods-RxStateExample.release.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +173,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1D1323961ECBF74E00C78884 /* TaskScene */ = {
+			isa = PBXGroup;
+			children = (
+				1D1323971ECBF7A200C78884 /* ViewController */,
+			);
+			path = TaskScene;
+			sourceTree = "<group>";
+		};
+		1D1323971ECBF7A200C78884 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1D1323981ECBF7BB00C78884 /* TaskViewController.swift */,
+				1D1323991ECBF7BB00C78884 /* TaskViewController.xib */,
+				1D13239A1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		1DF45B191EC366090029F787 = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +254,7 @@
 			children = (
 				1DF45B9A1EC369310029F787 /* Type */,
 				1DF45BD51EC36BEC0029F787 /* Extension */,
+				1D1323961ECBF74E00C78884 /* TaskScene */,
 				1DF45BC41EC36B1B0029F787 /* TasksScene */,
 			);
 			path = Flow;
@@ -236,6 +265,7 @@
 			children = (
 				1DF45BC31EC36A8B0029F787 /* Type */,
 				1DF45B5A1EC3671C0029F787 /* LoggingService.swift */,
+				1D1323A11ECC630900C78884 /* CoordinatingService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -271,12 +301,12 @@
 		1DF45B9A1EC369310029F787 /* Type */ = {
 			isa = PBXGroup;
 			children = (
+				1D1323A31ECE010900C78884 /* ResusableView.swift */,
 				1DF45B9C1EC3694D0029F787 /* Button.swift */,
 				1DF45B9F1EC3694D0029F787 /* ImageView.swift */,
 				1DF45BA01EC3694D0029F787 /* Label.swift */,
 				1DF45BA11EC3694D0029F787 /* NavigationController.swift */,
 				1DF45BA21EC3694D0029F787 /* NibLoadable.swift */,
-				1DF45BA31EC3694D0029F787 /* ResusableView.swift */,
 				1DF45BA41EC3694D0029F787 /* ReuseIdentifiable.swift */,
 				1DF45BA51EC3694D0029F787 /* TableView.swift */,
 				1DF45BA61EC3694D0029F787 /* TableViewCell.swift */,
@@ -332,7 +362,9 @@
 		1DF45BD51EC36BEC0029F787 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1D13239E1ECC621600C78884 /* UINavigationController+Rx.swift */,
 				1DF45BD61EC36C0A0029F787 /* UIViewController+Rx.swift */,
+				1D1323AB1ECEA35F00C78884 /* UIView+ActivityIndicator.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -376,7 +408,6 @@
 			isa = PBXGroup;
 			children = (
 				1D1323941ECAE77D00C78884 /* Info.plist */,
-				1DF45C001EC555C70029F787 /* R.generated.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -412,7 +443,6 @@
 			buildConfigurationList = 1DF45B4A1EC366090029F787 /* Build configuration list for PBXNativeTarget "RxStateExample" */;
 			buildPhases = (
 				378D19AC0FAEC07F77F49B16 /* [CP] Check Pods Manifest.lock */,
-				1DF45BFA1EC553100029F787 /* R Script */,
 				1DF45B1E1EC366090029F787 /* Sources */,
 				1DF45B1F1EC366090029F787 /* Frameworks */,
 				1DF45B201EC366090029F787 /* Resources */,
@@ -527,6 +557,7 @@
 			files = (
 				1DF45BD11EC36B660029F787 /* TaskTableViewCell.xib in Resources */,
 				1DF45BEE1EC37A380029F787 /* AddTaskTableViewCell.xib in Resources */,
+				1D13239C1ECBF7BB00C78884 /* TaskViewController.xib in Resources */,
 				1D1323951ECAE77D00C78884 /* Info.plist in Resources */,
 				1DF45B301EC366090029F787 /* LaunchScreen.storyboard in Resources */,
 				1DF45B2D1EC366090029F787 /* Assets.xcassets in Resources */,
@@ -580,20 +611,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		1DF45BFA1EC553100029F787 /* R Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "R Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" \"$SRCROOT\"";
 		};
 		378D19AC0FAEC07F77F49B16 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -708,25 +725,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DF45B621EC3676A0029F787 /* Task.swift in Sources */,
+				1D13239B1ECBF7BB00C78884 /* TaskViewController.swift in Sources */,
 				1DF45B5C1EC3671C0029F787 /* LoggingService.swift in Sources */,
 				1DF45BB11EC3694E0029F787 /* ImageView.swift in Sources */,
+				1D13239D1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift in Sources */,
 				1DF45BEC1EC37A2F0029F787 /* AddTaskTableViewCellViewModel.swift in Sources */,
 				1DF45B651EC3677C0029F787 /* main.swift in Sources */,
+				1D1323A21ECC630900C78884 /* CoordinatingService.swift in Sources */,
 				1DF45BBA1EC3694E0029F787 /* TextField.swift in Sources */,
 				1DF45B611EC3676A0029F787 /* ModelType.swift in Sources */,
 				1DF45BBE1EC3694E0029F787 /* ViewModelType.swift in Sources */,
 				1DF45BC21EC3698D0029F787 /* TaskProvider.swift in Sources */,
 				1DF45BB81EC3694E0029F787 /* TableViewCell.swift in Sources */,
 				1DF45BEA1EC37A220029F787 /* AddTaskTableViewCell.swift in Sources */,
+				1D13239F1ECC621600C78884 /* UINavigationController+Rx.swift in Sources */,
 				1DF45BCA1EC36B590029F787 /* TasksViewController.swift in Sources */,
 				1DF45BE81EC371E30029F787 /* SubjectLabelable.swift in Sources */,
 				1DF45BBC1EC3694E0029F787 /* View.swift in Sources */,
 				1DF45BD01EC36B660029F787 /* TaskTableViewCell.swift in Sources */,
 				1DF45BAE1EC3694E0029F787 /* Button.swift in Sources */,
-				1DF45BB51EC3694E0029F787 /* ResusableView.swift in Sources */,
 				1DF45BE71EC371E30029F787 /* Identifiable.swift in Sources */,
 				1DF45BB71EC3694E0029F787 /* TableView.swift in Sources */,
 				1DF45BB61EC3694E0029F787 /* ReuseIdentifiable.swift in Sources */,
+				1D1323A41ECE010900C78884 /* ResusableView.swift in Sources */,
 				1DF45BB31EC3694E0029F787 /* NavigationController.swift in Sources */,
 				1DF45BE41EC371E30029F787 /* DescribableError.swift in Sources */,
 				1DF45BF61EC430790029F787 /* ProviderType.swift in Sources */,
@@ -734,10 +755,10 @@
 				1DF45BB41EC3694E0029F787 /* NibLoadable.swift in Sources */,
 				1DF45BE61EC371E30029F787 /* HasDisposeBag.swift in Sources */,
 				1DF45B681EC367830029F787 /* AppDelegate.swift in Sources */,
+				1D1323AC1ECEA35F00C78884 /* UIView+ActivityIndicator.swift in Sources */,
 				1DF45B631EC3676A0029F787 /* TaskStatus.swift in Sources */,
 				1DF45BB21EC3694E0029F787 /* Label.swift in Sources */,
 				1DF45BD21EC36B660029F787 /* TaskTableViewCellViewModel.swift in Sources */,
-				1DF45C011EC555C70029F787 /* R.generated.swift in Sources */,
 				1DF45B691EC367830029F787 /* AppDelegateMock.swift in Sources */,
 				1DF45BCC1EC36B590029F787 /* TasksViewControllerViewModel.swift in Sources */,
 				1DF45BBB1EC3694E0029F787 /* TextView.swift in Sources */,
