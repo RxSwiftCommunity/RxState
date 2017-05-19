@@ -13,9 +13,6 @@ import RxState
 let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> [SubstateType] in
     var state = state
     switch action {
-    case let action as Store.Action:
-        state = Store.reduce(state: state, sction: action)
-
     case let action as TaskProvider.Action:
         guard var (taskProviderStateIndex, taskProviderState) = state.enumerated().first(where: { (_: Int, state: SubstateType) -> Bool in
             state is TaskProvider.State
@@ -27,6 +24,17 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
 
         state[taskProviderStateIndex] = taskProviderState as SubstateType
 
+    case let action as CoordinatingService.Action:
+        guard var (coordinatingServiceStateIndex, coordinatingServiceState) = state.enumerated().first(where: { (_: Int, state: SubstateType) -> Bool in
+            state is CoordinatingService.State
+        }) as? (Int, CoordinatingService.State) else {
+            fatalError("You need to register `TaskProvider.State` first")
+        }
+        
+        coordinatingServiceState = CoordinatingService.reduce(state: coordinatingServiceState, sction: action)
+        
+        state[coordinatingServiceStateIndex] = coordinatingServiceState as SubstateType
+        
     default:
         fatalError("Unknown action type")
     }
@@ -36,6 +44,7 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
 
 let store = Store(mainReducer: mainReducer)
 let loggingService = LoggingService(store: store)
+let coordinatingService = CoordinatingService()
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -48,19 +57,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .white
         window.makeKeyAndVisible()
+        window.rootViewController = UIViewController()
+        self.window = window
 
         loggingService.startLoggingAppState()
 
         let taskProviderState = TaskProvider.State()
-        store.dispatch(action: Store.Action.register(states: [taskProviderState]))
+        let coordinatingServiceState = CoordinatingService.State()
+        store.dispatch(action: Store.Action.register(states: [taskProviderState, coordinatingServiceState]))
 
-        let tasksViewControllerViewModel = TasksViewControllerViewModel(taskProvider: TaskProvider())
-        let tasksViewController = TasksViewController.build(withViewModel: tasksViewControllerViewModel)
-        let navigationController = NavigationController(rootViewController: tasksViewController)
-
-        window.rootViewController = navigationController
-
-        self.window = window
+        _ = coordinatingService.transission(toRoute: Route.root(window: window))
+            .concat(coordinatingService.transission(toRoute: Route.tasks)) // Once the root route is up, go to tasks route
+            .subscribe(onNext: { (action: CoordinatingService.Action) in
+                store.dispatch(action: action)
+            }, onError: nil, onCompleted: nil, onDisposed: nil)
+        
+        
         return true
     }
 }
