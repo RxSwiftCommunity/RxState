@@ -15,6 +15,8 @@ class ViewController: UIViewController, ViewControllerType {
     var disposeBag = DisposeBag()
     let id = Foundation.UUID().uuidString
 
+    weak var backButton: UIBarButtonItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -33,5 +35,12 @@ class ViewController: UIViewController, ViewControllerType {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+    }
+    
+    func addBackButton() {
+        navigationItem.hidesBackButton = true
+        let backButton = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        self.navigationItem.leftBarButtonItem = backButton
+        self.backButton = backButton
     }
 }
