@@ -84,7 +84,12 @@ public class Store: StoreType {
 
     public func dispatch<T: ActionType>(action: T) {
         _action.value = action
-        _state.value = mainReducer(_state.value, action)
+        if let storeAction = action as? Store.Action {
+            _state.value = Store.reduce(state: _state.value, sction: storeAction)
+        } else {
+            _state.value = mainReducer(_state.value, action)
+        }
+
     }
 }
 
