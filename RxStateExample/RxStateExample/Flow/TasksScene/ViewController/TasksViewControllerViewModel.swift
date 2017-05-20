@@ -49,7 +49,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
                 return taskProviderState.tasks
             }
             .distinctUntilChanged { (lhs: [Task], rhs: [Task]) -> Bool in
-                return rhs == lhs
+                return rhs.count == lhs.count
             }
             .map { (tasks: [Task]) -> [TasksTableViewModelSectionModel] in
                 // Tasks
