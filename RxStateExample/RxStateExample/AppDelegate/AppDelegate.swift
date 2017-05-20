@@ -43,8 +43,6 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
 }
 
 let store = Store(mainReducer: mainReducer)
-let loggingService = LoggingService(store: store)
-let coordinatingService = CoordinatingService(store: store)
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -54,20 +52,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _: UIApplication
         , didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?
         ) -> Bool {
+        
+        setupInitialStates()
+        setupMiddlewares()
+
+
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .white
         window.makeKeyAndVisible()
         window.rootViewController = UIViewController()
         self.window = window
+        openApp(onWindow: window)
         
-        loggingService.startLoggingAppState()
-
-        let taskProviderState = TaskProvider.State()
-        let coordinatingServiceState = CoordinatingService.State(currentRoute: Route.root(window: window))
-        store.dispatch(action: Store.Action.register(states: [taskProviderState, coordinatingServiceState]))
-        
-        coordinatingService.i()
-                
         return true
     }
+    
+    private func setupInitialStates(){
+        let taskProviderState = TaskProvider.State()
+        let coordinatingServiceState = CoordinatingService.State()
+        store.dispatch(action: Store.Action.add(states: [taskProviderState, coordinatingServiceState]))
+    }
+    
+    private func setupMiddlewares(){
+        let coordinatingService = CoordinatingService()
+        let loggingService = LoggingService()
+        store.register(middlewares: [loggingService, coordinatingService])
+    }
+    
+    private func openApp(onWindow window: UIWindow) {
+        _ = store.currentStateLastAction
+            .flatMap { (states: [SubstateType], lastAction: ActionType?) -> Driver<(CoordinatingService.State, CoordinatingService.Action)> in
+                for state in states {
+                    guard let coordinatingServiceState = state as? CoordinatingService.State else { continue }
+                    guard let coordinatingServiceAction = lastAction as? CoordinatingService.Action else {
+                        return Driver.never()
+                    }
+                    return Driver.just(coordinatingServiceState, coordinatingServiceAction)
+                }
+                fatalError("You need to register `CoordinatingService.State` first")
+            }
+            .distinctUntilChanged { (lhs: (CoordinatingService.State, CoordinatingService.Action), rhs: (CoordinatingService.State, CoordinatingService.Action)) -> Bool in
+                return lhs.0 == rhs.0 && lhs.1 == rhs.1
+            }
+            .filter { (coordinatingServiceState: CoordinatingService.State, _) -> Bool in
+                guard let currentRoute = coordinatingServiceState.currentRoute
+                    , case Route.root(_) = currentRoute else { return false }
+                return true
+            }
+            .asObservable()
+            .take(1)
+            .subscribe(onNext: { (_) in
+                store.dispatch(action: CoordinatingService.Action.transissionToRoute(route: Route.tasks))
+            }, onCompleted: nil, onDisposed: nil)
+        
+        store.dispatch(action: CoordinatingService.Action.transissionToRoute(route: Route.root(window: window)))
+    }
 }
+
