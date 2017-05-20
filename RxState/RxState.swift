@@ -12,6 +12,7 @@ import RxSwift
 // SubstateType
 public protocol SubstateType {}
 
+
 /**
  Has the following responsibilities:
  1. Holds application state. It can be access via `state` Driver.
@@ -19,6 +20,9 @@ public protocol SubstateType {}
  3. Allows access to the application state and last dipached action via `currentStateLastAction` Driver (Useful for creating middlewere).
  */
 public protocol StoreType {
+
+    /// Inisiate the store with a main reducer that the dispatch method will use to reduce incomming actions
+    init(mainReducer: @escaping MainReducer)
 
     /**
      A Driver emmitting a representation of the application state.
@@ -45,15 +49,21 @@ public protocol StoreType {
      
      */
     func dispatch<T: ActionType>(action: T)
+    
+    
+    /**
+     Registers middlewares.
+     
+     - parameters middlewares: An array containg the middlewares to be registered.
+     
+     */
+    func register(middlewares: [Middleware])
 
-    /// Inisiate the store with a main reducer that the dispatch method will use to reduce incomming actions
-    init(mainReducer: @escaping MainReducer)
 }
 
-/// A tuple representing the current application state and the last dispatched action.
-public typealias CurrentStateLastAction = (currentState: [SubstateType], lastAction: ActionType?)
 
 public class Store: StoreType {
+
 
     fileprivate let mainReducer: MainReducer
 
@@ -73,6 +83,8 @@ public class Store: StoreType {
     public var state: Driver<[SubstateType]> {
         return _state.asDriver()
     }
+    
+    public var middlewares: [Middleware] = []
 
     private let _state: Variable<[SubstateType]> = Variable([SubstateType]())
 
@@ -89,14 +101,21 @@ public class Store: StoreType {
         } else {
             _state.value = mainReducer(_state.value, action)
         }
+    }
+    
+    public func register(middlewares: [Middleware]) {
+        self.middlewares.append(contentsOf: middlewares)
 
+        for middleware in middlewares {
+            middleware.observe(currentStateLastAction: self.currentStateLastAction)
+        }
     }
 }
 
 extension Store {
     public enum Action: ActionType {
         /// Adds substates to the application state.
-        case register(states: [SubstateType])
+        case add(states: [SubstateType])
         
         /// Removes all substates in the application state.
         case reset
@@ -104,7 +123,7 @@ extension Store {
 
     public static func reduce(state: [SubstateType], sction: Store.Action) -> [SubstateType] {
         switch sction {
-        case let .register(states):
+        case let .add(states):
             var state = state
             state.append(contentsOf: states as [SubstateType])
             return state
@@ -122,8 +141,20 @@ extension Store {
  */
 public protocol ActionType {}
 
+/**
+ Data structure that describe intended state changes.
+ You should define actions for every possible state change that can happen.
+ State change can only happen only by dispatching Action.
+ That's how you get predictable state change.
+ */
+public protocol Middleware {
+    func observe(currentStateLastAction: Driver<CurrentStateLastAction>)
+}
 
 /**
  This reducer is used by the store's dispatch function. It should call the respective reducer basied on the Action type.
  */
 public typealias MainReducer = ((_ state: [SubstateType], _ action: ActionType) -> [SubstateType])
+
+/// A tuple representing the current application state and the last dispatched action.
+public typealias CurrentStateLastAction = (currentState: [SubstateType], lastAction: ActionType?)
