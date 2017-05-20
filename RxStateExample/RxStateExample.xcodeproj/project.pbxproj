@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D1323951ECAE77D00C78884 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D1323941ECAE77D00C78884 /* Info.plist */; };
 		1D13239B1ECBF7BB00C78884 /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323981ECBF7BB00C78884 /* TaskViewController.swift */; };
 		1D13239C1ECBF7BB00C78884 /* TaskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D1323991ECBF7BB00C78884 /* TaskViewController.xib */; };
 		1D13239D1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D13239A1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift */; };
@@ -558,7 +557,6 @@
 				1DF45BD11EC36B660029F787 /* TaskTableViewCell.xib in Resources */,
 				1DF45BEE1EC37A380029F787 /* AddTaskTableViewCell.xib in Resources */,
 				1D13239C1ECBF7BB00C78884 /* TaskViewController.xib in Resources */,
-				1D1323951ECAE77D00C78884 /* Info.plist in Resources */,
 				1DF45B301EC366090029F787 /* LaunchScreen.storyboard in Resources */,
 				1DF45B2D1EC366090029F787 /* Assets.xcassets in Resources */,
 				1DF45BCB1EC36B590029F787 /* TasksViewController.xib in Resources */,

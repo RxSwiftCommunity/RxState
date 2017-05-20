@@ -30,7 +30,7 @@ protocol TaskViewControllerViewModelType: ViewModelType {
 struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
     var disposeBag = DisposeBag()
     let id = Foundation.UUID().uuidString
-
+    
     fileprivate let taskProvider: TaskProvider
     fileprivate let store: StoreType
     fileprivate let taskId: TaskId
@@ -47,9 +47,9 @@ struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
         self.taskProvider = taskProvider
         self.store = store
     }
-
+    
     func transform(inputs: TaskViewControllerViewModelInputs) -> TaskViewControllerViewModelOutputs {
-
+        
         // Setup needed properties
         let task = taskProvider.taskProviderState
             .flatMap { (state: TaskProvider.State) -> Driver<Task> in
@@ -102,14 +102,11 @@ struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
             .disposed(by: disposeBag)
         
         inputs.backButtonDidTap?
-            .flatMapLatest { (_) -> Observable<CoordinatingService.Action> in
-                return self.coordinatingService.transission(toRoute: Route.tasks)
-            }
-            .subscribe(
-                onNext: { (action: CoordinatingService.Action)in
-                    self.store.dispatch(action: action)
+            .subscribe (
+                onNext: { _  in
+                    self.store.dispatch(action: CoordinatingService.Action.transissionToRoute(route: Route.tasks))
                 }
-                , onError: nil, onCompleted: nil, onDisposed: nil)
+            )
             .disposed(by: disposeBag)
         
         // Setup output
@@ -126,10 +123,10 @@ struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
             .map { (taskProviderState: TaskProvider.State) -> Bool in
                 return !taskProviderState.togglingTaskStatusForTasksWithIds.contains(self.taskId)
         }
-
+        
         
         let toggleTaskStatusButtonActivityIndicatorISAnimating = toggleTaskStatusButtonIsEnabled.map(!)
-
+        
         return TaskViewControllerViewModelOutputs(
             summary: summary
             , toggleTaskStatusButtonIsSelected: toggleTaskStatusButtonIsSelected
