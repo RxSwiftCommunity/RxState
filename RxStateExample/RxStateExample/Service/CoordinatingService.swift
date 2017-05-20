@@ -19,6 +19,7 @@ final class CoordinatingService: CoordinatingServiceType {
     fileprivate weak var navigatableNavigationController: NavigationController!
 
     func observe(currentStateLastAction: Driver<CurrentStateLastAction>) {
+        // Exctact `(CoordinatingService.State, CoordinatingService.Action)` from `CurrentStateLastAction`
         currentStateLastAction
             .flatMap { (states: [SubstateType], lastAction: ActionType?) -> Driver<(CoordinatingService.State, CoordinatingService.Action)> in
                 for state in states {
@@ -33,7 +34,6 @@ final class CoordinatingService: CoordinatingServiceType {
             .distinctUntilChanged { (lhs: (CoordinatingService.State, CoordinatingService.Action), rhs: (CoordinatingService.State, CoordinatingService.Action)) -> Bool in
                 return lhs.0 == rhs.0 && lhs.1 == rhs.1
             }
-            
             .flatMap { (state: CoordinatingService.State , action: CoordinatingService.Action) -> Driver<(Route?, Route)> in
                 
                 switch action {
@@ -110,7 +110,8 @@ final class CoordinatingService: CoordinatingServiceType {
 
 // State managment
 extension CoordinatingService {
-    struct State: SubstateType, Equatable {
+    struct State: SubstateType, CustomDebugStringConvertible, Equatable {
+        var transissioningToRoute: Route?
         var currentRoute: Route?
         
         static func ==(lhs: CoordinatingService.State, rhs: CoordinatingService.State) -> Bool {
@@ -123,6 +124,7 @@ extension CoordinatingService {
         var debugDescription: String {
             let result = "CoordinatingService.state\n"
                 + "currentRoute = \(String(describing: currentRoute))\n"
+                + "transissioningToRoute = \(String(describing: transissioningToRoute))\n"
             
             return result
         }
@@ -149,11 +151,14 @@ extension CoordinatingService {
     
     static func reduce(state: CoordinatingService.State, sction: CoordinatingService.Action) -> CoordinatingService.State {
         switch sction {
-        case .transissionToRoute(_):
+        case let .transissionToRoute(route):
+            var state = state
+            state.transissioningToRoute = route
             return state
             
         case let .transissionedToRoute(route):
             var state = state
+            state.transissioningToRoute = nil
             state.currentRoute = route
             return state
         }
