@@ -8,19 +8,15 @@
 import Foundation
 import RxSwift
 import RxState
+import RxCocoa
 
-protocol LoggingServiceType: HasDisposeBag {}
+protocol LoggingServiceType: Middleware, HasDisposeBag {}
 
 final class LoggingService: LoggingServiceType {
     var disposeBag = DisposeBag()
 
-    private let store: StoreType
-    init(store: StoreType) {
-        self.store = store
-    }
-    
-    func startLoggingAppState(){
-        store.currentStateLastAction
+    func observe(currentStateLastAction: Driver<CurrentStateLastAction>) {
+        currentStateLastAction
             .drive(
                 onNext: { (currentState: [SubstateType], lastAction: ActionType?) in
                     print("\n---------------------------------------------")

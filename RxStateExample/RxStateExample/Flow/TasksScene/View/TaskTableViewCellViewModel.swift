@@ -66,13 +66,11 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
         
         inputs.openTaskButtonDidTap
             .withLatestFrom(task)
-            .flatMapLatest { (task: Task) -> Observable<CoordinatingService.Action> in
-                return self.coordinatingService.transission(toRoute: Route.task(id: task.id))
-            }
             .subscribe(
-                onNext: { (action: CoordinatingService.Action) in
-                    self.store.dispatch(action: action)
-            }, onError: nil, onCompleted: nil, onDisposed: nil
+                onNext: { (task: Task) in
+                    self.store.dispatch(action: CoordinatingService.Action.transissionToRoute(route: Route.task(id: task.id)))
+            }
+                , onError: nil, onCompleted: nil, onDisposed: nil
             )
             .disposed(by: inputs.disposeBag)
 
