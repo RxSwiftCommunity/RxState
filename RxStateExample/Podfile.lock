@@ -7,6 +7,9 @@ PODS:
   - RxDataSources (1.0.3):
     - RxCocoa (~> 3.0)
     - RxSwift (~> 3.0)
+  - RxOptional (3.1.3):
+    - RxCocoa
+    - RxSwift
   - RxState (0.0.1):
     - RxCocoa (= 3.4.1)
     - RxSwift (= 3.4.1)
@@ -15,6 +18,7 @@ PODS:
 DEPENDENCIES:
   - R.swift (= 3.2.0)
   - RxDataSources (= 1.0.3)
+  - RxOptional (= 3.1.3)
   - RxState (from `../`)
 
 EXTERNAL SOURCES:
@@ -26,9 +30,10 @@ SPEC CHECKSUMS:
   R.swift.Library: fbdec16c9802ad104fc1ba53415dc190e6ec5c73
   RxCocoa: a8a5f1d061d0043e28f56976829f31ce63e8eb09
   RxDataSources: a021a0e944ba5f7991259829d973afdbfa719c0b
+  RxOptional: b97b59183af80d1e729ac9e51d09a10be668d6a8
   RxState: 938a811d5b3f9a38837ff22f44b1bdb7c7407566
   RxSwift: 656f8fbeca5bc372121a72d9ebdd3cd3bc0ffade
 
-PODFILE CHECKSUM: 779362a4faaae3ab789c0723b6db4833ba6936cf
+PODFILE CHECKSUM: 793d3077f7d8f99023a33f0d85f8e9e0f6752535
 
 COCOAPODS: 1.2.1

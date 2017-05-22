@@ -10,7 +10,11 @@ import UIKit
 
 private func appDelegateClassName() -> String {
     let isTesting = NSClassFromString("XCTestCase") != nil
-    return NSStringFromClass(isTesting ? AppDelegateMock.self : AppDelegate.self)
+    if isTesting {
+        return NSStringFromClass(AppDelegateMock.self)
+    } else {
+        return NSStringFromClass(AppDelegate.self)
+    }
 }
 
 UIApplicationMain(

@@ -6,6 +6,7 @@ target 'RxStateExample' do
   pod 'RxDataSources', '1.0.3'
   pod 'R.swift', '3.2.0'
   pod 'RxState', :path => '../'
+  pod 'RxOptional', '3.1.3'
 
   target 'RxStateExampleTests' do
     inherit! :search_paths

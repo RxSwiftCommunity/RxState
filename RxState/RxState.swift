@@ -48,7 +48,7 @@ public protocol StoreType {
      - parameters action: The action to be dispatched.
      
      */
-    func dispatch<T: ActionType>(action: T)
+    func dispatch(action: ActionType)
     
     
     /**
@@ -94,7 +94,7 @@ public class Store: StoreType {
     }
     private let _action: Variable<ActionType?> = Variable(nil)
 
-    public func dispatch<T: ActionType>(action: T) {
+    public func dispatch(action: ActionType) {
         _action.value = action
         if let storeAction = action as? Store.Action {
             _state.value = Store.reduce(state: _state.value, sction: storeAction)

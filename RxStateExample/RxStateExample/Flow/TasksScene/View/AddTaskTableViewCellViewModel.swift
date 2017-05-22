@@ -10,55 +10,48 @@ import RxSwift
 import RxCocoa
 import RxState
 
-struct AddTaskTableViewCellViewModelInputs: ViewModelInputsType {
-    let addTaskStatusButtonDidTap: ControlEvent<Void>
-    let disposeBag: DisposeBag
-}
-
-struct AddTaskTableViewCellViewModelOutputs: ViewModelOutputsType {
-    let addTaskButtonActivityIndicatorISAnimating: Driver<Bool>
-}
 
 protocol AddTaskTableViewCellViewModelType: ViewModelType {
-    func transform(inputs: AddTaskTableViewCellViewModelInputs) -> AddTaskTableViewCellViewModelOutputs
+    // Going ☝️ to the store
+    func set(inputs: AddTaskTableViewCellViewModel.Inputs) -> Disposable
+    // Going 👇 from the store
+    var outputs: AddTaskTableViewCellViewModel.Outputs { get }
 }
 
 struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
-    let id = Foundation.UUID().uuidString
+    let store: StoreType
 
-    fileprivate let taskProvider: TaskProvider
-    fileprivate let store: StoreType
     
-    init(
-        store: StoreType
-        , taskProvider: TaskProvider
-        ) {
-        self.store = store
-        self.taskProvider = taskProvider
+    struct Inputs {
+        let addTaskStatusButtonDidTap: ControlEvent<Void>
     }
+    
+    func set(inputs: AddTaskTableViewCellViewModel.Inputs) -> Disposable {
+        
+        let result: Disposable = inputs.addTaskStatusButtonDidTap
+            .asDriver()
+            .flatMapLatest { (_) -> Driver<ActionType> in
+                let task = Task(summary: "Your new task :)", status: TaskStatus.todo)
 
-    func transform(inputs: AddTaskTableViewCellViewModelInputs) -> AddTaskTableViewCellViewModelOutputs {
-
-        inputs.addTaskStatusButtonDidTap
-            .flatMapLatest { _ -> Observable<TaskProvider.Action> in
-                self.taskProvider.add(task: Task(summary: "Your new task :)", status: TaskStatus.todo))
+                let addTaskActionCreatorInputs = AddTaskActionCreator.Inputs(store: self.store, task: task)
+                return AddTaskActionCreator.create(inputs: addTaskActionCreatorInputs)
             }
-            .subscribe(
-                onNext: { (action: TaskProvider.Action) in
-                    self.store.dispatch(action: action)
-                }
-                , onError: nil
-                , onCompleted: nil
-                , onDisposed: nil
-            )
-            .disposed(by: inputs.disposeBag)
-
-        let addTaskButtonActivityIndicatorISAnimating = taskProvider.taskProviderState
-            .map { (taskProviderState: TaskProvider.State) -> Bool in
-                return taskProviderState.addingTask
-        }
-
-        return AddTaskTableViewCellViewModelOutputs(addTaskButtonActivityIndicatorISAnimating: addTaskButtonActivityIndicatorISAnimating)
+            .drive(onNext: { (action: ActionType) in
+                self.store.dispatch(action: action)
+            }, onCompleted: nil, onDisposed: nil)
+        
+        return result
+    }
+    
+    struct Outputs {
+        let addTaskButtonActivityIndicatorISAnimating: Driver<Bool>
     }
 
+    var outputs: AddTaskTableViewCellViewModel.Outputs {
+        
+        let addTaskTransformerInputs = AddTaskTransformer.Inputs(store: store)
+        let addTaskTransformerOutputs = AddTaskTransformer.transform(inputs: addTaskTransformerInputs)
+        
+        return AddTaskTableViewCellViewModel.Outputs(addTaskButtonActivityIndicatorISAnimating: addTaskTransformerOutputs.addTaskButtonActivityIndicatorISAnimating)
+    }
 }

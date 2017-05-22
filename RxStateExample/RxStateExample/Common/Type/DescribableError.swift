@@ -11,3 +11,4 @@ protocol DescribableError:
     Error
     , CustomDebugStringConvertible
     , CustomStringConvertible {}
+

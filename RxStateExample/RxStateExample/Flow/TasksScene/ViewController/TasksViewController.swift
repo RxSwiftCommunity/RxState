@@ -28,14 +28,16 @@ final class TasksViewController: ViewController {
     }
 
     private func bindViewModel() {
-        let viewModelOutputs = viewModel
-            .transform(inputs: TasksViewControllerViewModelInputs())
-
-        viewModelOutputs.sectionsModels
-            .drive(tasksTableView.rx.items(dataSource: viewModelOutputs.dataSource))
+        viewModel.bind(inputs: TasksViewControllerViewModel.Inputs())
             .disposed(by: disposeBag)
 
-        viewModelOutputs.title
+        viewModel.outputs
+            .sectionsModels
+            .drive(tasksTableView.rx.items(dataSource: viewModel.outputs.dataSource))
+            .disposed(by: disposeBag)
+
+        viewModel.outputs
+            .title
             .drive(rx.title)
             .disposed(by: disposeBag)
     }

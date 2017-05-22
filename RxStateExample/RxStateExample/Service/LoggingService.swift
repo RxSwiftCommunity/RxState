@@ -28,10 +28,7 @@ final class LoggingService: LoggingServiceType {
                     } else {
                         print("No action has been dispatched yet")
                     }
-            }
-                , onCompleted: nil
-                , onDisposed: nil
-            )
+            }, onCompleted: nil, onDisposed: nil)
             .disposed(by: disposeBag)
     }
 }

@@ -21,31 +21,40 @@ final class TaskViewController: ViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindViewModel()
-        configureUI()
+        setViewModelInputs()
+        bindViewModelOutputs()
     }
 
-    private func configureUI() {
-    }
-
-    private func bindViewModel() {
-        let viewModelInputs = TaskViewControllerViewModelInputs(toggleTaskStatusButtonDidTap: toggleTaskStatusButton.rx.tap, summary: summaryTextField.rx.text, backButtonDidTap: backButton?.rx.tap)
+    private func setViewModelInputs() {
+        let viewModelInputs = TaskViewControllerViewModel.Inputs(
+            toggleTaskStatusButtonDidTap: toggleTaskStatusButton.rx.tap
+            , backButtonDidTap: backButton?.rx.tap
+            , summary: summaryTextField.rx.text
+        )
         
-        let viewModelOutputs: TaskViewControllerViewModelOutputs = viewModel.transform(inputs: viewModelInputs)
+        viewModel.set(inputs: viewModelInputs)
+            .disposed(by: disposeBag)
+    }
 
-        viewModelOutputs.summary
+    private func bindViewModelOutputs() {
+
+        viewModel.outputs
+            .summary
             .drive(summaryTextField.rx.text)
             .disposed(by: disposeBag)
         
-        viewModelOutputs.toggleTaskStatusButtonIsSelected
+        viewModel.outputs
+            .toggleTaskStatusButtonIsSelected
             .drive(toggleTaskStatusButton.rx.isSelected)
             .disposed(by: disposeBag)
         
-        viewModelOutputs.toggleTaskStatusButtonIsEnabled
+        viewModel.outputs
+            .toggleTaskStatusButtonIsEnabled
             .drive(toggleTaskStatusButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        viewModelOutputs.toggleTaskStatusButtonActivityIndicatorISAnimating
+        viewModel.outputs
+            .toggleTaskStatusButtonActivityIndicatorIsAnimating
             .drive(toggleTaskStatusButton.rx.activityIndicatorIsAnimating)
             .disposed(by: disposeBag)
                 

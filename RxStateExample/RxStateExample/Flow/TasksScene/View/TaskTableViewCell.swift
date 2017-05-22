@@ -19,38 +19,41 @@ final class TaskTableViewCell: TableViewCell {
     
     fileprivate(set) var viewModel: TaskTableViewCellViewModelType! {
         didSet {
-            bindViewModel()
-            configureUI()
+            setViewModelInputs()
+            bindViewModelOutputs()
         }
     }
 
-    private func configureUI() {
-    }
-
-    private func bindViewModel() {
-
-        let viewModelInputs = TaskTableViewCellViewModelInputs(
+    private func setViewModelInputs() {
+        let viewModelInputs = TaskTableViewCellViewModel.Inputs(
             toggleTaskStatusButtonDidTap: toggleTaskStatusButton.rx.tap
             , openTaskButtonDidTap: openTaskStatusButton.rx.tap
             , summary: summaryTextField.rx.text
-            , disposeBag: disposeBag
         )
+        
+        viewModel.set(inputs: viewModelInputs)
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindViewModelOutputs() {
 
-        let viewModelOutputs = viewModel.transform(inputs: viewModelInputs)
-
-        viewModelOutputs.summary
+        viewModel.outputs
+            .summary
             .drive(summaryTextField.rx.text)
             .disposed(by: disposeBag)
 
-        viewModelOutputs.toggleTaskStatusButtonIsSelected
+        viewModel.outputs
+            .toggleTaskStatusButtonIsSelected
             .drive(toggleTaskStatusButton.rx.isSelected)
             .disposed(by: disposeBag)
 
-        viewModelOutputs.toggleTaskStatusButtonIsEnabled
+        viewModel.outputs
+            .toggleTaskStatusButtonIsEnabled
             .drive(toggleTaskStatusButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        viewModelOutputs.toggleTaskStatusButtonActivityIndicatorISAnimating
+        viewModel.outputs
+            .toggleTaskStatusButtonActivityIndicatorISAnimating
             .drive(toggleTaskStatusButton.rx.activityIndicatorIsAnimating)
             .disposed(by: disposeBag)
     }
