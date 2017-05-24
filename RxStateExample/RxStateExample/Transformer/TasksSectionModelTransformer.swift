@@ -10,18 +10,18 @@ import RxCocoa
 import RxState
 import RxDataSources
 
-class TasksSectionModelTransformer {
-    struct Inputs {
+final class TasksSectionModelTransformer: TransformerType {
+    struct Inputs: TransformerInputsType {
         let store: StoreType
     }
     
-    struct Outputs {
+    struct Outputs: TransformerOutputsType {
         let sectionModel: Driver<SectionModel>
     }
     
     static func transtorm(inputs: TasksSectionModelTransformer.Inputs) -> TasksSectionModelTransformer.Outputs {
         let sectionModel = inputs.store.tasksState
-            .map { (tasksState: TasksStateManager.State) -> [Task] in
+            .map { (tasksState: Store.TasksState) -> [Task] in
                 return tasksState.tasks
             }
             .distinctUntilChanged { (lhs: [Task], rhs: [Task]) -> Bool in

@@ -44,14 +44,14 @@ struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
     }
     
     struct Outputs {
-        let addTaskButtonActivityIndicatorISAnimating: Driver<Bool>
+        let addTaskButtonActivityIndicatorIsAnimating: Driver<Bool>
     }
 
     var outputs: AddTaskTableViewCellViewModel.Outputs {
         
-        let addTaskTransformerInputs = AddTaskTransformer.Inputs(store: store)
-        let addTaskTransformerOutputs = AddTaskTransformer.transform(inputs: addTaskTransformerInputs)
+        let addTaskButtonActivityIndicatorIsAnimatingInputs = AddTaskButtonActivityIndicatorIsAnimatingTransformer.Inputs(store: store)
+        let addTaskButtonActivityIndicatorIsAnimatingOutputs = AddTaskButtonActivityIndicatorIsAnimatingTransformer.transtorm(inputs: addTaskButtonActivityIndicatorIsAnimatingInputs)
         
-        return AddTaskTableViewCellViewModel.Outputs(addTaskButtonActivityIndicatorISAnimating: addTaskTransformerOutputs.addTaskButtonActivityIndicatorISAnimating)
+        return AddTaskTableViewCellViewModel.Outputs(addTaskButtonActivityIndicatorIsAnimating: addTaskButtonActivityIndicatorIsAnimatingOutputs.addTaskButtonActivityIndicatorIsAnimating)
     }
 }

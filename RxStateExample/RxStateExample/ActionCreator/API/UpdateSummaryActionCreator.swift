@@ -10,8 +10,8 @@ import RxCocoa
 import RxSwift
 import RxState
 
-class UpdateSummaryActionCreator {
-    struct Inputs {
+final class UpdateSummaryActionCreator: ActionCreatorType {
+    struct Inputs: ActionCreatorInputsType {
         let store: StoreType
         let summary: String
         let taskId: TaskId
@@ -20,16 +20,16 @@ class UpdateSummaryActionCreator {
     static func create(inputs: UpdateSummaryActionCreator.Inputs) -> Driver<ActionType> {
         return UpdateSummaryActionCreator.update(summery: inputs.summary, forTaskWithId: inputs.taskId)
             .asDriver { (error: Error) -> Driver<ActionType> in
-                return Driver.of(ErrorStateManager.Action.addPresentError(presentableError: error))
+                return Driver.of(Store.ErrorAction.addPresentError(presentableError: error))
         }
     }
     
     private static func update(summery: String, forTaskWithId id: TaskId) -> Observable<ActionType> {
         let observable = Observable<ActionType>
             .create { observer -> Disposable in
-                observer.on(.next(TasksStateManager.Action.updatingSummary(newSummary: summery, forTaskWithId: id)))
+                observer.on(.next(Store.TasksAction.updatingSummary(newSummary: summery, forTaskWithId: id)))
                 Thread.sleep(forTimeInterval: 2)
-                observer.on(.next(TasksStateManager.Action.updatedSummary(newSummary: summery, forTaskWithId: id)))
+                observer.on(.next(Store.TasksAction.updatedSummary(newSummary: summery, forTaskWithId: id)))
                 return Disposables.create()
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: DispatchQoS.default))

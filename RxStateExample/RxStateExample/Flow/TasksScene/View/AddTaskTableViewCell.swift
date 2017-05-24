@@ -31,10 +31,7 @@ final class AddTaskTableViewCell: TableViewCell {
     }
 
     private func bindViewModelOutputs() {
-        viewModel.set(inputs: AddTaskTableViewCellViewModel.Inputs(addTaskStatusButtonDidTap: addTaskButton.rx.tap))
-            .disposed(by: disposeBag)
-
-        viewModel.outputs.addTaskButtonActivityIndicatorISAnimating
+        viewModel.outputs.addTaskButtonActivityIndicatorIsAnimating
             .drive(addTaskButton.rx.activityIndicatorIsAnimating)
             .disposed(by: disposeBag)
     }

@@ -63,15 +63,14 @@ struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
         
         
         if let backButtonDidTap = inputs.backButtonDidTap {
-            _ = backButtonDidTap
+            let backButtonDidTapDisposable = backButtonDidTap
                 .asDriver()
-                .flatMapLatest { _ -> Driver<ActionType> in
-                    let taskToTasksActionCreatorInputs = TaskToTasksActionCreator.Inputs(store: self.store)
-                    return TaskToTasksActionCreator.create(inputs: taskToTasksActionCreatorInputs)
-                }
-                .drive(onNext: { (action: ActionType) in
-                    self.store.dispatch(action: action)
+                .drive(onNext: { _ in
+                    let navigateTaskToTaskActionCreatorInputs = NavigateTaskToTasksActionCreator.Inputs(store: self.store)
+                    
+                    _ = NavigateTaskToTasksActionCreator.navigate(inputs: navigateTaskToTaskActionCreatorInputs).drive()
                 }, onCompleted: nil, onDisposed: nil)
+            _ = compositeDisposable.insert(backButtonDidTapDisposable)
         }
         return compositeDisposable
     }

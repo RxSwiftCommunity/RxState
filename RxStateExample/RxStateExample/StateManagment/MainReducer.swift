@@ -11,27 +11,27 @@ import RxState
 let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> [SubstateType] in
     var state: [SubstateType] = state
     switch action {
-    case let action as TasksStateManager.Action:
+    case let action as Store.TasksAction:
         guard var (tasksStateIndex, tasksState) = state.enumerated().first(where: { (_: Int, state: SubstateType) -> Bool in
-            let result = state is TasksStateManager.State
+            let result = state is Store.TasksState
             return result
-        }) as? (Int, TasksStateManager.State) else {
-            fatalError("You need to register `TasksStateManager.State` first")
+        }) as? (Int, Store.TasksState) else {
+            fatalError("You need to register `Store.TasksState` first")
         }
         
-        tasksState = TasksStateManager.reduce(state: tasksState, sction: action)
+        tasksState = Store.reduce(state: tasksState, action: action)
         
         state[tasksStateIndex] = tasksState as SubstateType
         
-    case let action as FlowStateManager.Action:
+    case let action as Store.FlowAction:
         guard var (flowStateIndex, flowState) = state.enumerated().first(where: { (_: Int, state: SubstateType) -> Bool in
-            let result = state is FlowStateManager.State
+            let result = state is Store.FlowState
             return result
-        }) as? (Int, FlowStateManager.State) else {
-            fatalError("You need to register `TasksStateManager.State` first")
+        }) as? (Int, Store.FlowState) else {
+            fatalError("You need to register `Store.TasksState` first")
         }
         
-        flowState = FlowStateManager.reduce(state: flowState, sction: action)
+        flowState = Store.reduce(state: flowState, action: action)
         
         state[flowStateIndex] = flowState as SubstateType
         

@@ -74,17 +74,16 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
             }, onCompleted: nil, onDisposed: nil)
         _ = compositeDisposable.insert(toggleTaskStatusButtonDidTapDisposable)
         
-        _ = inputs.openTaskButtonDidTap
+        let openTaskButtonDidTapDisposable = inputs.openTaskButtonDidTap
             .asDriver()
-            .flatMapLatest { _ -> Driver<ActionType> in
-                let tasksTaskActionCreatorInputs = TasksToTaskActionCreator.Inputs(store: self.store,taskId: self.taskId)
-                let result: Driver<ActionType> = TasksToTaskActionCreator.create(inputs: tasksTaskActionCreatorInputs)
-                return result
-            }
-            .drive(onNext: { (action: ActionType) in
-                self.store.dispatch(action: action)
+            .drive(onNext: { _ in
+                let navigateTasksTaskActionCreatorInputs = NavigateTasksToTaskActionCreator.Inputs(store: self.store,taskId: self.taskId)
+                
+                _ = NavigateTasksToTaskActionCreator.navigate(inputs: navigateTasksTaskActionCreatorInputs).drive()
             }, onCompleted: nil, onDisposed: nil)
-        
+
+        _ = compositeDisposable.insert(openTaskButtonDidTapDisposable)
+
         return compositeDisposable
     }
     
@@ -92,7 +91,7 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
         let summary: Driver<String>
         let toggleTaskStatusButtonIsSelected: Driver<Bool>
         let toggleTaskStatusButtonIsEnabled: Driver<Bool>
-        let toggleTaskStatusButtonActivityIndicatorISAnimating: Driver<Bool>
+        let toggleTaskStatusButtonActivityIndicatorIsAnimating: Driver<Bool>
     }
     
     var outputs: TaskTableViewCellViewModel.Outputs {
@@ -106,7 +105,7 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
             summary: summaryTransformerOutputs.summary
             , toggleTaskStatusButtonIsSelected: toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonIsSelected
             , toggleTaskStatusButtonIsEnabled: toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonIsEnabled
-            , toggleTaskStatusButtonActivityIndicatorISAnimating: toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonActivityIndicatorIsAnimating
+            , toggleTaskStatusButtonActivityIndicatorIsAnimating: toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonActivityIndicatorIsAnimating
         )
     }
 }

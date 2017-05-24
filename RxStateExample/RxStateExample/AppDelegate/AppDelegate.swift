@@ -34,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setupInitialStates(){
-        let tasksState = TasksStateManager.State()
-        let flowState = FlowStateManager.State()
+        let tasksState = Store.TasksState()
+        let flowState = Store.FlowState()
         store.dispatch(action: Store.Action.add(states: [tasksState, flowState]))
     }
     
@@ -45,16 +45,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func openApp(onWindow window: UIWindow) {
-        let toRootActionCreatorInputs = ToRootActionCreator.Inputs(store: store, window: window)
-        let toRootActionCreator = ToRootActionCreator.create(inputs: toRootActionCreatorInputs)
+        let navigatetoRootActionCreatorInputs = NavigateToRootActionCreator.Inputs(store: store, window: window)
 
-        let rootToTasksActionCreatorInputs = RootToTasksActionCreator.Inputs(store: store)
-        let rootToTasksActionCreator = RootToTasksActionCreator.create(inputs: rootToTasksActionCreatorInputs)
+        let navigateRootToTasksActionCreatorInputs = NavigateRootToTasksActionCreator.Inputs(store: store)
 
-        _ = Driver.concat([toRootActionCreator, rootToTasksActionCreator])
-            .drive(onNext: { (action: ActionType) in
-                store.dispatch(action: action)
-            }, onCompleted: nil, onDisposed: nil)
+        _ = Driver.concat([
+            NavigateToRootActionCreator.navigate(inputs: navigatetoRootActionCreatorInputs)
+            , NavigateRootToTasksActionCreator.navigate(inputs: navigateRootToTasksActionCreatorInputs)
+            ])
+            .drive()
     }
 }
 

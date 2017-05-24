@@ -9,13 +9,13 @@ import Foundation
 import RxCocoa
 import RxState
 
-class ToggleTaskStatusTransformer {
-    struct Inputs {
+final class ToggleTaskStatusTransformer: TransformerType {
+    struct Inputs: TransformerInputsType {
         let store: StoreType
         let taskId: TaskId
     }
     
-    struct Outputs {
+    struct Outputs: TransformerOutputsType {
         let toggleTaskStatusButtonIsSelected: Driver<Bool>
         let toggleTaskStatusButtonIsEnabled: Driver<Bool>
         let toggleTaskStatusButtonActivityIndicatorIsAnimating: Driver<Bool>
@@ -31,7 +31,7 @@ class ToggleTaskStatusTransformer {
             .distinctUntilChanged()
         
         let toggleTaskStatusButtonIsEnabled = store.tasksState
-            .map { (tasksState: TasksStateManager.State) -> Bool in
+            .map { (tasksState: Store.TasksState) -> Bool in
                 return !tasksState.togglingTaskStatusForTasksWithIds.contains(inputs.taskId)
             }
             .distinctUntilChanged()

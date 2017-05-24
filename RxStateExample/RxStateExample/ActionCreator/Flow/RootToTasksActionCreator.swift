@@ -10,22 +10,19 @@ import RxSwift
 import RxCocoa
 import RxState
 
-class RootToTasksActionCreator {
-    struct Inputs {
+final class NavigateRootToTasksActionCreator: FlowActionCreatorType {
+    struct Inputs: ActionCreatorInputsType {
         let store: StoreType
     }
     
-    // For flow action creators. You need to make sure this Driver completes after emitting one and only one `Action`. This way the subscription gets disposed once it's done (You can't add it to a view controller dispose bag since it would be disposed once the transision completes and just before the `transissionedToRoute` is dispatched.
-    static func create(inputs: RootToTasksActionCreator.Inputs) -> Driver<ActionType> {
+    static func create(inputs: NavigateRootToTasksActionCreator.Inputs) -> Driver<ActionType> {
 
 //        let destinationRoute = Driver.just(Route.tasks)
 //        
 //        return destinationRoute
-//            .debug("Task")
-//            .withLatestFrom(inputs.store.flowState, resultSelector: { (destinationRoute: Route, flowState: FlowStateManager.State) -> (Route?, Route, NavigatableController) in
+//            .withLatestFrom(inputs.store.flowState, resultSelector: { (destinationRoute: Route, flowState: Store.FlowState) -> (Route?, Route, NavigatableController) in
 //                return (flowState.currentRoute, destinationRoute, flowState.currentRouteNavigatableController)
 //            })
-//            .debug("Task, flowState")
 //            .flatMap{ (originRoute: Route?, destinationRoute: Route, navigatableController: NavigatableController) -> Driver<ActionType> in
 //                return RootToTasksActionCreator.transission(fromRoute: originRoute, toRoute: destinationRoute, usingNavigatableController: navigatableController, inputs: inputs)
 //        }
@@ -35,23 +32,23 @@ class RootToTasksActionCreator {
         let destinationRoute = Route.tasks
 
         return inputs.store.flowState
-            .flatMapLatest { (flowState: FlowStateManager.State) -> Driver<(Route?, Route, NavigatableController)> in
+            .flatMapLatest { (flowState: Store.FlowState) -> Driver<(Route?, Route, NavigatableController)> in
                 return Driver.of((flowState.currentRoute, destinationRoute, flowState.currentRouteNavigatableController))
             }
             .asObservable()
             .take(1)
             .flatMap { (originRoute: Route?, destinationRoute: Route, navigatableController: NavigatableController) -> Observable<ActionType> in
-                return RootToTasksActionCreator.transission(fromRoute: originRoute, toRoute: destinationRoute, usingNavigatableController: navigatableController, inputs: inputs).asObservable()
+                return NavigateRootToTasksActionCreator.navigate(fromRoute: originRoute, toRoute: destinationRoute, usingNavigatableController: navigatableController, inputs: inputs).asObservable()
             }
-            .asDriver(onErrorJustReturn: FlowStateManager.Action.transissionToRoute(route: Route.root)) // The Observable being converted doesn't emmit errors. Hence, this won't be returned
+            .asDriver(onErrorJustReturn: Store.FlowAction.transissionToRoute(route: Route.root)) // The Observable being converted doesn't emmit errors. Hence, this won't be returned
         
     }
     
-    private static func transission(
+    private static func navigate(
         fromRoute originRoute: Route?
         , toRoute destinationRoute: Route
         , usingNavigatableController navigatableController: NavigatableController
-        , inputs: RootToTasksActionCreator.Inputs
+        , inputs: NavigateRootToTasksActionCreator.Inputs
         ) -> Driver<ActionType> {
         
         guard let navigationController = navigatableController.navigationController else {
@@ -63,7 +60,7 @@ class RootToTasksActionCreator {
         }
         
         let result: Driver<ActionType> = Observable.create { (observer: AnyObserver<ActionType>) -> Disposable in
-            observer.on(.next(FlowStateManager.Action.transissionToRoute(route: destinationRoute)))
+            observer.on(.next(Store.FlowAction.transissionToRoute(route: destinationRoute)))
             let tasksViewControllerViewModel = TasksViewControllerViewModel(store: inputs.store)
             let viewController = TasksViewController.build(withViewModel: tasksViewControllerViewModel)
             navigationController.setViewControllers([viewController], animated: false)
@@ -74,14 +71,14 @@ class RootToTasksActionCreator {
                 , tabBarController: navigatableController.tabBarController
             )
             
-            let action: ActionType = FlowStateManager.Action.transissionedToRoute(route: destinationRoute, currentRouteNavigatableController: navigatableController)
+            let action: ActionType = Store.FlowAction.transissionedToRoute(route: destinationRoute, currentRouteNavigatableController: navigatableController)
             
             observer.on(.next(action))
             observer.on(.completed)
             
             return Disposables.create()
             }
-            .asDriver(onErrorJustReturn: FlowStateManager.Action.transissionToRoute(route: Route.root)) // The Observable being converted doesn't emmit errors. Hence, this won't be returned
+            .asDriver(onErrorJustReturn: Store.FlowAction.transissionToRoute(route: Route.root)) // The Observable being converted doesn't emmit errors. Hence, this won't be returned
         
         return result
     }

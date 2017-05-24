@@ -22,12 +22,15 @@
 		1D1323C91ED0E1D400C78884 /* AddTaskActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323C81ED0E1D400C78884 /* AddTaskActionCreator.swift */; };
 		1D1323CB1ED0E20F00C78884 /* AddTaskTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323CA1ED0E20F00C78884 /* AddTaskTransformer.swift */; };
 		1D1323CE1ED0EC6800C78884 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323CD1ED0EC6800C78884 /* Route.swift */; };
-		1D1323D11ED153EF00C78884 /* TasksStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323D01ED153EF00C78884 /* TasksStateManager.swift */; };
+		1D1323D11ED153EF00C78884 /* TasksStateManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323D01ED153EF00C78884 /* TasksStateManagement.swift */; };
 		1D1323D31ED15B1400C78884 /* TaskToTasksActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323D21ED15B1400C78884 /* TaskToTasksActionCreator.swift */; };
-		1D1323D51ED15DBB00C78884 /* FlowStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323D41ED15DBB00C78884 /* FlowStateManager.swift */; };
+		1D1323D51ED15DBB00C78884 /* FlowStateManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323D41ED15DBB00C78884 /* FlowStateManagement.swift */; };
 		1D1323DA1ED1630F00C78884 /* ToRootActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1323D91ED1630F00C78884 /* ToRootActionCreator.swift */; };
+		1D81DF4C1ED44177001C769D /* TransformerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81DF4B1ED44177001C769D /* TransformerType.swift */; };
+		1D81DF4F1ED4426F001C769D /* ActionCreatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81DF4E1ED4426F001C769D /* ActionCreatorType.swift */; };
+		1D81DF511ED4A1A3001C769D /* FlowActionCreatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D81DF501ED4A1A3001C769D /* FlowActionCreatorType.swift */; };
 		1DE462D91ED16BD500307FC6 /* RootToTasksActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE462D81ED16BD500307FC6 /* RootToTasksActionCreator.swift */; };
-		1DE462DB1ED1909700307FC6 /* ErrorStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE462DA1ED1909700307FC6 /* ErrorStateManager.swift */; };
+		1DE462DB1ED1909700307FC6 /* ErrorStateManagment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE462DA1ED1909700307FC6 /* ErrorStateManagment.swift */; };
 		1DE462DE1ED2B6AB00307FC6 /* TasksTitleTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE462DD1ED2B6AB00307FC6 /* TasksTitleTransformer.swift */; };
 		1DE462E01ED2BB3F00307FC6 /* TasksSectionModelTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE462DF1ED2BB3F00307FC6 /* TasksSectionModelTransformer.swift */; };
 		1DE462E21ED2C42800307FC6 /* SectionItemModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE462E11ED2C42800307FC6 /* SectionItemModelType.swift */; };
@@ -113,13 +116,16 @@
 		1D1323C81ED0E1D400C78884 /* AddTaskActionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskActionCreator.swift; sourceTree = "<group>"; };
 		1D1323CA1ED0E20F00C78884 /* AddTaskTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTaskTransformer.swift; sourceTree = "<group>"; };
 		1D1323CD1ED0EC6800C78884 /* Route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
-		1D1323D01ED153EF00C78884 /* TasksStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksStateManager.swift; sourceTree = "<group>"; };
+		1D1323D01ED153EF00C78884 /* TasksStateManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksStateManagement.swift; sourceTree = "<group>"; };
 		1D1323D21ED15B1400C78884 /* TaskToTasksActionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskToTasksActionCreator.swift; path = Flow/TaskToTasksActionCreator.swift; sourceTree = "<group>"; };
-		1D1323D41ED15DBB00C78884 /* FlowStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStateManager.swift; sourceTree = "<group>"; };
+		1D1323D41ED15DBB00C78884 /* FlowStateManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowStateManagement.swift; sourceTree = "<group>"; };
 		1D1323D91ED1630F00C78884 /* ToRootActionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ToRootActionCreator.swift; path = Flow/ToRootActionCreator.swift; sourceTree = "<group>"; };
+		1D81DF4B1ED44177001C769D /* TransformerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformerType.swift; sourceTree = "<group>"; };
+		1D81DF4E1ED4426F001C769D /* ActionCreatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCreatorType.swift; sourceTree = "<group>"; };
+		1D81DF501ED4A1A3001C769D /* FlowActionCreatorType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowActionCreatorType.swift; sourceTree = "<group>"; };
 		1DAE0BF0435AD24E3B877790 /* Pods-RxStateExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RxStateExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RxStateExampleTests/Pods-RxStateExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		1DE462D81ED16BD500307FC6 /* RootToTasksActionCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootToTasksActionCreator.swift; path = Flow/RootToTasksActionCreator.swift; sourceTree = "<group>"; };
-		1DE462DA1ED1909700307FC6 /* ErrorStateManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorStateManager.swift; sourceTree = "<group>"; };
+		1DE462DA1ED1909700307FC6 /* ErrorStateManagment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorStateManagment.swift; sourceTree = "<group>"; };
 		1DE462DD1ED2B6AB00307FC6 /* TasksTitleTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTitleTransformer.swift; sourceTree = "<group>"; };
 		1DE462DF1ED2BB3F00307FC6 /* TasksSectionModelTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksSectionModelTransformer.swift; sourceTree = "<group>"; };
 		1DE462E11ED2C42800307FC6 /* SectionItemModelType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionItemModelType.swift; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 		1D1323B21ED0D84C00C78884 /* ActionCreator */ = {
 			isa = PBXGroup;
 			children = (
+				1D81DF4D1ED4424A001C769D /* Type */,
 				1D1323D71ED161E500C78884 /* API */,
 				1D1323D61ED161DE00C78884 /* Flow */,
 			);
@@ -246,6 +253,7 @@
 		1D1323B31ED0D86800C78884 /* Transformer */ = {
 			isa = PBXGroup;
 			children = (
+				1D81DF4A1ED44153001C769D /* Type */,
 				1D1323BA1ED0D8EE00C78884 /* SummaryTransformer.swift */,
 				1D1323C01ED0DA2C00C78884 /* ToggleTaskStatusTransformer.swift */,
 				1D1323CA1ED0E20F00C78884 /* AddTaskTransformer.swift */,
@@ -255,16 +263,16 @@
 			path = Transformer;
 			sourceTree = "<group>";
 		};
-		1D1323CF1ED1537C00C78884 /* StateManager */ = {
+		1D1323CF1ED1537C00C78884 /* StateManagment */ = {
 			isa = PBXGroup;
 			children = (
 				1DE462E81ED333A400307FC6 /* Store.swift */,
 				1DE462E61ED3330E00307FC6 /* MainReducer.swift */,
-				1D1323D01ED153EF00C78884 /* TasksStateManager.swift */,
-				1D1323D41ED15DBB00C78884 /* FlowStateManager.swift */,
-				1DE462DA1ED1909700307FC6 /* ErrorStateManager.swift */,
+				1D1323D01ED153EF00C78884 /* TasksStateManagement.swift */,
+				1D1323D41ED15DBB00C78884 /* FlowStateManagement.swift */,
+				1DE462DA1ED1909700307FC6 /* ErrorStateManagment.swift */,
 			);
-			path = StateManager;
+			path = StateManagment;
 			sourceTree = "<group>";
 		};
 		1D1323D61ED161DE00C78884 /* Flow */ = {
@@ -286,6 +294,23 @@
 				1D1323C81ED0E1D400C78884 /* AddTaskActionCreator.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		1D81DF4A1ED44153001C769D /* Type */ = {
+			isa = PBXGroup;
+			children = (
+				1D81DF4B1ED44177001C769D /* TransformerType.swift */,
+			);
+			path = Type;
+			sourceTree = "<group>";
+		};
+		1D81DF4D1ED4424A001C769D /* Type */ = {
+			isa = PBXGroup;
+			children = (
+				1D81DF4E1ED4426F001C769D /* ActionCreatorType.swift */,
+				1D81DF501ED4A1A3001C769D /* FlowActionCreatorType.swift */,
+			);
+			path = Type;
 			sourceTree = "<group>";
 		};
 		1DF45B191EC366090029F787 = {
@@ -315,7 +340,7 @@
 			children = (
 				1DF45BF11EC42B7F0029F787 /* RxStateExample-Bridging-Header.h */,
 				1DF45B641EC3677C0029F787 /* main.swift */,
-				1D1323CF1ED1537C00C78884 /* StateManager */,
+				1D1323CF1ED1537C00C78884 /* StateManagment */,
 				1DF45B551EC3668F0029F787 /* AppDelegate */,
 				1DF45BDA1EC371AE0029F787 /* Common */,
 				1DF45B561EC366980029F787 /* Model */,
@@ -808,13 +833,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D1323D11ED153EF00C78884 /* TasksStateManager.swift in Sources */,
-				1D1323D51ED15DBB00C78884 /* FlowStateManager.swift in Sources */,
+				1D81DF4F1ED4426F001C769D /* ActionCreatorType.swift in Sources */,
+				1D1323D11ED153EF00C78884 /* TasksStateManagement.swift in Sources */,
+				1D1323D51ED15DBB00C78884 /* FlowStateManagement.swift in Sources */,
 				1DF45B621EC3676A0029F787 /* Task.swift in Sources */,
 				1D13239B1ECBF7BB00C78884 /* TaskViewController.swift in Sources */,
 				1DF45B5C1EC3671C0029F787 /* LoggingService.swift in Sources */,
 				1DE462E71ED3330E00307FC6 /* MainReducer.swift in Sources */,
 				1DF45BB11EC3694E0029F787 /* ImageView.swift in Sources */,
+				1D81DF4C1ED44177001C769D /* TransformerType.swift in Sources */,
 				1D13239D1ECBF7BB00C78884 /* TaskViewControllerViewModel.swift in Sources */,
 				1DF45BEC1EC37A2F0029F787 /* AddTaskTableViewCellViewModel.swift in Sources */,
 				1DF45B651EC3677C0029F787 /* main.swift in Sources */,
@@ -837,6 +864,7 @@
 				1D1323BF1ED0D9E800C78884 /* ToggleTaskStatusActionCreator.swift in Sources */,
 				1DF45BE81EC371E30029F787 /* SubjectLabelable.swift in Sources */,
 				1DF45BBC1EC3694E0029F787 /* View.swift in Sources */,
+				1D81DF511ED4A1A3001C769D /* FlowActionCreatorType.swift in Sources */,
 				1DE462DE1ED2B6AB00307FC6 /* TasksTitleTransformer.swift in Sources */,
 				1D1323CB1ED0E20F00C78884 /* AddTaskTransformer.swift in Sources */,
 				1DF45BD01EC36B660029F787 /* TaskTableViewCell.swift in Sources */,
@@ -853,7 +881,7 @@
 				1DF45BB41EC3694E0029F787 /* NibLoadable.swift in Sources */,
 				1DF45BE61EC371E30029F787 /* HasDisposeBag.swift in Sources */,
 				1DF45B681EC367830029F787 /* AppDelegate.swift in Sources */,
-				1DE462DB1ED1909700307FC6 /* ErrorStateManager.swift in Sources */,
+				1DE462DB1ED1909700307FC6 /* ErrorStateManagment.swift in Sources */,
 				1D1323BD1ED0D9A600C78884 /* UpdateSummaryActionCreator.swift in Sources */,
 				1D1323AC1ECEA35F00C78884 /* UIView+ActivityIndicator.swift in Sources */,
 				1DF45B631EC3676A0029F787 /* TaskStatus.swift in Sources */,

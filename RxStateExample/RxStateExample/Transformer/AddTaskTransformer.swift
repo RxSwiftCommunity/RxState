@@ -9,21 +9,21 @@ import Foundation
 import RxCocoa
 import RxState
 
-class AddTaskTransformer {
-    struct Inputs {
+final class AddTaskButtonActivityIndicatorIsAnimatingTransformer: TransformerType {
+    struct Inputs: TransformerInputsType {
         let store: StoreType
     }
     
-    struct Outputs {
-        let addTaskButtonActivityIndicatorISAnimating: Driver<Bool>
+    struct Outputs: TransformerOutputsType {
+        let addTaskButtonActivityIndicatorIsAnimating: Driver<Bool>
     }
     
-    static func transform(inputs: AddTaskTransformer.Inputs) -> AddTaskTransformer.Outputs {
-        let addTaskButtonActivityIndicatorISAnimating = inputs.store.tasksState
-            .map { (tasksState: TasksStateManager.State) -> Bool in
+    static func transtorm(inputs: AddTaskButtonActivityIndicatorIsAnimatingTransformer.Inputs) -> AddTaskButtonActivityIndicatorIsAnimatingTransformer.Outputs {
+        let addTaskButtonActivityIndicatorIsAnimating = inputs.store.tasksState
+            .map { (tasksState: Store.TasksState) -> Bool in
                 return tasksState.addingTask
         }
         
-        return AddTaskTransformer.Outputs(addTaskButtonActivityIndicatorISAnimating: addTaskButtonActivityIndicatorISAnimating)
+        return AddTaskButtonActivityIndicatorIsAnimatingTransformer.Outputs(addTaskButtonActivityIndicatorIsAnimating: addTaskButtonActivityIndicatorIsAnimating)
     }
 }

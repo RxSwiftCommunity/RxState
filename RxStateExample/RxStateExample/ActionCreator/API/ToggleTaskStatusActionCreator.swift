@@ -10,8 +10,8 @@ import RxSwift
 import RxCocoa
 import RxState
 
-class ToggleTaskStatusActionCreator {
-    struct Inputs {
+final class ToggleTaskStatusActionCreator: ActionCreatorType {
+    struct Inputs: ActionCreatorInputsType {
         let store: StoreType
         let taskId: TaskId
     }
@@ -31,7 +31,7 @@ class ToggleTaskStatusActionCreator {
                 return ToggleTaskStatusActionCreator.toggle(taskStatus: newStatus, forTaskWithId: inputs.taskId)
             }
             .asDriver { (error: Error) -> Driver<ActionType> in
-                return Driver.of(ErrorStateManager.Action.addPresentError(presentableError: error))
+                return Driver.of(Store.ErrorAction.addPresentError(presentableError: error))
         }
     }
     
@@ -39,9 +39,9 @@ class ToggleTaskStatusActionCreator {
         
         let observable = Observable<ActionType>
             .create { observer -> Disposable in
-                observer.on(.next(TasksStateManager.Action.togglingTaskStatus(forTaskWithId: id)))
+                observer.on(.next(Store.TasksAction.togglingTaskStatus(forTaskWithId: id)))
                 Thread.sleep(forTimeInterval: 2)
-                observer.on(.next(TasksStateManager.Action.toggledTaskStatus(taskStatus: taskStatus, forTaskWithId: id)))
+                observer.on(.next(Store.TasksAction.toggledTaskStatus(taskStatus: taskStatus, forTaskWithId: id)))
                 return Disposables.create()
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: DispatchQoS.default))

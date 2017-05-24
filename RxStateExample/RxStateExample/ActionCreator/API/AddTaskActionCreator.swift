@@ -10,25 +10,27 @@ import RxSwift
 import RxCocoa
 import RxState
 
-class AddTaskActionCreator {
-    struct Inputs {
+final class AddTaskActionCreator: ActionCreatorType {
+    struct Inputs: ActionCreatorInputsType {
         let store: StoreType
         let task: Task
     }
     
     static func create(inputs: AddTaskActionCreator.Inputs) -> Driver<ActionType> {
-        return AddTaskActionCreator.requestAdd(task: inputs.task)
+        let result: Driver<ActionType> = AddTaskActionCreator.requestAdd(task: inputs.task)
             .asDriver { (error: Error) -> Driver<ActionType> in
-                return Driver.of(ErrorStateManager.Action.addPresentError(presentableError: error))
-        }
+                return Driver.of(Store.ErrorAction.addPresentError(presentableError: error))
+            }
+        
+        return result
     }
     
     private static func requestAdd(task: Task) -> Observable<ActionType> {
         let observable = Observable<ActionType>
             .create { observer -> Disposable in
-                observer.on(.next(TasksStateManager.Action.addingTask))
+                observer.on(.next(Store.TasksAction.addingTask))
                 Thread.sleep(forTimeInterval: 2)
-                observer.on(.next(TasksStateManager.Action.addedTask(task: task)))
+                observer.on(.next(Store.TasksAction.addedTask(task: task)))
                 return Disposables.create()
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: DispatchQoS.default))

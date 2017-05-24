@@ -9,19 +9,19 @@ import Foundation
 import RxCocoa
 import RxState
 
-class TasksTitleTransformer {
-    struct Inputs {
+final class TasksTitleTransformer: TransformerType {
+    struct Inputs: TransformerInputsType {
         let store: StoreType
     }
     
-    struct Outputs {
+    struct Outputs: TransformerOutputsType {
         let title: Driver<String>
     }
     
     static func transtorm(inputs: TasksTitleTransformer.Inputs) -> TasksTitleTransformer.Outputs {
         
         let title: Driver<String> = inputs.store.tasksState
-            .map { (tasksState: TasksStateManager.State) -> String in
+            .map { (tasksState: Store.TasksState) -> String in
                 let loading: Bool = tasksState.addingTask
                     || !tasksState.togglingTaskStatusForTasksWithIds.isEmpty
                     || tasksState.updatingSummaryForTasksWithId != nil

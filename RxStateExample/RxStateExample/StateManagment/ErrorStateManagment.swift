@@ -1,5 +1,5 @@
 //
-//  ErrorStateManager.swift
+//  ErrorStateManagment.swift
 //
 //  Copyright © 2017 Nazih Shoura. All rights reserved.
 //  See LICENSE.txt for license information
@@ -11,8 +11,8 @@ import RxSwift
 import CoreLocation
 import RxState
 
-final class ErrorStateManager {
-    struct State: SubstateType, CustomDebugStringConvertible {
+extension Store {
+    struct ErrorState: SubstateType, CustomDebugStringConvertible {
         var silentError: Error?
         var presentableError: Error?
         
@@ -27,13 +27,13 @@ final class ErrorStateManager {
         
     }
     
-    enum Action: ActionType {
+    enum ErrorAction: ActionType {
         case clearErrors
         case addPresentError(presentableError: Error)
         case addSilentError(silentError: Error)
     }
     
-    static func reduce(state: ErrorStateManager.State, sction: ErrorStateManager.Action) -> ErrorStateManager.State {
+    static func reduce(state: Store.ErrorState, sction: Store.ErrorAction) -> Store.ErrorState {
         switch sction {
         case let .addPresentError(error):
             var state = state
@@ -57,17 +57,17 @@ final class ErrorStateManager {
 // MARK: - Shortcuts
 extension StoreType {
     
-    /// A convenience variable to extract `TasksStateManager.State` from the application state
+    /// A convenience variable to extract `Store.TasksState` from the application state
     var presentableError: Driver<Error> {
         let presentableError = store.state
             .flatMap { (states: [SubstateType]) -> Driver<Error> in
                 
                 guard let errorStateManagerState = states
                     .first(where: { (state: SubstateType) -> Bool in
-                        state is ErrorStateManager.State
-                    }) as? ErrorStateManager.State
+                        state is Store.ErrorState
+                    }) as? Store.ErrorState
                     else {
-                    fatalError("You need to register `TasksStateManager.State` first")
+                    fatalError("You need to register `Store.TasksState` first")
                 }
                 
                 guard let presentableError = errorStateManagerState.presentableError

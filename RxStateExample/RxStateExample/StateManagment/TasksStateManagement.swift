@@ -1,5 +1,5 @@
 //
-//  TasksStateManager.swift
+//  TasksStateManagement.swift
 //
 //  Copyright © 2017 Nazih Shoura. All rights reserved.
 //  See LICENSE.txt for license information
@@ -12,8 +12,8 @@ import CoreLocation
 import RxState
 
 
-final class TasksStateManager {
-    struct State: SubstateType, CustomDebugStringConvertible, Equatable {
+extension Store {
+    struct TasksState: SubstateType, CustomDebugStringConvertible, Equatable {
         
         var tasks: [Task]
         var addingTask: Bool
@@ -26,7 +26,7 @@ final class TasksStateManager {
             togglingTaskStatusForTasksWithIds = []
         }
         
-        static func ==(lhs: TasksStateManager.State, rhs: TasksStateManager.State) -> Bool {
+        static func ==(lhs: Store.TasksState, rhs: Store.TasksState) -> Bool {
             let result = lhs.tasks == rhs.tasks
                 && lhs.addingTask == rhs.addingTask
                 && lhs.togglingTaskStatusForTasksWithIds == rhs.togglingTaskStatusForTasksWithIds
@@ -46,7 +46,7 @@ final class TasksStateManager {
         }
     }
     
-    enum Action: ActionType {
+    enum TasksAction: ActionType {
         case togglingTaskStatus(forTaskWithId: TaskId)
         case toggledTaskStatus(taskStatus: TaskStatus, forTaskWithId: TaskId)
         case addingTask
@@ -55,9 +55,9 @@ final class TasksStateManager {
         case updatedSummary(newSummary: String, forTaskWithId: TaskId)
     }
     
-    static func reduce(state: TasksStateManager.State, sction: TasksStateManager.Action) -> TasksStateManager.State {
+    static func reduce(state: Store.TasksState, action: Store.TasksAction) -> Store.TasksState {
         var state = state
-        switch sction {
+        switch action {
             
         case let .updatingSummary(summary, id):
             var state = state
@@ -109,7 +109,7 @@ extension StoreType {
     /// A convenience variable to extract a specific `Task` from the application state
     func task(withId id: TaskId) -> Driver<Task> {
         let task = store.tasksState
-            .flatMap { (state: TasksStateManager.State) -> Driver<Task> in
+            .flatMap { (state: Store.TasksState) -> Driver<Task> in
                 guard let task = state.tasks.first(where: { (task: Task) -> Bool in
                     task.id == id
                 }) else {
@@ -122,15 +122,15 @@ extension StoreType {
         return task
     }
     
-    /// A convenience variable to extract `TasksStateManager.State` from the application state
-    var tasksState: Driver<TasksStateManager.State> {
+    /// A convenience variable to extract `Store.TasksState` from the application state
+    var tasksState: Driver<Store.TasksState> {
         let tasksState = store.state
-            .flatMap { (states: [SubstateType]) -> Driver<TasksStateManager.State> in
+            .flatMap { (states: [SubstateType]) -> Driver<Store.TasksState> in
                 for state in states {
-                    guard let value = state as? TasksStateManager.State else { continue }
-                    return Driver<TasksStateManager.State>.just(value)
+                    guard let value = state as? Store.TasksState else { continue }
+                    return Driver<Store.TasksState>.just(value)
                 }
-                fatalError("You need to register `TasksStateManager.State` first")
+                fatalError("You need to register `Store.TasksState` first")
             }
             .distinctUntilChanged()
         

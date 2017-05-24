@@ -10,29 +10,30 @@ import RxSwift
 import RxCocoa
 import RxState
 
-class TasksToTaskActionCreator {
-    struct Inputs {
+final class NavigateTasksToTaskActionCreator: FlowActionCreatorType {
+    typealias I = NavigateTasksToTaskActionCreator.Inputs
+
+    struct Inputs: ActionCreatorInputsType {
         let store: StoreType
         let taskId: TaskId
     }
     
-    // For flow action creators. You need to make sure this Driver completes after emitting one and only one `Action`. This way the subscription gets disposed once it's done (You can't add it to a view controller dispose bag since it would be disposed once the transision completes and just before the `transissionedToRoute` is dispatched.
-    static func create(inputs: TasksToTaskActionCreator.Inputs) -> Driver<ActionType> {
+    static func create(inputs: NavigateTasksToTaskActionCreator.Inputs) -> Driver<ActionType> {
         let destinationRoute = Route.task(id: inputs.taskId)
         
         return inputs.store.flowState
-            .flatMapLatest { (flowState: FlowStateManager.State) -> Driver<(Route?, Route, NavigatableController)> in
+            .flatMapLatest { (flowState: Store.FlowState) -> Driver<(Route?, Route, NavigatableController)> in
                 return Driver.of((flowState.currentRoute, destinationRoute, flowState.currentRouteNavigatableController))
             }
             .asObservable()
             .take(1)
             .flatMap { (originRoute: Route?, destinationRoute: Route, navigatableController: NavigatableController) -> Observable<ActionType> in
-                return TasksToTaskActionCreator.transission(fromRoute: originRoute, toRoute: destinationRoute, usingNavigatableController: navigatableController, inputs: inputs).asObservable()
+                return NavigateTasksToTaskActionCreator.navigate(fromRoute: originRoute, toRoute: destinationRoute, usingNavigatableController: navigatableController, inputs: inputs).asObservable()
             }
-            .asDriver(onErrorJustReturn: FlowStateManager.Action.transissionToRoute(route: Route.root)) // The Observable being converted doesn't emmit errors. Hence, this won't be returned
+            .asDriver(onErrorJustReturn: Store.FlowAction.transissionToRoute(route: Route.root)) // The Observable being converted doesn't emmit errors. Hence, this won't be returned
     }
     
-    private static func transission(fromRoute originRoute: Route?, toRoute destinationRoute: Route, usingNavigatableController navigatableController: NavigatableController, inputs: TasksToTaskActionCreator.Inputs) -> Driver<ActionType> {
+    private static func navigate(fromRoute originRoute: Route?, toRoute destinationRoute: Route, usingNavigatableController navigatableController: NavigatableController, inputs: NavigateTasksToTaskActionCreator.Inputs) -> Driver<ActionType> {
         
         guard let navigationController = navigatableController.navigationController else {
             fatalError("A navigation controller is needed to perform this transission.\nCurrent navigatableController: \(navigatableController)")
@@ -55,10 +56,10 @@ class TasksToTaskActionCreator {
                     , tabBarController: navigatableController.tabBarController
                 )
                 
-                let result: ActionType = FlowStateManager.Action.transissionedToRoute(route: destinationRoute, currentRouteNavigatableController: navigatableController)
+                let result: ActionType = Store.FlowAction.transissionedToRoute(route: destinationRoute, currentRouteNavigatableController: navigatableController)
                 return result
             }
-            .startWith(FlowStateManager.Action.transissionToRoute(route: destinationRoute))
+            .startWith(Store.FlowAction.transissionToRoute(route: destinationRoute))
         
         return result
     }

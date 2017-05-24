@@ -9,13 +9,13 @@ import Foundation
 import RxCocoa
 import RxState
 
-class SummaryTransformer {
-    struct Inputs {
+final class SummaryTransformer {
+    struct Inputs: TransformerInputsType {
         let store: StoreType
         let taskId: TaskId
     }
     
-    struct Outputs {
+    struct Outputs: TransformerOutputsType {
         let summary: Driver<String>
     }
     
