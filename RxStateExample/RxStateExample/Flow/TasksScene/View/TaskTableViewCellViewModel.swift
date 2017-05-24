@@ -77,9 +77,9 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
         let openTaskButtonDidTapDisposable = inputs.openTaskButtonDidTap
             .asDriver()
             .drive(onNext: { _ in
-                let navigateTasksTaskActionCreatorInputs = NavigateTasksToTaskActionCreator.Inputs(store: self.store,taskId: self.taskId)
+                let navigateTasksTaskActionCreatorInputs = TasksToTaskCoordinator.Inputs(store: self.store,taskId: self.taskId)
                 
-                _ = NavigateTasksToTaskActionCreator.navigate(inputs: navigateTasksTaskActionCreatorInputs).drive()
+                _ = TasksToTaskCoordinator.navigate(inputs: navigateTasksTaskActionCreatorInputs).drive()
             }, onCompleted: nil, onDisposed: nil)
 
         _ = compositeDisposable.insert(openTaskButtonDidTapDisposable)

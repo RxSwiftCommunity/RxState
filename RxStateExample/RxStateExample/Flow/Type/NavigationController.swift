@@ -8,8 +8,7 @@
 import UIKit
 import RxSwift
 
-protocol NavigationControllerType: HasDisposeBag, Identifiable, SubjectLabelable {
-}
+protocol NavigationControllerType: HasDisposeBag, Identifiable, SubjectLabelable {}
 
 class NavigationController: UINavigationController, NavigationControllerType {
     var disposeBag = DisposeBag()

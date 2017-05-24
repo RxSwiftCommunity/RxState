@@ -10,18 +10,15 @@ import RxCocoa
 import RxSwift
 import RxState
 
+#if os(iOS)
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    func application(
-        _: UIApplication
-        , didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?
-        ) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         setupInitialStates()
         setupMiddlewares()
-
 
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .white
@@ -32,28 +29,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+}
+#elseif os(macOS)
+
+class AppDelegate: NSObject, NSApplicationDelegate {
     
-    private func setupInitialStates(){
+    func applicationDidFinishLaunching(aNotification: Notification) {
+        // Insert code here to initialize your application
+    }
+    
+    func applicationWillTerminate(aNotification: Notification) {
+        // Insert code here to tear down your application
+    }
+}
+    
+#endif
+
+extension AppDelegate {
+    fileprivate func setupInitialStates(){
         let tasksState = Store.TasksState()
         let flowState = Store.FlowState()
         store.dispatch(action: Store.Action.add(states: [tasksState, flowState]))
     }
     
-    private func setupMiddlewares(){
-        let loggingService = LoggingService()
+    fileprivate func setupMiddlewares(){
+        let loggingService = LoggingMiddleware()
         store.register(middlewares: [loggingService])
     }
     
-    private func openApp(onWindow window: UIWindow) {
-        let navigatetoRootActionCreatorInputs = NavigateToRootActionCreator.Inputs(store: store, window: window)
-
-        let navigateRootToTasksActionCreatorInputs = NavigateRootToTasksActionCreator.Inputs(store: store)
-
+    fileprivate func openApp(onWindow window: UIWindow) {
+        let navigatetoRootActionCreatorInputs = ToRootCoordinator.Inputs(store: store, window: window)
+        
+        let navigateRootToTasksActionCreatorInputs = RootToTasksCoordinator.Inputs(store: store)
+        
         _ = Driver.concat([
-            NavigateToRootActionCreator.navigate(inputs: navigatetoRootActionCreatorInputs)
-            , NavigateRootToTasksActionCreator.navigate(inputs: navigateRootToTasksActionCreatorInputs)
+            ToRootCoordinator.navigate(inputs: navigatetoRootActionCreatorInputs)
+            , RootToTasksCoordinator.navigate(inputs: navigateRootToTasksActionCreatorInputs)
             ])
             .drive()
     }
 }
-

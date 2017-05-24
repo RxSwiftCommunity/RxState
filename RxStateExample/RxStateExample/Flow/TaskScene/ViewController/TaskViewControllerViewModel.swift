@@ -66,9 +66,9 @@ struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
             let backButtonDidTapDisposable = backButtonDidTap
                 .asDriver()
                 .drive(onNext: { _ in
-                    let navigateTaskToTaskActionCreatorInputs = NavigateTaskToTasksActionCreator.Inputs(store: self.store)
+                    let navigateTaskToTaskActionCreatorInputs = TaskToTasksCoordinator.Inputs(store: self.store)
                     
-                    _ = NavigateTaskToTasksActionCreator.navigate(inputs: navigateTaskToTaskActionCreatorInputs).drive()
+                    _ = TaskToTasksCoordinator.navigate(inputs: navigateTaskToTaskActionCreatorInputs).drive()
                 }, onCompleted: nil, onDisposed: nil)
             _ = compositeDisposable.insert(backButtonDidTapDisposable)
         }

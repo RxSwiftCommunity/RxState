@@ -15,11 +15,11 @@ protocol ResusableView: class {
 
 extension ResusableView where Self: UIView {
     func disposeOnReuse() {
-
+        
         if var hasDisposeBag = self as? HasDisposeBag {
             hasDisposeBag.disposeBag = DisposeBag()
         }
-
+        
         for case let resusableView as ResusableView in subviews {
             resusableView.disposeOnReuse()
         }

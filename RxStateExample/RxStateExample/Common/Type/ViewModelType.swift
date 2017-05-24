@@ -1,5 +1,5 @@
 //
-//  ViewModel.swift
+//  ViewModelType.swift
 //
 //  Copyright © 2017 Nazih Shoura. All rights reserved.
 //  See LICENSE.txt for license information

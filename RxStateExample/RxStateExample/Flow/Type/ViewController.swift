@@ -8,10 +8,10 @@
 import RxSwift
 import UIKit
 
-protocol ViewControllerType: HasDisposeBag, Identifiable, SubjectLabelable {
-}
+protocol ViewControllerType: HasDisposeBag, Identifiable, SubjectLabelable {}
 
 class ViewController: UIViewController, ViewControllerType {
+
     var disposeBag = DisposeBag()
     let id = Foundation.UUID().uuidString
 
