@@ -18,7 +18,7 @@ extension Store {
         var currentRouteNavigatableController: NavigatableController
         
         init() {
-            self.currentRouteNavigatableController = NavigatableController(viewController: nil, navigationController: nil, tabBarController: nil)
+            self.currentRouteNavigatableController = NavigatableController()
         }
         
         static func ==(lhs: Store.FlowState, rhs: Store.FlowState) -> Bool {
@@ -140,24 +140,3 @@ extension StoreType {
     }
 }
 
-final class NavigatableController: CustomDebugStringConvertible {
-    weak var viewController: UIViewController?
-    weak var navigationController: UINavigationController?
-    weak var tabBarController: UITabBarController?
-    
-    init(
-        viewController: UIViewController?
-        , navigationController: UINavigationController?
-        , tabBarController: UITabBarController?
-        ) {
-        self.viewController = viewController
-        self.navigationController = navigationController
-        self.tabBarController = tabBarController
-    }
-    
-    var debugDescription: String {
-        return "viewController: \(String(describing: viewController))"
-            .appending("\nnavigationController: \(String(describing: navigationController))")
-            .appending("\ntabBarController: \(String(describing: tabBarController))")
-    }
-}

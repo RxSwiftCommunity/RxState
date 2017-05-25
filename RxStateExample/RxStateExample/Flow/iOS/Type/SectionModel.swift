@@ -25,3 +25,5 @@ struct SectionModel: SectionModelType, SubjectLabelable, CustomDebugStringConver
         return result
     }
 }
+
+protocol SectionItemModelType {}

@@ -20,6 +20,7 @@ final class ToggleTaskStatusActionCreator: ActionCreatorType {
         
         return store.task(withId: inputs.taskId)
             .asObservable()
+            .take(1)
             .flatMap { (task: Task) -> Observable<ActionType> in
                 let newStatus = { () -> TaskStatus in
                     switch task.status {
@@ -42,6 +43,7 @@ final class ToggleTaskStatusActionCreator: ActionCreatorType {
                 observer.on(.next(Store.TasksAction.togglingTaskStatus(forTaskWithId: id)))
                 Thread.sleep(forTimeInterval: 2)
                 observer.on(.next(Store.TasksAction.toggledTaskStatus(taskStatus: taskStatus, forTaskWithId: id)))
+                observer.on(.completed)
                 return Disposables.create()
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: DispatchQoS.default))

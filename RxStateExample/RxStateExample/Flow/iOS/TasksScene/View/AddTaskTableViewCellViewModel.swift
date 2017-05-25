@@ -11,7 +11,7 @@ import RxCocoa
 import RxState
 
 
-protocol AddTaskTableViewCellViewModelType: ViewModelType {
+protocol AddTaskTableViewCellViewModelType: ViewModelType, SectionItemModelType {
     // Going ☝️ to the store
     func set(inputs: AddTaskTableViewCellViewModel.Inputs) -> Disposable
     // Going 👇 from the store
@@ -22,13 +22,13 @@ struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
     let store: StoreType
 
     
-    struct Inputs {
-        let addTaskStatusButtonDidTap: ControlEvent<Void>
+    struct Inputs: ViewModelInputsType {
+        let addTaskButtonDidTap: ControlEvent<Void>
     }
     
     func set(inputs: AddTaskTableViewCellViewModel.Inputs) -> Disposable {
         
-        let result: Disposable = inputs.addTaskStatusButtonDidTap
+        let result: Disposable = inputs.addTaskButtonDidTap
             .asDriver()
             .flatMapLatest { (_) -> Driver<ActionType> in
                 let task = Task(summary: "Your new task :)", status: TaskStatus.todo)
@@ -43,7 +43,7 @@ struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
         return result
     }
     
-    struct Outputs {
+    struct Outputs: ViewModelOutputsType {
         let addTaskButtonActivityIndicatorIsAnimating: Driver<Bool>
     }
 

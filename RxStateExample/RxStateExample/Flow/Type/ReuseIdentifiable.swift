@@ -6,8 +6,6 @@
 //
 
 import Foundation
-import class UIKit.UITableViewCell
-import class UIKit.UITableViewHeaderFooterView
 
 protocol ReuseIdentifiable: SubjectLabelable {
     static var reuseIdentifier: String { get }
@@ -19,6 +17,12 @@ extension ReuseIdentifiable {
     }
 }
 
-extension UITableViewCell: ReuseIdentifiable {}
+#if os(iOS)
+import class UIKit.UITableViewCell
+import class UIKit.UITableViewHeaderFooterView
 
+
+extension UITableViewCell: ReuseIdentifiable {}
 extension UITableViewHeaderFooterView: ReuseIdentifiable {}
+    
+#endif

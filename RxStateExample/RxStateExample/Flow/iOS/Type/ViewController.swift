@@ -21,7 +21,9 @@ class ViewController: UIViewController, ViewControllerType {
         super.viewDidLoad()
     }
 
+    @IBOutlet weak var AddTaskButton: NSButton!
     override func viewWillAppear(_ animated: Bool) {
+        @IBOutlet weak var tasksTableView: NSTableView!
         super.viewWillAppear(animated)
     }
 

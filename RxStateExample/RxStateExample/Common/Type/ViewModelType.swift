@@ -5,4 +5,9 @@
 //  See LICENSE.txt for license information
 //
 
-protocol ViewModelType: SectionItemModelType, SubjectLabelable {}
+protocol ViewModelType: SubjectLabelable {}
+
+protocol ViewModelInputsType {}
+
+protocol ViewModelOutputsType {}
+

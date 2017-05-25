@@ -30,6 +30,7 @@ final class UpdateSummaryActionCreator: ActionCreatorType {
                 observer.on(.next(Store.TasksAction.updatingSummary(newSummary: summery, forTaskWithId: id)))
                 Thread.sleep(forTimeInterval: 2)
                 observer.on(.next(Store.TasksAction.updatedSummary(newSummary: summery, forTaskWithId: id)))
+                observer.on(.completed)
                 return Disposables.create()
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: DispatchQoS.default))

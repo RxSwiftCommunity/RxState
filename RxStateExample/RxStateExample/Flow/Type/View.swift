@@ -5,11 +5,20 @@
 //  See LICENSE.txt for license information
 //
 
-import UIKit
 import RxSwift
 
 protocol ViewType: HasDisposeBag, ResusableView {}
 
-class View: UIView, ViewType {
+#if os(iOS)
+    import UIKit
+    typealias OSView = UIView
+#endif
+
+#if os(macOS)
+    import Cocoa
+    typealias OSView = NSView
+#endif
+
+class View: OSView, ViewType {
     var disposeBag = DisposeBag()
 }

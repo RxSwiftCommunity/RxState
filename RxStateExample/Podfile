@@ -1,0 +1,54 @@
+target 'RxStateExample-iOS' do
+  platform :ios, '9.0'
+  use_frameworks!
+
+  # Pods for RxStateExample
+  pod 'RxDataSources'#, '1.0.3'
+  pod 'RxState', :path => '../'
+  pod 'RxSwift', '3.4.1'
+  pod 'RxCocoa', '3.4.1'
+  pod 'RxOptional', '3.1.3'
+
+  target 'RxStateExample-iOSTests' do
+    inherit! :search_paths
+
+  end
+
+  target 'RxStateExample-iOSUITests' do
+    inherit! :search_paths
+  end
+
+end
+
+target 'RxStateExample-macOS' do
+  platform :osx, '10.10'
+  use_frameworks!
+
+  # Pods for RxStateExample
+  pod 'RxState', :path => '../'
+  pod 'RxSwift', '3.4.1'
+  pod 'RxCocoa', '3.4.1'
+  pod 'RxOptional', '3.1.3'
+
+  target 'RxStateExample-macOSTests' do
+    inherit! :search_paths
+
+  end
+
+  target 'RxStateExample-macOSUITests' do
+    inherit! :search_paths
+  end
+
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if target.name == 'RxSwift'
+            target.build_configurations.each do |config|
+                if config.name == 'Debug'
+                    config.build_settings['OTHER_SWIFT_FLAGS'] ||= ['-D', 'TRACE_RESOURCES']
+                end
+            end
+        end
+    end
+end

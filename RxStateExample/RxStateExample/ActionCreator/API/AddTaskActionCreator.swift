@@ -31,6 +31,7 @@ final class AddTaskActionCreator: ActionCreatorType {
                 observer.on(.next(Store.TasksAction.addingTask))
                 Thread.sleep(forTimeInterval: 2)
                 observer.on(.next(Store.TasksAction.addedTask(task: task)))
+                observer.on(.completed)
                 return Disposables.create()
             }
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: DispatchQoS.default))

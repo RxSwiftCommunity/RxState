@@ -1,36 +1,33 @@
 //
-//  TaskViewControllerViewModel.swift
+//  TaskViewViewModel.swift
 //
 //  Copyright © 2017 Nazih Shoura. All rights reserved.
 //  See LICENSE.txt for license information
 //
 
-import UIKit
+import Cocoa
 import RxSwift
 import RxCocoa
 import RxState
 import RxOptional
 
-protocol TaskViewControllerViewModelType: ViewModelType {
+protocol TaskViewViewModelType: ViewModelType {
     // Going ☝️ to the store
-    func set(inputs: TaskViewControllerViewModel.Inputs) -> Disposable
+    func set(inputs: TaskViewViewModel.Inputs) -> Disposable
     // Going 👇 from the store
-    var outputs: TaskViewControllerViewModel.Outputs { get }
-    
+    var outputs: TaskViewViewModel.Outputs { get }
 }
 
-struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
+struct TaskViewViewModel: TaskViewViewModelType {
     let store: StoreType
     let taskId: TaskId
     
-    
-    struct Inputs {
+    struct Inputs: ViewModelInputsType {
         let toggleTaskStatusButtonDidTap: ControlEvent<Void>
-        let backButtonDidTap: ControlEvent<Void>?
         let summary: ControlProperty<String?>
     }
     
-    func set(inputs: TaskViewControllerViewModel.Inputs) -> Disposable {
+    func set(inputs: TaskViewViewModel.Inputs) -> Disposable {
         
         let compositeDisposable = CompositeDisposable()
         
@@ -61,39 +58,29 @@ struct TaskViewControllerViewModel: TaskViewControllerViewModelType {
             }, onCompleted: nil, onDisposed: nil)
         _ = compositeDisposable.insert(toggleTaskStatusButtonDidTapDisposable)
         
-        
-        if let backButtonDidTap = inputs.backButtonDidTap {
-            let backButtonDidTapDisposable = backButtonDidTap
-                .asDriver()
-                .drive(onNext: { _ in
-                    let navigateTaskToTaskActionCreatorInputs = TaskToTasksCoordinator.Inputs(store: self.store)
-                    
-                    _ = TaskToTasksCoordinator.navigate(inputs: navigateTaskToTaskActionCreatorInputs).drive()
-                }, onCompleted: nil, onDisposed: nil)
-            _ = compositeDisposable.insert(backButtonDidTapDisposable)
-        }
         return compositeDisposable
     }
     
-    struct Outputs {
+    struct Outputs: ViewModelOutputsType {
         let summary: Driver<String>
-        let toggleTaskStatusButtonIsSelected: Driver<Bool>
-        let toggleTaskStatusButtonIsEnabled: Driver<Bool>
-        let toggleTaskStatusButtonActivityIndicatorIsAnimating: Driver<Bool>
+        let toggleTaskStatusButtonIsSelected: Driver<Int>
     }
     
-    var outputs: TaskViewControllerViewModel.Outputs {
+    var outputs: TaskViewViewModel.Outputs {
         
         let toggleTaskStatusTransformerInputs = ToggleTaskStatusTransformer.Inputs(store: self.store, taskId: taskId)
         let toggleTaskStatusTransformerOutputs = ToggleTaskStatusTransformer.transtorm(inputs: toggleTaskStatusTransformerInputs)
         let summaryTransformerInputs = SummaryTransformer.Inputs(store: self.store, taskId: taskId)
         let summaryTransformerOutputs = SummaryTransformer.transtorm(inputs: summaryTransformerInputs)
         
-        return TaskViewControllerViewModel.Outputs(
+        let toggleTaskStatusButtonIsSelected = toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonIsSelected.map { (selected: Bool) -> Int in
+            if selected { return 1 }
+            return 0
+        }
+        
+        return TaskViewViewModel.Outputs(
             summary: summaryTransformerOutputs.summary
-            , toggleTaskStatusButtonIsSelected: toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonIsSelected
-            , toggleTaskStatusButtonIsEnabled: toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonIsEnabled
-            , toggleTaskStatusButtonActivityIndicatorIsAnimating: toggleTaskStatusTransformerOutputs.toggleTaskStatusButtonActivityIndicatorIsAnimating
+            , toggleTaskStatusButtonIsSelected: toggleTaskStatusButtonIsSelected
         )
     }
 }

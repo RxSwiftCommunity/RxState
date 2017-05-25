@@ -12,7 +12,7 @@ import RxDataSources
 import RxState
 
 
-protocol TasksViewControllerViewModelType: ViewModelType {
+protocol TasksViewControllerViewModelType: ViewModelType, SectionItemModelType {
     // Going ☝️ to the store
     func bind(inputs: TasksViewControllerViewModel.Inputs) -> Disposable
     // Going 👇 from the store
@@ -24,7 +24,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
     let store: StoreType
     
     
-    struct Inputs {
+    struct Inputs: ViewModelInputsType {
     }
     
     func bind(inputs: TasksViewControllerViewModel.Inputs) -> Disposable {
@@ -32,7 +32,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
         return compositeDisposable
     }
     
-    struct Outputs {
+    struct Outputs: ViewModelOutputsType {
         let sectionsModels: Driver<[SectionModel]>
         let dataSource: RxTableViewSectionedReloadDataSource<SectionModel>
         let title: Driver<String>

@@ -24,7 +24,7 @@ final class AddTaskTableViewCell: TableViewCell {
     }
     
     private func setViewModelInputs() {
-        let viewModelInputs = AddTaskTableViewCellViewModel.Inputs(addTaskStatusButtonDidTap: addTaskButton.rx.tap)
+        let viewModelInputs = AddTaskTableViewCellViewModel.Inputs(addTaskButtonDidTap: addTaskButton.rx.tap)
         
         viewModel.set(inputs: viewModelInputs)
             .disposed(by: disposeBag)
