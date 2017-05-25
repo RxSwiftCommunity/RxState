@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
 This is a Swift port of [Redux](http://redux.js.org/) using [RxSwift](https://github.com/ReactiveX/RxSwift)
                         DESC
 
-  s.homepage     = "http://EXAMPLE/RxState"
+  s.homepage     = "https://github.com/nazeehshoura/RxState"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
