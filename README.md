@@ -3,7 +3,7 @@ Welcome to RxState!
 
 RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture. It's.
 
-##Why Unidirectional Data Flow Architecture?
+## Why Unidirectional Data Flow Architecture?
 
 1. Helps you manage state in a consistent and unified way that guaranty it’s always predictable (After all, state is the source of all evil and you wanna keep that evil in check).
 2. Limits the way app state can be mutated, which makes your app easier to understand.
@@ -11,7 +11,7 @@ RxState a predictable state container for Swift apps. It's a tiny library built 
 4. Enables faster debugging.
 5. It’s is entirely platform independent - you can easily use the same business logic and share it between apps for multiple platforms (iOS, tvOS, etc.).
 
-##Architecture Components
+## Architecture Components
 
 - **App State**
 A single **immutable** data structure. It includes the UI state, the navigation state and the state of your model layer. 
@@ -34,7 +34,7 @@ Observers the `App State` in the `Store` to transform it to presentable data, wr
 - **View**
 Presents the presentable data that was deriver from the `App State` and delivers the user's interactions to the `Action Creators and Dispatchers`.
 
-##How it works?
+## How it works?
 
 <img src="https://github.com/nazeehshoura/RxState/blob/master/docs/RxState-Pattern.jpg" width="100%" height="100%">
 
@@ -59,7 +59,7 @@ Presents the presentable data that was deriver from the `App State` and delivers
 
 7. The `View/View Controller` render the UI to show the presentable data to the user.
 
-##How does RxState helps you build the Architecture?
+## How does RxState helps you build the Architecture?
 
 RxState defines the main component for you:
 
@@ -144,9 +144,9 @@ print(lastAction)
 ```
 
 
-##Installation
+## Installation
 
-###CocoaPods
+### CocoaPods
 
 You can install RxState via CocoaPods by adding it to your Podfile:
 ```ruby
@@ -155,12 +155,12 @@ pod 'RxState'
 And run ```pod install```.
 
 
-##Demo
+## Demo
 A have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree/development/RxStateExample) as comprehensive as possible. It's currently runs on iOS and macOS.
 
-##Contributing
+## Contributing
 We would love to see you involved and feedback and contribution are greatly appreciated :)  Checkout the [Contributing Guide](github.com/nazeehshoura/RxState/blob/development/CONTRIBUTING.md).
 
-##Influences
+## Influences
 [RxSwift](https://github.com/ReactiveX/RxSwift): Reactive Programming in Swift.
 [Redux](http://redux.js.org/): a predictable state container for JavaScript apps.
