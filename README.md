@@ -70,8 +70,8 @@ Ex.
 
 ```swift
 struct TasksState: SubstateType {   
-var tasks: [Task]
-var addingTask: Bool
+    var tasks: [Task]
+    var addingTask: Bool
 }
 ```
 
@@ -87,11 +87,11 @@ store.dispatch(action: action)
 
 ```swift
 public enum Action: ActionType {
-/// Adds substates to the application state.
-case add(states: [SubstateType])
+    /// Adds substates to the application state.
+    case add(states: [SubstateType])
 
-/// Removes all substates in the application state.
-case reset
+    /// Removes all substates in the application state.
+    case reset
 }
 ```
 
@@ -99,27 +99,33 @@ case reset
 
 ```swift
 let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> [SubstateType] in
-// Copy the `App State`
-var state: [SubstateType] = state
-switch action {
-// Cast to a specific `Action`.
-case let action as Store.TasksAction:
-// Extract the `Substate`.
-guard var (tasksStateIndex, tasksState) = state
-.enumerated()
-.first(where: { $1 is Store.TasksState}) as? (Int, Store.TasksState) 
-else {
-fatalError("You need to register `Store.TasksState` first")
-}
-// Reduce the `Substate` to get a new `Substate`.
-tasksState = Store.reduce(state: tasksState, action: action)
-// Replace the `Substate` in the `App State` with the new `Substate`.
-state[tasksStateIndex] = tasksState as SubstateType
-default:
-fatalError("Unknown action type")
-}
-// Return the new `App State`
-return state
+    // Copy the `App State`
+    var state: [SubstateType] = state
+    
+    // Cast to a specific `Action`.
+    switch action {
+    case let action as Store.TasksAction:
+
+        // Extract the `Substate`.
+        guard var (tasksStateIndex, tasksState) = state
+            .enumerated()
+            .first(where: { $1 is Store.TasksState}) as? (Int, Store.TasksState) 
+        else {
+            fatalError("You need to register `Store.TasksState` first")
+        }
+
+        // Reduce the `Substate` to get a new `Substate`.
+        tasksState = Store.reduce(state: tasksState, action: action)
+    
+        // Replace the `Substate` in the `App State` with the new `Substate`.
+        state[tasksStateIndex] = tasksState as SubstateType
+    
+    default:
+        fatalError("Unknown action type")
+    }
+    
+    // Return the new `App State`
+    return state
 }
 ```
 
@@ -129,17 +135,18 @@ return state
 protocol LoggingMiddlewareType: Middleware, HasDisposeBag {}
 
 final class LoggingMiddleware: LoggingMiddlewareType {
-var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
 
-func observe(currentStateLastAction: Driver<CurrentStateLastAction>) {
-currentStateLastAction
-.drive(
-onNext: { (currentState: [SubstateType], lastAction: ActionType?) in
-print(currentState)
-print(lastAction)
-}, onCompleted: nil, onDisposed: nil)
-.disposed(by: disposeBag)
-}
+    func observe(currentStateLastAction: Driver<CurrentStateLastAction>) {
+        currentStateLastAction
+            .drive(
+                onNext: { (currentState: [SubstateType], lastAction: ActionType?) in
+                    print(currentState)
+                    print(lastAction)
+                }, onCompleted: nil, onDisposed: nil)
+            .disposed(by: disposeBag)
+        }
+    }
 }
 ```
 
