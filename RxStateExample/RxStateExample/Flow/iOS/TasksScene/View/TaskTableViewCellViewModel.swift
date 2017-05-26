@@ -96,7 +96,7 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
     
     var outputs: TaskTableViewCellViewModel.Outputs {
         
-        let toggleTaskStatusTransformerInputs = ToggleTaskStatusTransformer.Inputs(store: self.store, taskId: Driver.of(taskId))
+        let toggleTaskStatusTransformerInputs = ToggleTaskStatusTransformer.Inputs(store: self.store, taskId: taskId)
         let toggleTaskStatusTransformerOutputs = ToggleTaskStatusTransformer.transtorm(inputs: toggleTaskStatusTransformerInputs)
         let summaryTransformerInputs = SummaryTransformer.Inputs(store: self.store, taskId: taskId)
         let summaryTransformerOutputs = SummaryTransformer.transtorm(inputs: summaryTransformerInputs)

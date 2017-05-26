@@ -28,7 +28,7 @@ extension AppDelegate {
     func setupInitialStates(){
         let tasksState = Store.TasksState()
         let flowState = Store.FlowState()
-        store.dispatch(action: Store.Action.add(states: [tasksState, flowState]))
+        store.dispatch(action: Store.StoreAction.add(states: [tasksState, flowState]))
     }
     
     func setupMiddlewares(){
