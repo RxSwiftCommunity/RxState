@@ -15,8 +15,7 @@ RxState a predictable state container for Swift apps. It's a tiny library built 
 
 - **App State**: A single **immutable** data structure. It includes the UI state, the navigation state and the state of your model layer. 
 
-- **Store**
-Contains the app state and notifies the `App State Observers` of the `App State` updates.
+- **Store**:Contains the app state and notifies the `App State Observers` of the `App State` updates.
 
 - **Reducer**: A [pure](en.wikipedia.org/wiki/Pure_function) function that takes the current app state and an `Action` as input, creates a **new** `App State` that reflects the changes described by the `Action`, and returns the **new** `App State`.
 
@@ -69,7 +68,7 @@ struct TasksState: SubstateType {
 }
 ```
 
-You can add a `Substate`s to the `App State` by dispatching `Store.Action.add(states: [SubstateType])`:
+You can add a `Substate`s to the `App State` by dispatching `Store.Action.add(states: [SubstateType])`.
 
 ```swift
 let tasksState = Store.TasksState()
@@ -77,7 +76,7 @@ let action = Store.Action.add(states: [tasksState])
 store.dispatch(action: action)
 ```
 
-3. `ActionType`: A protocol that tags an `Action`. The `Store` has the following `Action`s .
+3. `ActionType`: A protocol that tags an `Action`. The `Store` has the following `Action`s:
 
 ```swift
 public enum Action: ActionType {
@@ -123,7 +122,7 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
 }
 ```
 
-4. `MiddlewareType`: A protocol defining an object that can observe the `App State` and the last dispatched `Action` and does something with it
+4. `MiddlewareType`: A protocol defining an object that can observe the `App State` and the last dispatched `Action` and does something with it.
 
 ```swift
 protocol LoggingMiddlewareType: Middleware, HasDisposeBag {}
