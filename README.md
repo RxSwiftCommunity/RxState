@@ -1,4 +1,4 @@
-Welcome to RxState!
+RxState: Redux + RxSwift
 ===================
 
 RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture.
@@ -162,5 +162,5 @@ A have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree
 We would love to see you involved and feedback and contribution are greatly appreciated :)  Checkout the [Contributing Guide](github.com/nazeehshoura/RxState/blob/development/CONTRIBUTING.md).
 
 ## Influences
-[RxSwift](https://github.com/ReactiveX/RxSwift): Reactive Programming in Swift.
-[Redux](http://redux.js.org/): a predictable state container for JavaScript apps.
+* [RxSwift](https://github.com/ReactiveX/RxSwift): Reactive Programming in Swift.
+* [Redux](http://redux.js.org/): a predictable state container for JavaScript apps.
