@@ -29,7 +29,7 @@ RxState a predictable state container for Swift apps. It's a tiny library built 
 
 ## How it works?
 
-<img src="https://github.com/nazeehshoura/RxState/blob/master/docs/RxState-Pattern.jpg" width="100%" height="100%">
+<img src="https://github.com/nazeehshoura/RxState/blob/master/docs/RxState-Pattern.jpeg" width="100%" height="100%">
 
 1. The `View/View Controller` sends events (The `View Model`'s inputs) to the `View Model`.
 
