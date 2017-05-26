@@ -1,7 +1,7 @@
 Welcome to RxState!
 ===================
 
-RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture. It's.
+RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture.
 
 ## Why Unidirectional Data Flow Architecture?
 
@@ -13,26 +13,20 @@ RxState a predictable state container for Swift apps. It's a tiny library built 
 
 ## Architecture Components
 
-- **App State**
-A single **immutable** data structure. It includes the UI state, the navigation state and the state of your model layer. 
+- **App State**: A single **immutable** data structure. It includes the UI state, the navigation state and the state of your model layer. 
 
 - **Store**
 Contains the app state and notifies the `App State Observers` of the `App State` updates.
 
-- **Reducer**
-A [pure](en.wikipedia.org/wiki/Pure_function) function that takes the current app state and an `Action` as input, creates a **new** `App State` that reflects the changes described by the `Action`, and returns the **new** `App State`.
+- **Reducer**: A [pure](en.wikipedia.org/wiki/Pure_function) function that takes the current app state and an `Action` as input, creates a **new** `App State` that reflects the changes described by the `Action`, and returns the **new** `App State`.
 
-- **Action**
-Actions describe a state change. The only way to modified the `App State` is by dispatching `Actions` to the `Store`.
+- **Action**: Actions describe a state change. The only way to modified the `App State` is by dispatching `Actions` to the `Store`.
 
-- **Action Creators and Dispatchers**
-Creates `Action`s and dispatch them to the store.
+- **Action Creators and Dispatchers**: Creates `Action`s and dispatch them to the store.
 
-- **App State Observers**
-Observers the `App State` in the `Store` to transform it to presentable data, write logs, etc.
+- **App State Observers**: Observers the `App State` in the `Store` to transform it to presentable data, write logs, etc.
 
-- **View**
-Presents the presentable data that was deriver from the `App State` and delivers the user's interactions to the `Action Creators and Dispatchers`.
+- **View**: Presents the presentable data that was deriver from the `App State` and delivers the user's interactions to the `Action Creators and Dispatchers`.
 
 ## How it works?
 
@@ -83,7 +77,7 @@ let action = Store.Action.add(states: [tasksState])
 store.dispatch(action: action)
 ```
 
-3. `ActionType` A protocol that tags an `Action`. The `Store` has the following `Action`s .
+3. `ActionType`: A protocol that tags an `Action`. The `Store` has the following `Action`s .
 
 ```swift
 public enum Action: ActionType {
