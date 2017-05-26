@@ -63,10 +63,3 @@
   (so we can know if this is a potential cause of your issue)
   - [ ] yes (which ones)
   - [ ] no
-
-**Level of RxState knowledge**:
-  (this is so we can understand your level of knowledge
-    and formulate the response in an appropriate manner)
-  - [ ] just starting
-  - [ ] I have a small code base
-  - [ ] I have a significant code base

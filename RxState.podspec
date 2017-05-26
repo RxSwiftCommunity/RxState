@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
 This is a Swift port of [Redux](http://redux.js.org/) using [RxSwift](https://github.com/ReactiveX/RxSwift)
                         DESC
 
-  s.homepage     = "https://github.com/nazeehshoura/RxState"
+  s.homepage     = "http://EXAMPLE/RxState"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -132,7 +132,7 @@ This is a Swift port of [Redux](http://redux.js.org/) using [RxSwift](https://gi
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "RxSwift"
-  s.dependency "RxCocoa"
+  s.dependency "RxSwift", "3.4.1"
+  s.dependency "RxCocoa", "3.4.1"
 
 end

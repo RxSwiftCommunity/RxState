@@ -1,5 +1,5 @@
 def common_pods
-    pod 'RxState'
+    pod 'RxState', '0.0.2'
     pod 'RxSwift', '3.4.1'
     pod 'RxCocoa', '3.4.1'
     pod 'RxOptional', '3.1.3'
