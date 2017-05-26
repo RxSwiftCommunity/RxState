@@ -10,7 +10,7 @@ import RxSwift
 import RxState
 import RxCocoa
 
-protocol LoggingMiddlewareType: Middleware, HasDisposeBag {}
+protocol LoggingMiddlewareType: MiddlewareType, HasDisposeBag {}
 
 final class LoggingMiddleware: LoggingMiddlewareType {
     var disposeBag = DisposeBag()
