@@ -1,3 +1,10 @@
+//
+//  AppDelegate.swift
+//
+//  Copyright © 2017 Nazih Shoura. All rights reserved.
+//  See LICENSE.txt for license information
+//
+
 import UIKit
 import RxCocoa
 import RxSwift
@@ -6,12 +13,14 @@ import RxState
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    override init() {
+        super.init()
+        setupMiddlewares()
+        setupInitialStates()
+    }
     var window: UIWindow?
     
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        setupInitialStates()
-        setupMiddlewares()
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.backgroundColor = .white
