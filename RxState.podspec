@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "RxState"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "RxSwift + Redux"
 
   # This description is used to generate tags and improve search results.
@@ -25,7 +25,8 @@ Pod::Spec.new do |s|
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
-This is a Swift port of [Redux](http://redux.js.org/) using [RxSwift](https://github.com/ReactiveX/RxSwift)
+  A tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture in Swift.
+
                         DESC
 
   s.homepage     = "https://github.com/nazeehshoura/RxState"
