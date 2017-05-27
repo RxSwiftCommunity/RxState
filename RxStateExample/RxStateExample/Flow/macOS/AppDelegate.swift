@@ -1,9 +1,8 @@
 //
 //  AppDelegate.swift
-//  RxStateExample-macOS
 //
-//  Created by Nazih on 25/05/2017.
-//  Copyright © 2017 RxState. All rights reserved.
+//  Copyright © 2017 Nazih Shoura. All rights reserved.
+//  See LICENSE.txt for license information
 //
 
 import Cocoa

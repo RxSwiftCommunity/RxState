@@ -12,14 +12,16 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
     // Copy the `App State`
     var state: [SubstateType] = state
     switch action {
-        // Cast to a spcific `Action`.
+    // Cast to a spcific `Action`.
     case let action as Store.TasksAction:
         // Extract the `Substate`.
         guard var (tasksStateIndex, tasksState) = state
             .enumerated()
-            .first(where: { $1 is Store.TasksState}) as? (Int, Store.TasksState)
+            .first(where: { (_, substate: SubstateType) -> Bool in
+                return substate is Store.TasksState}
+            ) as? (Int, Store.TasksState)
             else {
-            fatalError("You need to register `Store.TasksState` first")
+                fatalError("You need to register `Store.TasksState` first")
         }
         
         // Reduce the `Substate` to get a new `Substate`.
@@ -32,11 +34,11 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
         guard var (flowStateIndex, flowState) = state
             .enumerated()
             .first(where: { (_: Int, state: SubstateType) -> Bool in
-            let result = state is Store.FlowState
-            return result
-        }) as? (Int, Store.FlowState)
+                let result = state is Store.FlowState
+                return result
+            }) as? (Int, Store.FlowState)
             else {
-            fatalError("You need to register `Store.TasksState` first")
+                fatalError("You need to register `Store.TasksState` first")
         }
         
         flowState = Store.reduce(state: flowState, action: action)

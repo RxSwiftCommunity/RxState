@@ -5,7 +5,6 @@
 //  See LICENSE.txt for license information
 //
 
-
 import Cocoa
 
 class TaskView: View {
