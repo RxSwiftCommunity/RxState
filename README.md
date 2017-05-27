@@ -1,5 +1,5 @@
-RxState: Redux + RxSwift
-===================
+<img src="assets/RxState_Logo.png" alt="RxState" width="40" height="40"> RxState: Redux + RxSwift
+======================================
 
 RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture.
 
@@ -29,7 +29,7 @@ RxState a predictable state container for Swift apps. It's a tiny library built 
 
 ## How it works?
 
-<img src="https://github.com/nazeehshoura/RxState/blob/master/docs/RxState-Pattern.jpeg" width="100%" height="100%">
+<img src="assets/RxState-Pattern.jpeg" width="100%" height="100%">
 
 1. The `View/View Controller` sends events (The `View Model`'s inputs) to the `View Model`.
 
@@ -68,18 +68,18 @@ struct TasksState: SubstateType {
 }
 ```
 
-You can add a `Substate`s to the `App State` by dispatching `Store.Action.add(states: [SubstateType])`.
+You can add a `Substate`s to the `App State` by dispatching `StoreAction.add(states: [SubstateType])`.
 
 ```swift
-let tasksState = Store.TasksState()
-let action = Store.Action.add(states: [tasksState])
+let tasksState = TasksState()
+let action = StoreAction.add(states: [tasksState])
 store.dispatch(action: action)
 ```
 
 3. `ActionType`: A protocol that tags an `Action`. The `Store` has the following `Action`s:
 
 ```swift
-public enum Action: ActionType {
+public enum StoreAction: ActionType {
     /// Adds substates to the application state.
     case add(states: [SubstateType])
 
@@ -97,14 +97,16 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
     
     // Cast to a specific `Action`.
     switch action {
-    case let action as Store.TasksAction:
+    case let action as TasksAction:
 
         // Extract the `Substate`.
         guard var (tasksStateIndex, tasksState) = state
             .enumerated()
-            .first(where: { $1 is Store.TasksState}) as? (Int, Store.TasksState) 
-        else {
-            fatalError("You need to register `Store.TasksState` first")
+            .first(where: { (_, substate: SubstateType) -> Bool in
+                return substate is Store.TasksState}
+            ) as? (Int, Store.TasksState)
+            else {
+                fatalError("You need to register `Store.TasksState` first")
         }
 
         // Reduce the `Substate` to get a new `Substate`.
@@ -122,7 +124,7 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
 }
 ```
 
-4. `MiddlewareType`: A protocol defining an object that can observe the `App State` and the last dispatched `Action` and does something with it.
+4. `MiddlewareType`: A protocol defining an object that can observe the `App State` and the last dispatched `Action` and does something with it like logging:
 
 ```swift
 protocol LoggingMiddlewareType: Middleware, HasDisposeBag {}
@@ -156,7 +158,7 @@ And run ```pod install```.
 
 
 ## Demo
-A have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree/development/RxStateExample) as comprehensive as possible. It's currently runs on iOS and macOS.
+I have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree/development/RxStateExample) as comprehensive as possible. It's currently runs on iOS and macOS.
 
 ## Contributing
 We would love to see you involved and feedback and contribution are greatly appreciated :)  Checkout the [Contributing Guide](github.com/nazeehshoura/RxState/blob/development/CONTRIBUTING.md).
