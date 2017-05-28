@@ -1,7 +1,7 @@
 <img src="assets/RxState_Logo.png" alt="RxState" width="50" height="40"> RxState: Redux + RxSwift
 ======================================
 
-RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture.
+RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](https://github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture.
 
 ## Why Unidirectional Data Flow Architecture?
 
@@ -145,6 +145,10 @@ final class LoggingMiddleware: LoggingMiddlewareType {
 }
 ```
 
+## Requirements
+
+* Xcode 8.0
+* Swift 3.0
 
 ## Installation
 
@@ -156,6 +160,7 @@ pod 'RxState'
 ```
 And run ```pod install```.
 
+RxState requirs
 
 ## Demo
 I have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree/development/RxStateExample) as comprehensive as possible. It currently runs on iOS and macOS.
