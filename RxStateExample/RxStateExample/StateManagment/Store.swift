@@ -8,5 +8,5 @@
 import Foundation
 import RxState
 
-// It deserve it's own file ;)
+// It deserves it's own file ;)
 let store = Store(mainReducer: mainReducer)

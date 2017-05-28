@@ -1,7 +1,7 @@
 <img src="assets/RxState_Logo.png" alt="RxState" width="50" height="40"> RxState: Redux + RxSwift
 ======================================
 
-RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture.
+RxState a predictable state container for Swift apps. It's a tiny library built on top of [RxSwift](https://github.com/ReactiveX/RxSwift) and inspired by [Redux](http://redux.js.org/) that facilitates building [Unidirectional Data Flow](http://redux.js.org/docs/basics/DataFlow.html) architecture.
 
 ## Why Unidirectional Data Flow Architecture?
 
@@ -17,7 +17,7 @@ RxState a predictable state container for Swift apps. It's a tiny library built 
 
 - **Store**:Contains the app state and notifies the `App State Observers` of the `App State` updates.
 
-- **Reducer**: A [pure](en.wikipedia.org/wiki/Pure_function) function that takes the current app state and an `Action` as input, creates a **new** `App State` that reflects the changes described by the `Action`, and returns the **new** `App State`.
+- **Reducer**: A [pure](http://en.wikipedia.org/wiki/Pure_function) function that takes the current app state and an `Action` as input, creates a **new** `App State` that reflects the changes described by the `Action`, and returns the **new** `App State`.
 
 - **Action**: Actions describe a state change. The only way to modified the `App State` is by dispatching `Actions` to the `Store`.
 
@@ -33,10 +33,10 @@ RxState a predictable state container for Swift apps. It's a tiny library built 
 
 1. The `View/View Controller` sends events (The `View Model`'s inputs) to the `View Model`.
 
-2. The `View Model` creates an `Action`s from the received inputs and dispatch them to the `Store`.
+2. The `View Model` creates an `Action` from the received inputs and dispatch them to the `Store`.
 
 - The  `View Model` can use a dedicated `Action Creator`s to create `Action`s.
-`Action Creator`s do async work and, based on the results it gets, returns different `Action`s to the `View Model` to dispatch.
+`Action Creator`s do can async work and, based on the results it gets, returns different `Action`s to the `View Model` to dispatch.
 
 3. The `Store` sends the `App State` and the received `Action` to the `Reducer`.
 
@@ -106,7 +106,7 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
                 return substate is Store.TasksState}
             ) as? (Int, Store.TasksState)
             else {
-                fatalError("You need to register `Store.TasksState` first")
+                fatalError("You need to register `TasksState` first")
         }
 
         // Reduce the `Substate` to get a new `Substate`.
@@ -145,6 +145,10 @@ final class LoggingMiddleware: LoggingMiddlewareType {
 }
 ```
 
+## Requirements
+
+* Xcode 8.0
+* Swift 3.0
 
 ## Installation
 
@@ -156,6 +160,7 @@ pod 'RxState'
 ```
 And run ```pod install```.
 
+RxState requirs
 
 ## Demo
 I have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree/development/RxStateExample) as comprehensive as possible. It currently runs on iOS and macOS.
