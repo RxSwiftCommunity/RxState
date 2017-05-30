@@ -1,6 +1,7 @@
 //
 //  RxState.swift
 //
+//  Created by Nazih Shoura.
 //  Copyright © 2017 Nazih Shoura. All rights reserved.
 //  See LICENSE.txt for license information
 //
@@ -57,7 +58,7 @@ public protocol StoreType {
      - parameters middlewares: An array containg the middlewares to be registered.
      
      */
-    func register(middlewares: [Middleware])
+    func register(middlewares: [MiddlewareType])
 
 }
 
@@ -84,7 +85,7 @@ public class Store: StoreType {
         return _state.asDriver()
     }
     
-    public var middlewares: [Middleware] = []
+    public var middlewares: [MiddlewareType] = []
 
     private let _state: Variable<[SubstateType]> = Variable([SubstateType]())
 
@@ -103,7 +104,7 @@ public class Store: StoreType {
         }
     }
     
-    public func register(middlewares: [Middleware]) {
+    public func register(middlewares: [MiddlewareType]) {
         self.middlewares.append(contentsOf: middlewares)
 
         for middleware in middlewares {
@@ -147,7 +148,7 @@ public protocol ActionType {}
  State change can only happen only by dispatching Action.
  That's how you get predictable state change.
  */
-public protocol Middleware {
+public protocol MiddlewareType {
     func observe(currentStateLastAction: Driver<CurrentStateLastAction>)
 }
 

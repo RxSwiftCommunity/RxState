@@ -145,25 +145,26 @@ final class LoggingMiddleware: LoggingMiddlewareType {
 }
 ```
 
+## Dependencies
+
+- [RxSwift](https://github.com/ReactiveX/RxSwift) (>= 3.4)
+- [RxCocoa](https://github.com/ReactiveX/RxSwift) (>= 3.4)
+
 ## Requirements
 
-* Xcode 8.0
-* Swift 3.0
+- Swift 3
 
 ## Installation
 
-### CocoaPods
+- **Using [CocoaPods](https://cocoapods.org)**:
 
-You can install RxState via CocoaPods by adding it to your Podfile:
 ```ruby
 pod 'RxState'
 ```
-And run ```pod install```.
-
-RxState requirs
 
 ## Demo
 I have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree/development/RxStateExample) as comprehensive as possible. It currently runs on iOS and macOS.
+Notice how, because of the architecture, only the View/ View Controller layer needed to change in order to port the app from iOS to macOS.
 
 ## Contributing
 We would love to see you involved and feedback and contribution are greatly appreciated :)  Checkout the [Contributing Guide](github.com/nazeehshoura/RxState/blob/development/CONTRIBUTING.md).
