@@ -163,12 +163,25 @@ pod 'RxState'
 ```
 
 ## Demo
+
 I have tried to make the [demo app](https://github.com/nazeehshoura/RxState/tree/development/RxStateExample) as comprehensive as possible. It currently runs on iOS and macOS.
 Notice how, because of the architecture, only the View/ View Controller layer needed to change in order to port the app from iOS to macOS.
 
 ## Contributing
+
 We would love to see you involved and feedback and contribution are greatly appreciated :)  Checkout the [Contributing Guide](github.com/nazeehshoura/RxState/blob/development/CONTRIBUTING.md).
 
-## Influences
+## Influences and credits
+
 * [RxSwift](https://github.com/ReactiveX/RxSwift): Reactive Programming in Swift.
 * [Redux](http://redux.js.org/): a predictable state container for JavaScript apps.
+
+## Author
+
+Nazih Shoura, shoura.nazeeh@gmail.com
+
+## License
+
+This library belongs to _RxSwiftCommunity_.
+
+RxState is available under the MIT license. See the LICENSE file for more info.
