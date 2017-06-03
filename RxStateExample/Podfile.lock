@@ -7,25 +7,29 @@ PODS:
   - RxOptional (3.1.3):
     - RxCocoa
     - RxSwift
-  - RxState (0.0.2):
-    - RxCocoa
-    - RxSwift
+  - RxState (0.2.1):
+    - RxCocoa (= 3.4.1)
+    - RxSwift (= 3.4.1)
   - RxSwift (3.4.1)
+  - RxTest (3.4.1):
+    - RxSwift (~> 3.4)
 
 DEPENDENCIES:
   - RxCocoa (= 3.4.1)
   - RxDataSources (= 1.0.3)
   - RxOptional (= 3.1.3)
-  - RxState (= 0.0.2)
+  - RxState (= 0.2.1)
   - RxSwift (= 3.4.1)
+  - RxTest (= 3.4.1)
 
 SPEC CHECKSUMS:
   RxCocoa: a8a5f1d061d0043e28f56976829f31ce63e8eb09
   RxDataSources: a021a0e944ba5f7991259829d973afdbfa719c0b
   RxOptional: b97b59183af80d1e729ac9e51d09a10be668d6a8
-  RxState: cf2169c8332f1c5634f89789cab3f0792d7af8eb
+  RxState: 7921a9ffc66735a44969b449c53f0d9e7dca58c0
   RxSwift: 656f8fbeca5bc372121a72d9ebdd3cd3bc0ffade
+  RxTest: a6fd6e4069face7c6488f96f6c42296b3e44db48
 
-PODFILE CHECKSUM: 953069fd97e5fce1d4ad60b5f033c37b1f3b476d
+PODFILE CHECKSUM: cb064c67a118f11a90961c90a62f656941a70bdb
 
 COCOAPODS: 1.2.1
