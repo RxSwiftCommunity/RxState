@@ -30,7 +30,7 @@ final class UpdateSummaryActionCreator: ActionCreatorType {
             .create { observer -> Disposable in
                 observer.on(.next(Store.TasksAction.updatingSummary(newSummary: summery, forTaskWithId: id)))
                 Thread.sleep(forTimeInterval: 2)
-                observer.on(.next(Store.TasksAction.updatedSummary(newSummary: summery, forTaskWithId: id)))
+                observer.on(.next(Store.TasksAction.updateSummary(newSummary: summery, forTaskWithId: id)))
                 observer.on(.completed)
                 return Disposables.create()
             }

@@ -43,7 +43,7 @@ final class ToggleTaskStatusActionCreator: ActionCreatorType {
             .create { observer -> Disposable in
                 observer.on(.next(Store.TasksAction.togglingTaskStatus(forTaskWithId: id)))
                 Thread.sleep(forTimeInterval: 2)
-                observer.on(.next(Store.TasksAction.toggledTaskStatus(taskStatus: taskStatus, forTaskWithId: id)))
+                observer.on(.next(Store.TasksAction.toggleTaskStatus(taskStatus: taskStatus, forTaskWithId: id)))
                 observer.on(.completed)
                 return Disposables.create()
             }

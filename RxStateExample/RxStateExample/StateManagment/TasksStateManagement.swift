@@ -49,11 +49,11 @@ extension Store {
     
     enum TasksAction: ActionType {
         case togglingTaskStatus(forTaskWithId: TaskId)
-        case toggledTaskStatus(taskStatus: TaskStatus, forTaskWithId: TaskId)
+        case toggleTaskStatus(taskStatus: TaskStatus, forTaskWithId: TaskId)
         case addingTask
-        case addedTask(task: Task)
+        case addTask(task: Task)
         case updatingSummary(newSummary: String, forTaskWithId: TaskId)
-        case updatedSummary(newSummary: String, forTaskWithId: TaskId)
+        case updateSummary(newSummary: String, forTaskWithId: TaskId)
     }
     
     static func reduce(state: Store.TasksState, action: Store.TasksAction) -> Store.TasksState {
@@ -65,7 +65,7 @@ extension Store {
             state.updatingSummaryForTasksWithId = (summary, id)
             return state
             
-        case let .updatedSummary(summary, id):
+        case let .updateSummary(summary, id):
             state.updatingSummaryForTasksWithId = nil
             
             guard let index: Array.Index = state.tasks.index(where: { $0.id == id }) else {
@@ -78,7 +78,7 @@ extension Store {
             state.togglingTaskStatusForTasksWithIds.append(id)
             return state
             
-        case let .toggledTaskStatus(taskStatus, id):
+        case let .toggleTaskStatus(taskStatus, id):
             guard let togglingTaskStatusForTasksWithIdIndex: Array.Index = state.togglingTaskStatusForTasksWithIds.index(of: id) else {
                 fatalError("You haven't dispatched `togglingTaskStatus` Action!")
             }
@@ -94,7 +94,7 @@ extension Store {
             state.addingTask = true
             return state
             
-        case let .addedTask(tasks):
+        case let .addTask(tasks):
             var state = state
             state.tasks.append(tasks)
             state.addingTask = false
