@@ -108,7 +108,7 @@ public class Store: StoreType {
         self.middlewares.append(contentsOf: middlewares)
 
         for middleware in middlewares {
-            middleware.observe(currentStateLastAction: self.currentStateLastAction)
+            middleware.observe(store: self)
         }
     }
 }
@@ -149,7 +149,7 @@ public protocol ActionType {}
  That's how you get predictable state change.
  */
 public protocol MiddlewareType {
-    func observe(currentStateLastAction: Driver<CurrentStateLastAction>)
+    func observe(store: StoreType)
 }
 
 /**
