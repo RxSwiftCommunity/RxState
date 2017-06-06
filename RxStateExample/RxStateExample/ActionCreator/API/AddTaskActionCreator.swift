@@ -31,7 +31,7 @@ final class AddTaskActionCreator: ActionCreatorType {
             .create { observer -> Disposable in
                 observer.on(.next(Store.TasksAction.addingTask))
                 Thread.sleep(forTimeInterval: 2)
-                observer.on(.next(Store.TasksAction.addedTask(task: task)))
+                observer.on(.next(Store.TasksAction.addTask(task: task)))
                 observer.on(.completed)
                 return Disposables.create()
             }
