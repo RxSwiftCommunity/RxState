@@ -16,8 +16,8 @@ protocol LoggingMiddlewareType: MiddlewareType, HasDisposeBag {}
 final class LoggingMiddleware: LoggingMiddlewareType {
     var disposeBag = DisposeBag()
     
-    func observe(currentStateLastAction: Driver<CurrentStateLastAction>) {
-        currentStateLastAction
+    func observe(store: StoreType) {
+        store.currentStateLastAction
             .drive(
                 onNext: { (currentState: [SubstateType], lastAction: ActionType?) in
                     print("\n---------------------------------------------")

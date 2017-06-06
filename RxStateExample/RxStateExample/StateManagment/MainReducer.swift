@@ -19,7 +19,9 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
         guard var (tasksStateIndex, tasksState) = state
             .enumerated()
             .first(where: { (_, substate: SubstateType) -> Bool in
-                return substate is Store.TasksState}
+                let result: Bool = substate is Store.TasksState
+                return result
+            }
             ) as? (Int, Store.TasksState)
             else {
                 fatalError("You need to register `Store.TasksState` first")
@@ -35,7 +37,7 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
         guard var (flowStateIndex, flowState) = state
             .enumerated()
             .first(where: { (_: Int, state: SubstateType) -> Bool in
-                let result = state is Store.FlowState
+                let result: Bool = state is Store.FlowState
                 return result
             }) as? (Int, Store.FlowState)
             else {
