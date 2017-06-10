@@ -66,7 +66,10 @@ public class Store: StoreType {
     }
 
     public var state: Observable<[SubstateType]> {
-        return _state.asObservable().share(replay: 1, scope: SubjectLifetimeScope.forever)
+        return _state
+            .asObservable()
+            .share(replay: 1, scope: SubjectLifetimeScope.forever)
+            .catchErrorJustReturn([])
     }
     
     public var middlewares: [MiddlewareType] = []
@@ -74,7 +77,10 @@ public class Store: StoreType {
     private let _state: Variable<StoreState> = Variable(StoreState())
 
     public var lastDispatchedaAtion: Observable<ActionType?> {
-        return _lastDispatchedaAtion.asObservable().share(replay: 1, scope: SubjectLifetimeScope.forever)
+        return _lastDispatchedaAtion
+            .asObservable()
+            .share(replay: 1, scope: SubjectLifetimeScope.forever)
+            .catchErrorJustReturn(nil)
     }
     private let _lastDispatchedaAtion: Variable<ActionType?> = Variable(nil)
 
