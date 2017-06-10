@@ -17,7 +17,7 @@ protocol TasksViewControllerViewModelType: ViewModelType, SectionItemModelType {
     // Going ☝️ to the store
     func bind(inputs: TasksViewControllerViewModel.Inputs) -> Disposable
     // Going 👇 from the store
-    var outputs: TasksViewControllerViewModel.Outputs { get }
+    func generateOutputs() -> TasksViewControllerViewModelType.Outputs
     
 }
 
@@ -39,7 +39,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
         let title: Driver<String>
     }
     
-    var outputs: TasksViewControllerViewModel.Outputs {
+    func generateOutputs() -> TasksViewControllerViewModelType.Outputs {
 
         let tasksSectionModel = TasksSectionModelTransformer.transtorm(inputs: TasksSectionModelTransformer.Inputs(store: self.store)).sectionModel
         let addTaskSectionItemModel: SectionItemModelType = AddTaskTableViewCellViewModel(store: self.store)
