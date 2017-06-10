@@ -108,15 +108,15 @@ extension Store {
 // MARK: - Shortcuts
 extension StoreType {
     /// A convenience variable to extract a specific `Task` from the application state
-    func task(withId id: TaskId) -> Driver<Task> {
+    func task(withId id: TaskId) -> Observable<Task> {
         let task = store.tasksState
-            .flatMap { (state: Store.TasksState) -> Driver<Task> in
+            .flatMap { (state: Store.TasksState) -> Observable<Task> in
                 guard let task = state.tasks.first(where: { (task: Task) -> Bool in
                     task.id == id
                 }) else {
-                    return Driver.empty()
+                    return Observable.empty()
                 }
-                return Driver.of(task)
+                return Observable.of(task)
             }
             .distinctUntilChanged()
         
@@ -124,12 +124,12 @@ extension StoreType {
     }
     
     /// A convenience variable to extract `Store.TasksState` from the application state
-    var tasksState: Driver<Store.TasksState> {
+    var tasksState: Observable<Store.TasksState> {
         let tasksState = store.state
-            .flatMap { (states: [SubstateType]) -> Driver<Store.TasksState> in
+            .flatMap { (states: [SubstateType]) -> Observable<Store.TasksState> in
                 for state in states {
                     guard let value = state as? Store.TasksState else { continue }
-                    return Driver<Store.TasksState>.just(value)
+                    return Observable<Store.TasksState>.just(value)
                 }
                 fatalError("You need to register `Store.TasksState` first")
             }

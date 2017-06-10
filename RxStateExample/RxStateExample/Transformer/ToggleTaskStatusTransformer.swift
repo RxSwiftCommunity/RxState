@@ -36,6 +36,7 @@ final class ToggleTaskStatusTransformer: TransformerType {
                 return !tasksState.togglingTaskStatusForTasksWithIds.contains(inputs.taskId)
             }
             .distinctUntilChanged()
+
         
         
         let toggleTaskStatusButtonActivityIndicatorIsAnimating = toggleTaskStatusButtonIsEnabled.map(!)

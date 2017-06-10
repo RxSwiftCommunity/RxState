@@ -78,33 +78,14 @@ extension Store {
 
 // MARK: - Shortcuts
 extension StoreType {
-    /// A convenience computed variable to extract `(CoordinatingService.State, CoordinatingService.Action)` from `CurrentStateLastAction`
-    var coordinatingServiceCurrentStateLastAction: Driver<(Store.FlowState, Store.FlowAction)> {
-        let coordinatingServiceCurrentStateLastAction = currentStateLastAction
-            .flatMap { (states: [SubstateType], lastAction: ActionType?) -> Driver<(Store.FlowState, Store.FlowAction)> in
-                for state in states {
-                    guard let coordinatingServiceState = state as? Store.FlowState else { continue }
-                    guard let coordinatingServiceAction = lastAction as? Store.FlowAction else {
-                        return Driver.never()
-                    }
-                    return Driver.just(coordinatingServiceState, coordinatingServiceAction)
-                }
-                fatalError("You need to register `CoordinatingService.State` first")
-            }
-            .distinctUntilChanged { (lhs: (Store.FlowState, Store.FlowAction), rhs: (Store.FlowState, Store.FlowAction)) -> Bool in
-                return lhs.0 == rhs.0 && lhs.1 == rhs.1
-        }
-        
-        return coordinatingServiceCurrentStateLastAction
-    }
     
     /// A convenience computed variable to extract `Store.FlowState` from the application state
-    var flowState: Driver<Store.FlowState> {
+    var flowState: Observable<Store.FlowState> {
         let flowState = store.state
-            .flatMap { (states: [SubstateType]) -> Driver<Store.FlowState> in
+            .flatMap { (states: [SubstateType]) -> Observable<Store.FlowState> in
                 for state in states {
                     guard let value = state as? Store.FlowState else { continue }
-                    return Driver<Store.FlowState>.just(value)
+                    return Observable<Store.FlowState>.just(value)
                 }
                 fatalError("You need to register `Store.FlowState` first")
             }
@@ -114,8 +95,8 @@ extension StoreType {
     }
     
     /// A convenience computed variable to extract `Store.FlowState.navigatableController` from the application state
-    var navigatableController: Driver<NavigatableController> {
-        let navigatableController: Driver<NavigatableController> = store.flowState
+    var navigatableController: Observable<NavigatableController> {
+        let navigatableController: Observable<NavigatableController> = store.flowState
             .map { (state: Store.FlowState) -> NavigatableController in
                 return state.currentRouteNavigatableController
         }
@@ -123,8 +104,8 @@ extension StoreType {
     }
     
     /// A convenience computed variable to extract `Store.FlowState.originRoute` from the application state
-    var originRoute: Driver<Route?> {
-        let originRoute: Driver<Route?> = store.flowState
+    var originRoute: Observable<Route?> {
+        let originRoute: Observable<Route?> = store.flowState
             .map { (state: Store.FlowState) -> Route? in
                 return state.currentRoute
         }
@@ -132,8 +113,8 @@ extension StoreType {
     }
     
     /// A convenience computed variable to extract `Store.FlowState.originRoute` from the application state
-    var currentRoute: Driver<Route?> {
-        let currentRoute: Driver<Route?> = store.flowState
+    var currentRoute: Observable<Route?> {
+        let currentRoute: Observable<Route?> = store.flowState
             .map { (state: Store.FlowState) -> Route? in
                 return state.currentRoute
         }

@@ -15,9 +15,10 @@ import RxState
 
 protocol TasksViewControllerViewModelType: ViewModelType, SectionItemModelType {
     // Going ☝️ to the store
-    func bind(inputs: TasksViewControllerViewModel.Inputs) -> Disposable
+    func set(inputs: TasksViewControllerViewModel.Inputs) -> Disposable
+    
     // Going 👇 from the store
-    func generateOutputs() -> TasksViewControllerViewModelType.Outputs
+    func generateOutputs() -> TasksViewControllerViewModel.Outputs
     
 }
 
@@ -28,7 +29,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
     struct Inputs: ViewModelInputsType {
     }
     
-    func bind(inputs: TasksViewControllerViewModel.Inputs) -> Disposable {
+    func set(inputs: TasksViewControllerViewModel.Inputs) -> Disposable {
         let compositeDisposable = CompositeDisposable()
         return compositeDisposable
     }
@@ -39,7 +40,7 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
         let title: Driver<String>
     }
     
-    func generateOutputs() -> TasksViewControllerViewModelType.Outputs {
+    func generateOutputs() -> TasksViewControllerViewModel.Outputs {
 
         let tasksSectionModel = TasksSectionModelTransformer.transtorm(inputs: TasksSectionModelTransformer.Inputs(store: self.store)).sectionModel
         let addTaskSectionItemModel: SectionItemModelType = AddTaskTableViewCellViewModel(store: self.store)

@@ -38,17 +38,19 @@ final class TaskTableViewCell: TableViewCell {
     
     private func bindViewModelOutputs() {
 
-        viewModel.outputs
+        let outputs = viewModel.generateOutputs()
+
+        outputs
             .summary
             .drive(summaryTextField.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs
+        outputs
             .toggleTaskStatusButtonIsSelected
             .drive(toggleTaskStatusButton.rx.isSelected)
             .disposed(by: disposeBag)
 
-        viewModel.outputs
+        outputs
             .toggleTaskStatusButtonIsEnabled
             .drive(toggleTaskStatusButton.rx.isEnabled)
             .disposed(by: disposeBag)

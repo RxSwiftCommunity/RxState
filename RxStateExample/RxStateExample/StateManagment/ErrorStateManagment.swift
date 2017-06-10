@@ -59,9 +59,9 @@ extension Store {
 extension StoreType {
     
     /// A convenience variable to extract `Store.TasksState` from the application state
-    var presentableError: Driver<Error> {
+    var presentableError: Observable<Error> {
         let presentableError = store.state
-            .flatMap { (states: [SubstateType]) -> Driver<Error> in
+            .flatMap { (states: [SubstateType]) -> Observable<Error> in
                 
                 guard let errorStateManagerState = states
                     .first(where: { (state: SubstateType) -> Bool in
@@ -73,10 +73,10 @@ extension StoreType {
                 
                 guard let presentableError = errorStateManagerState.presentableError
                     else {
-                    return Driver.never()
+                    return Observable.never()
                 }
                 
-                return Driver.of(presentableError)
+                return Observable.of(presentableError)
             }
         
         return presentableError
