@@ -26,22 +26,16 @@ public protocol StoreType {
     init(mainReducer: @escaping MainReducer)
 
     /**
-     A Driver emmitting a representation of the application state.
-     The application state is an array of substates.
-     To add substates to the application state, dispatch `Store.Action.register(states: [StateType])`.
+     A Hot Observables of `[SubstateType]`.
+     To add substates to `[SubstateType]`, dispatch `Store.Action.register(subStates: [SubstateType])`.
      */
-    var state: Driver<[SubstateType]> { get }
+    var state: Observable<[SubstateType]> { get }
 
     /**
-     The last dispatched action.
+     A Hot Observables of the last dispatched action.
      If the value is `nil`, it means that no Action has been dispatched yet.
      */
-    var action: Driver<ActionType?> { get }
-
-    /**
-     The last dispatched action with the resulted state.
-     */
-    var currentStateLastAction: Driver<CurrentStateLastAction> { get }
+    var lastDispatchedaAtion: Observable<ActionType?> { get }
 
     /**
      Dispatches a action, causing the `state` to be updated.
@@ -65,43 +59,32 @@ public protocol StoreType {
 
 public class Store: StoreType {
 
-
     fileprivate let mainReducer: MainReducer
 
     required public init(mainReducer: @escaping MainReducer) {
         self.mainReducer = mainReducer
     }
 
-    public var currentStateLastAction: Driver<CurrentStateLastAction> {
-        return Driver.zip(
-            state
-            , action
-        ) { (currentState: [SubstateType], action: ActionType?) -> CurrentStateLastAction in
-            CurrentStateLastAction(currentState, action)
-        }
-    }
-
-    public var state: Driver<[SubstateType]> {
-        return _state.asDriver()
+    public var state: Observable<[SubstateType]> {
+        return _state.asObservable().share(replay: 1, scope: SubjectLifetimeScope.forever)
     }
     
     public var middlewares: [MiddlewareType] = []
 
     private let _state: Variable<[SubstateType]> = Variable([SubstateType]())
 
-    
-    public var action: Driver<ActionType?> {
-        return _action.asDriver()
+    public var lastDispatchedaAtion: Observable<ActionType?> {
+        return _lastDispatchedaAtion.asObservable().share(replay: 1, scope: SubjectLifetimeScope.forever)
     }
-    private let _action: Variable<ActionType?> = Variable(nil)
+    private let _lastDispatchedaAtion: Variable<ActionType?> = Variable(nil)
 
     public func dispatch(action: ActionType) {
-        _action.value = action
-        if let storeAction = action as? Store.StoreAction {
+        if let storeAction = action as? Store.Action {
             _state.value = Store.reduce(state: _state.value, sction: storeAction)
         } else {
             _state.value = mainReducer(_state.value, action)
         }
+        _lastDispatchedaAtion.value = action
     }
     
     public func register(middlewares: [MiddlewareType]) {
@@ -114,15 +97,15 @@ public class Store: StoreType {
 }
 
 extension Store {
-    public enum StoreAction: ActionType {
-        /// Adds substates to the application state.
-        case add(states: [SubstateType])
+    public enum Action: ActionType {
+        /// Adds substates to the store's state.
+        case add(subStates: [SubstateType])
         
-        /// Removes all substates in the application state.
+        /// Removes all substates in the store's state.
         case reset
     }
 
-    public static func reduce(state: [SubstateType], sction: Store.StoreAction) -> [SubstateType] {
+    public static func reduce(state: [SubstateType], sction: Store.Action) -> [SubstateType] {
         switch sction {
         case let .add(states):
             var state = state
@@ -156,6 +139,3 @@ public protocol MiddlewareType {
  This reducer is used by the store's dispatch function. It should call the respective reducer basied on the Action type.
  */
 public typealias MainReducer = ((_ state: [SubstateType], _ action: ActionType) -> [SubstateType])
-
-/// A tuple representing the current application state and the last dispatched action.
-public typealias CurrentStateLastAction = (currentState: [SubstateType], lastAction: ActionType?)
