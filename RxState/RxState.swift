@@ -26,10 +26,10 @@ public protocol StoreType {
     init(mainReducer: @escaping MainReducer)
 
     /**
-     A Hot Observables of `[SubstateType]`.
-     To add substates to `[SubstateType]`, dispatch `Store.Action.register(subStates: [SubstateType])`.
+     A Hot Observables of `StoreState`.
+     To add substates to `StoreState`, dispatch `Store.Action.register(subStates: [SubstateType])`.
      */
-    var state: Observable<[SubstateType]> { get }
+    var state: Observable<StoreState> { get }
 
     /**
      A Hot Observables of the last dispatched action.
@@ -71,7 +71,7 @@ public class Store: StoreType {
     
     public var middlewares: [MiddlewareType] = []
 
-    private let _state: Variable<[SubstateType]> = Variable([SubstateType]())
+    private let _state: Variable<StoreState> = Variable(StoreState())
 
     public var lastDispatchedaAtion: Observable<ActionType?> {
         return _lastDispatchedaAtion.asObservable().share(replay: 1, scope: SubjectLifetimeScope.forever)
@@ -105,11 +105,11 @@ extension Store {
         case reset
     }
 
-    public static func reduce(state: [SubstateType], sction: Store.Action) -> [SubstateType] {
+    public static func reduce(state: StoreState, sction: Store.Action) -> StoreState {
         switch sction {
         case let .add(states):
             var state = state
-            state.append(contentsOf: states as [SubstateType])
+            state.append(contentsOf: states as StoreState)
             return state
         case .reset:
             return []
@@ -138,4 +138,10 @@ public protocol MiddlewareType {
 /**
  This reducer is used by the store's dispatch function. It should call the respective reducer basied on the Action type.
  */
-public typealias MainReducer = ((_ state: [SubstateType], _ action: ActionType) -> [SubstateType])
+public typealias MainReducer = ((_ state: StoreState, _ action: ActionType) -> StoreState)
+
+
+/**
+ This reducer is used by the store's dispatch function. It should call the respective reducer basied on the Action type.
+ */
+public typealias StoreState = [SubstateType]
