@@ -17,7 +17,7 @@ final class LoggingMiddleware: LoggingMiddlewareType {
     var disposeBag = DisposeBag()
     
     func observe(store: StoreType) {
-        store.currentStateLastAction
+        store.stateLastAction
             .drive(
                 onNext: { (currentState: [SubstateType], lastAction: ActionType?) in
                     print("\n---------------------------------------------")

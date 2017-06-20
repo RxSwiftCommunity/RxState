@@ -17,7 +17,7 @@ protocol TasksViewControllerViewModelType: ViewModelType, NSTableViewDataSource,
     // Going ☝️ to the store
     func set(inputs: TasksViewControllerViewModel.Inputs) -> Disposable
     // Going 👇 from the store
-    var outputs: TasksViewControllerViewModel.Outputs { get }
+    func generateOutputs() -> TasksViewControllerViewModel.Outputs
 }
 
 class TasksViewControllerViewModel: NSObject, TasksViewControllerViewModelType {
@@ -64,7 +64,7 @@ class TasksViewControllerViewModel: NSObject, TasksViewControllerViewModelType {
         let title: Driver<String>
     }
     
-    var outputs: TasksViewControllerViewModel.Outputs {
+    func generateOutputs() -> TasksViewControllerViewModel.Outputs {
         let reloadTasksTableViewSignal = tasks
             .asDriver()
             .distinctUntilChanged({ (lhsTasks: [Task], rhsTasks: [Task]) -> Bool in

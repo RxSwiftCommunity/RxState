@@ -55,7 +55,7 @@ final class TaskTableViewCell: TableViewCell {
             .drive(toggleTaskStatusButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        viewModel.outputs
+        outputs
             .toggleTaskStatusButtonActivityIndicatorIsAnimating
             .drive(toggleTaskStatusButton.rx.activityIndicatorIsAnimating)
             .disposed(by: disposeBag)

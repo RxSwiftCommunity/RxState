@@ -21,22 +21,27 @@ public protocol SubstateType {}
  3. Allows access to the application state and last dipached action via `currentStateLastAction` Driver (Useful for creating middlewere).
  */
 public protocol StoreType {
-
+    
     /// Inisiate the store with a main reducer that the dispatch method will use to reduce incomming actions
     init(mainReducer: @escaping MainReducer)
+    
+    /**
+     The last dispatched action with the resulted state.
+     */
+    var stateLastAction: Driver<StateLastAction> { get }
 
     /**
-     A Hot Observables of `StoreState`.
+     A Driver of `StoreState`.
      To add substates to `StoreState`, dispatch `Store.Action.register(subStates: [SubstateType])`.
      */
-    var state: Observable<StoreState> { get }
-
+    var state: Driver<StoreState> { get }
+    
     /**
-     A Hot Observables of the last dispatched action.
+     A Driver of the last dispatched action.
      If the value is `nil`, it means that no Action has been dispatched yet.
      */
-    var lastDispatchedaAtion: Observable<ActionType?> { get }
-
+    var lastDispatchedaAtion: Driver<ActionType?> { get }
+    
     /**
      Dispatches a action, causing the `state` to be updated.
      
@@ -53,37 +58,40 @@ public protocol StoreType {
      
      */
     func register(middlewares: [MiddlewareType])
-
+    
 }
 
 
 public class Store: StoreType {
-
+    
     fileprivate let mainReducer: MainReducer
-
+    
     required public init(mainReducer: @escaping MainReducer) {
         self.mainReducer = mainReducer
     }
-
-    public var state: Observable<[SubstateType]> {
-        return _state
-            .asObservable()
-            .share(replay: 1, scope: SubjectLifetimeScope.forever)
-            .catchErrorJustReturn([])
+    
+    public var stateLastAction: Driver<StateLastAction> {
+        return Driver.zip(
+            state
+            , lastDispatchedaAtion
+        ) { (state: [SubstateType], lastDispatchedaAtion: ActionType?) -> StateLastAction in
+            StateLastAction(state, lastDispatchedaAtion)
+        }
+    }
+    
+    public var state: Driver<[SubstateType]> {
+        return _state.asDriver()
     }
     
     public var middlewares: [MiddlewareType] = []
-
+    
     private let _state: Variable<StoreState> = Variable(StoreState())
-
-    public var lastDispatchedaAtion: Observable<ActionType?> {
-        return _lastDispatchedaAtion
-            .asObservable()
-            .share(replay: 1, scope: SubjectLifetimeScope.forever)
-            .catchErrorJustReturn(nil)
+    
+    public var lastDispatchedaAtion: Driver<ActionType?> {
+        return _lastDispatchedaAtion.asDriver()
     }
     private let _lastDispatchedaAtion: Variable<ActionType?> = Variable(nil)
-
+    
     public func dispatch(action: ActionType) {
         if let storeAction = action as? Store.Action {
             _state.value = Store.reduce(state: _state.value, sction: storeAction)
@@ -95,7 +103,7 @@ public class Store: StoreType {
     
     public func register(middlewares: [MiddlewareType]) {
         self.middlewares.append(contentsOf: middlewares)
-
+        
         for middleware in middlewares {
             middleware.observe(store: self)
         }
@@ -110,7 +118,7 @@ extension Store {
         /// Removes all substates in the store's state.
         case reset
     }
-
+    
     public static func reduce(state: StoreState, sction: Store.Action) -> StoreState {
         switch sction {
         case let .add(states):
@@ -151,3 +159,6 @@ public typealias MainReducer = ((_ state: StoreState, _ action: ActionType) -> S
  This reducer is used by the store's dispatch function. It should call the respective reducer basied on the Action type.
  */
 public typealias StoreState = [SubstateType]
+
+/// A tuple representing the current application state and the last dispatched action.
+public typealias StateLastAction = (currentState: [SubstateType], lastAction: ActionType?)

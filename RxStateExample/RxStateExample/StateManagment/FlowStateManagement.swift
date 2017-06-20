@@ -80,12 +80,12 @@ extension Store {
 extension StoreType {
     
     /// A convenience computed variable to extract `Store.FlowState` from the application state
-    var flowState: Observable<Store.FlowState> {
+    var flowState: Driver<Store.FlowState> {
         let flowState = store.state
-            .flatMap { (states: [SubstateType]) -> Observable<Store.FlowState> in
+            .flatMap { (states: [SubstateType]) -> Driver<Store.FlowState> in
                 for state in states {
                     guard let value = state as? Store.FlowState else { continue }
-                    return Observable<Store.FlowState>.just(value)
+                    return Driver<Store.FlowState>.just(value)
                 }
                 fatalError("You need to register `Store.FlowState` first")
             }
@@ -95,8 +95,8 @@ extension StoreType {
     }
     
     /// A convenience computed variable to extract `Store.FlowState.navigatableController` from the application state
-    var navigatableController: Observable<NavigatableController> {
-        let navigatableController: Observable<NavigatableController> = store.flowState
+    var navigatableController: Driver<NavigatableController> {
+        let navigatableController: Driver<NavigatableController> = store.flowState
             .map { (state: Store.FlowState) -> NavigatableController in
                 return state.currentRouteNavigatableController
         }
@@ -104,8 +104,8 @@ extension StoreType {
     }
     
     /// A convenience computed variable to extract `Store.FlowState.originRoute` from the application state
-    var originRoute: Observable<Route?> {
-        let originRoute: Observable<Route?> = store.flowState
+    var originRoute: Driver<Route?> {
+        let originRoute: Driver<Route?> = store.flowState
             .map { (state: Store.FlowState) -> Route? in
                 return state.currentRoute
         }
@@ -113,8 +113,8 @@ extension StoreType {
     }
     
     /// A convenience computed variable to extract `Store.FlowState.originRoute` from the application state
-    var currentRoute: Observable<Route?> {
-        let currentRoute: Observable<Route?> = store.flowState
+    var currentRoute: Driver<Route?> {
+        let currentRoute: Driver<Route?> = store.flowState
             .map { (state: Store.FlowState) -> Route? in
                 return state.currentRoute
         }

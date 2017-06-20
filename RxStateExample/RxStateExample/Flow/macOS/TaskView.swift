@@ -34,12 +34,14 @@ class TaskView: View {
     }
 
     private func bindViewModelOutputs(){
-        viewModel.outputs
+        let outputs = viewModel.generateOutputs()
+
+        outputs
             .summary
             .drive(SummaryTextField.rx.text)
             .disposed(by: disposeBag)
         
-        viewModel.outputs
+        outputs
             .toggleTaskStatusButtonIsSelected
             .drive(toggleTaskStatusButton.rx.state)
             .disposed(by: disposeBag)
