@@ -21,28 +21,27 @@ public protocol SubstateType {}
  3. Allows access to the application state and last dipached action via `currentStateLastAction` Driver (Useful for creating middlewere).
  */
 public protocol StoreType {
-
+    
     /// Inisiate the store with a main reducer that the dispatch method will use to reduce incomming actions
     init(mainReducer: @escaping MainReducer)
-
-    /**
-     A Driver emmitting a representation of the application state.
-     The application state is an array of substates.
-     To add substates to the application state, dispatch `Store.Action.register(states: [StateType])`.
-     */
-    var state: Driver<[SubstateType]> { get }
-
-    /**
-     The last dispatched action.
-     If the value is `nil`, it means that no Action has been dispatched yet.
-     */
-    var action: Driver<ActionType?> { get }
-
+    
     /**
      The last dispatched action with the resulted state.
      */
-    var currentStateLastAction: Driver<CurrentStateLastAction> { get }
+    var stateLastAction: Driver<StateLastAction> { get }
 
+    /**
+     A Driver of `StoreState`.
+     To add substates to `StoreState`, dispatch `Store.Action.register(subStates: [SubstateType])`.
+     */
+    var state: Driver<StoreState> { get }
+    
+    /**
+     A Driver of the last dispatched action.
+     If the value is `nil`, it means that no Action has been dispatched yet.
+     */
+    var lastDispatchedaAtion: Driver<ActionType?> { get }
+    
     /**
      Dispatches a action, causing the `state` to be updated.
      
@@ -59,54 +58,52 @@ public protocol StoreType {
      
      */
     func register(middlewares: [MiddlewareType])
-
+    
 }
 
 
 public class Store: StoreType {
-
-
+    
     fileprivate let mainReducer: MainReducer
-
+    
     required public init(mainReducer: @escaping MainReducer) {
         self.mainReducer = mainReducer
     }
-
-    public var currentStateLastAction: Driver<CurrentStateLastAction> {
+    
+    public var stateLastAction: Driver<StateLastAction> {
         return Driver.zip(
             state
-            , action
-        ) { (currentState: [SubstateType], action: ActionType?) -> CurrentStateLastAction in
-            CurrentStateLastAction(currentState, action)
+            , lastDispatchedaAtion
+        ) { (state: [SubstateType], lastDispatchedaAtion: ActionType?) -> StateLastAction in
+            StateLastAction(state, lastDispatchedaAtion)
         }
     }
-
+    
     public var state: Driver<[SubstateType]> {
         return _state.asDriver()
     }
     
     public var middlewares: [MiddlewareType] = []
-
-    private let _state: Variable<[SubstateType]> = Variable([SubstateType]())
-
     
-    public var action: Driver<ActionType?> {
-        return _action.asDriver()
+    private let _state: Variable<StoreState> = Variable(StoreState())
+    
+    public var lastDispatchedaAtion: Driver<ActionType?> {
+        return _lastDispatchedaAtion.asDriver()
     }
-    private let _action: Variable<ActionType?> = Variable(nil)
-
+    private let _lastDispatchedaAtion: Variable<ActionType?> = Variable(nil)
+    
     public func dispatch(action: ActionType) {
-        _action.value = action
-        if let storeAction = action as? Store.StoreAction {
+        if let storeAction = action as? Store.Action {
             _state.value = Store.reduce(state: _state.value, sction: storeAction)
         } else {
             _state.value = mainReducer(_state.value, action)
         }
+        _lastDispatchedaAtion.value = action
     }
     
     public func register(middlewares: [MiddlewareType]) {
         self.middlewares.append(contentsOf: middlewares)
-
+        
         for middleware in middlewares {
             middleware.observe(store: self)
         }
@@ -114,19 +111,19 @@ public class Store: StoreType {
 }
 
 extension Store {
-    public enum StoreAction: ActionType {
-        /// Adds substates to the application state.
-        case add(states: [SubstateType])
+    public enum Action: ActionType {
+        /// Adds substates to the store's state.
+        case add(subStates: [SubstateType])
         
-        /// Removes all substates in the application state.
+        /// Removes all substates in the store's state.
         case reset
     }
-
-    public static func reduce(state: [SubstateType], sction: Store.StoreAction) -> [SubstateType] {
+    
+    public static func reduce(state: StoreState, sction: Store.Action) -> StoreState {
         switch sction {
         case let .add(states):
             var state = state
-            state.append(contentsOf: states as [SubstateType])
+            state.append(contentsOf: states as StoreState)
             return state
         case .reset:
             return []
@@ -155,7 +152,13 @@ public protocol MiddlewareType {
 /**
  This reducer is used by the store's dispatch function. It should call the respective reducer basied on the Action type.
  */
-public typealias MainReducer = ((_ state: [SubstateType], _ action: ActionType) -> [SubstateType])
+public typealias MainReducer = ((_ state: StoreState, _ action: ActionType) -> StoreState)
+
+
+/**
+ This reducer is used by the store's dispatch function. It should call the respective reducer basied on the Action type.
+ */
+public typealias StoreState = [SubstateType]
 
 /// A tuple representing the current application state and the last dispatched action.
-public typealias CurrentStateLastAction = (currentState: [SubstateType], lastAction: ActionType?)
+public typealias StateLastAction = (currentState: [SubstateType], lastAction: ActionType?)

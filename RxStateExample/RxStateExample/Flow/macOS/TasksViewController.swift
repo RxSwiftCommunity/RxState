@@ -44,11 +44,13 @@ class TasksViewController: ViewController {
     }
     
     private func bindViewModelOutputs() {
-        viewModel.outputs.title
+        let outputs = viewModel.generateOutputs()
+
+        outputs.title
             .drive(titleTextField.rx.text)
             .disposed(by: disposeBag)
 
-        viewModel.outputs.reloadTasksTableViewSignal
+        outputs.reloadTasksTableViewSignal
             .drive(onNext: {
                 self.tasksTableView.reloadData()
             }, onCompleted: nil, onDisposed: nil)

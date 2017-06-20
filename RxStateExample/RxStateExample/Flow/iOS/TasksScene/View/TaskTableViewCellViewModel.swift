@@ -15,7 +15,7 @@ protocol TaskTableViewCellViewModelType: ViewModelType, SectionItemModelType {
     // Going ☝️ to the store
     func set(inputs: TaskTableViewCellViewModel.Inputs) -> Disposable
     // Going 👇 from the store
-    var outputs: TaskTableViewCellViewModel.Outputs { get }
+    func generateOutputs() -> TaskTableViewCellViewModel.Outputs
     
 }
 
@@ -95,7 +95,7 @@ struct TaskTableViewCellViewModel: TaskTableViewCellViewModelType {
         let toggleTaskStatusButtonActivityIndicatorIsAnimating: Driver<Bool>
     }
     
-    var outputs: TaskTableViewCellViewModel.Outputs {
+    func generateOutputs() -> TaskTableViewCellViewModel.Outputs {
         
         let toggleTaskStatusTransformerInputs = ToggleTaskStatusTransformer.Inputs(store: self.store, taskId: taskId)
         let toggleTaskStatusTransformerOutputs = ToggleTaskStatusTransformer.transtorm(inputs: toggleTaskStatusTransformerInputs)

@@ -1,5 +1,5 @@
 PODS:
-  - RxCocoa (3.4.1):
+  - RxCocoa (3.5.0):
     - RxSwift (~> 3.4)
   - RxDataSources (1.0.3):
     - RxCocoa (~> 3.0)
@@ -7,29 +7,33 @@ PODS:
   - RxOptional (3.1.3):
     - RxCocoa
     - RxSwift
-  - RxState (0.2.1):
-    - RxCocoa (= 3.4.1)
-    - RxSwift (= 3.4.1)
-  - RxSwift (3.4.1)
+  - RxState (0.3.0):
+    - RxCocoa (~> 3.5.0)
+    - RxSwift (~> 3.5.0)
+  - RxSwift (3.5.0)
   - RxTest (3.4.1):
     - RxSwift (~> 3.4)
 
 DEPENDENCIES:
-  - RxCocoa (= 3.4.1)
+  - RxCocoa (= 3.5.0)
   - RxDataSources (= 1.0.3)
   - RxOptional (= 3.1.3)
-  - RxState (= 0.2.1)
-  - RxSwift (= 3.4.1)
+  - RxState (from `../`)
+  - RxSwift (= 3.5.0)
   - RxTest (= 3.4.1)
 
+EXTERNAL SOURCES:
+  RxState:
+    :path: "../"
+
 SPEC CHECKSUMS:
-  RxCocoa: a8a5f1d061d0043e28f56976829f31ce63e8eb09
+  RxCocoa: a0a09f45d0e5b48ecb6a4a7b4b4c89c88d3f633f
   RxDataSources: a021a0e944ba5f7991259829d973afdbfa719c0b
   RxOptional: b97b59183af80d1e729ac9e51d09a10be668d6a8
-  RxState: 7921a9ffc66735a44969b449c53f0d9e7dca58c0
-  RxSwift: 656f8fbeca5bc372121a72d9ebdd3cd3bc0ffade
+  RxState: 1e3dd422b48defbf08c1122ba9ecb2ea762277db
+  RxSwift: 18ee9d78b45edb3b0b7e79916b47a116e6dbc842
   RxTest: a6fd6e4069face7c6488f96f6c42296b3e44db48
 
-PODFILE CHECKSUM: cb064c67a118f11a90961c90a62f656941a70bdb
+PODFILE CHECKSUM: 541fdc1ce9dae6b8ab9da96e8df7e8ae597a0445
 
 COCOAPODS: 1.2.1

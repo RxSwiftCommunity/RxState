@@ -16,7 +16,7 @@ protocol AddTaskTableViewCellViewModelType: ViewModelType, SectionItemModelType 
     // Going ☝️ to the store
     func set(inputs: AddTaskTableViewCellViewModel.Inputs) -> Disposable
     // Going 👇 from the store
-    var outputs: AddTaskTableViewCellViewModel.Outputs { get }
+    func generateOutputs() -> AddTaskTableViewCellViewModel.Outputs
 }
 
 struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
@@ -48,7 +48,7 @@ struct AddTaskTableViewCellViewModel: AddTaskTableViewCellViewModelType {
         let addTaskButtonActivityIndicatorIsAnimating: Driver<Bool>
     }
 
-    var outputs: AddTaskTableViewCellViewModel.Outputs {
+    func generateOutputs() -> AddTaskTableViewCellViewModel.Outputs {
         
         let addTaskButtonActivityIndicatorIsAnimatingInputs = AddTaskButtonActivityIndicatorIsAnimatingTransformer.Inputs(store: store)
         let addTaskButtonActivityIndicatorIsAnimatingOutputs = AddTaskButtonActivityIndicatorIsAnimatingTransformer.transtorm(inputs: addTaskButtonActivityIndicatorIsAnimatingInputs)
