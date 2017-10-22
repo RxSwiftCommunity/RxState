@@ -94,7 +94,7 @@ public class Store: StoreType {
     
     public func dispatch(action: ActionType) {
         if let storeAction = action as? Store.Action {
-            _state.value = Store.reduce(state: _state.value, sction: storeAction)
+            _state.value = Store.reduce(state: _state.value, action: storeAction)
         } else {
             _state.value = mainReducer(_state.value, action)
         }
@@ -119,8 +119,8 @@ extension Store {
         case reset
     }
     
-    public static func reduce(state: StoreState, sction: Store.Action) -> StoreState {
-        switch sction {
+    public static func reduce(state: StoreState, action: Store.Action) -> StoreState {
+        switch action {
         case let .add(states):
             var state = state
             state.append(contentsOf: states as StoreState)
