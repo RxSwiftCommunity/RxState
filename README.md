@@ -169,7 +169,7 @@ Notice how, because of the architecture, only the View/ View Controller layer ne
 
 ## Contributing
 
-We would love to see you involved! Feedback and contribution are greatly appreciated :)  Checkout the [Contributing Guide](https://github.com/RxSwiftCommunity/RxState/blob/development/CONTRIBUTING.md) and [Code of Conduct](https://github.com/RxSwiftCommunity/RxState/blob/development/CODE_OF_CONDUCT.md).
+We would love to see you involved! Feedback and contribution are greatly appreciated :)  Checkout the [Contributing Guide](https://github.com/RxSwiftCommunity/RxState/blob/development/CONTRIBUTING.md) and the [Code of Conduct](https://github.com/RxSwiftCommunity/RxState/blob/development/CODE_OF_CONDUCT.md).
 
 ## Influences and credits
 
