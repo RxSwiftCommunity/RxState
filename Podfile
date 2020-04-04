@@ -4,8 +4,8 @@ target 'RxState' do
   use_frameworks!
 
   # Pods for RxState
-  pod 'RxSwift', '~> 3.5.0'
-  pod 'RxCocoa', '~> 3.5.0'
+  pod 'RxSwift', '~> 5.1'
+  pod 'RxCocoa', '~> 5.1'
 
   target 'RxStateTests' do
     inherit! :search_paths
