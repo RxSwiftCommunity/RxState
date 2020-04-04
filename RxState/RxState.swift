@@ -85,20 +85,20 @@ public class Store: StoreType {
     
     public var middlewares: [MiddlewareType] = []
     
-    private let _state: Variable<StoreState> = Variable(StoreState())
+    private let _state: BehaviorRelay<StoreState> = BehaviorRelay(value: StoreState())
     
     public var lastDispatchedaAtion: Driver<ActionType?> {
         return _lastDispatchedaAtion.asDriver()
     }
-    private let _lastDispatchedaAtion: Variable<ActionType?> = Variable(nil)
+    private let _lastDispatchedaAtion: BehaviorRelay<ActionType?> = BehaviorRelay(value: nil)
     
     public func dispatch(action: ActionType) {
         if let storeAction = action as? Store.Action {
-            _state.value = Store.reduce(state: _state.value, action: storeAction)
+            _state.accept(Store.reduce(state: _state.value, action: storeAction))
         } else {
-            _state.value = mainReducer(_state.value, action)
+            _state.accept(mainReducer(_state.value, action))
         }
-        _lastDispatchedaAtion.value = action
+        _lastDispatchedaAtion.accept(action)
     }
     
     public func register(middlewares: [MiddlewareType]) {

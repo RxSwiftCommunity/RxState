@@ -147,12 +147,12 @@ final class LoggingMiddleware: LoggingMiddlewareType {
 
 ## Dependencies
 
-- [RxSwift](https://github.com/ReactiveX/RxSwift) (>= 3.4)
-- [RxCocoa](https://github.com/ReactiveX/RxSwift) (>= 3.4)
+- [RxSwift](https://github.com/ReactiveX/RxSwift) (>= 5.1)
+- [RxCocoa](https://github.com/ReactiveX/RxSwift) (>= 5.1)
 
 ## Requirements
 
-- Swift 3
+- Swift 5
 
 ## Installation
 
@@ -160,6 +160,27 @@ final class LoggingMiddleware: LoggingMiddlewareType {
 
 ```ruby
 pod 'RxState'
+```
+- **Using [Swift Package Manager](https://developer.apple.com/documentation/swift_packages)**:
+
+Create a ```Package.Swift``` file in your project's root folder.
+
+Added following content into the ```Package.swift``` file
+
+```Swift
+// swift-tools-version:5.0
+
+import PackageDescription
+
+let package = Package(
+  name: "YourProjectName",
+  dependencies: [
+    .package(url: "https://github.com/RxSwiftCommunity/RxState.git", from: "0.6.0")
+  ],
+  targets: [
+    .target(name: "YourProjectTarget", dependencies: ["RxState"])
+  ]
+)
 ```
 
 ## Demo

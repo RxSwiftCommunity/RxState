@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "RxState"
-  s.version      = "0.5.0"
+  s.version      = "0.6.0"
   s.summary      = "RxSwift + Redux"
 
   # This description is used to generate tags and improve search results.
@@ -133,7 +133,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  s.dependency "RxSwift", "~> 3.5.0"
-  s.dependency "RxCocoa", "~> 3.5.0"
+  s.dependency "RxSwift", "~> 5.1"
+  s.dependency "RxCocoa", "~> 5.1"
 
 end
