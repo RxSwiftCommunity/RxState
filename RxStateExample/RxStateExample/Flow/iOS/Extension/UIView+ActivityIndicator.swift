@@ -13,8 +13,8 @@ import RxCocoa
 
 extension Reactive where Base: UIView {
     /// Bindable sink for `enabled` property.
-    public var activityIndicatorIsAnimating: UIBindingObserver<Base, Bool> {
-        return UIBindingObserver(UIElement: self.base) { view, value in
+    public var activityIndicatorIsAnimating: Binder<Bool> {
+        return Binder(self.base) { view, value in
             view.activityIndicatorIsAnimating = value
         }
         
@@ -45,7 +45,7 @@ extension UIView {
                 let activityIndicator = { () -> UIActivityIndicatorView in
                     let location = self.center
                     
-                    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+                    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
                     // Add the tag so we can find the view in order to remove it later
                     activityIndicator.tag = self.activityIndicatorTag
                     

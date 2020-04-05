@@ -8,4 +8,4 @@
 
 import Foundation
 
-protocol ModelType: Hashable, Identifiable {}
+protocol ModelType: Identifiable {}

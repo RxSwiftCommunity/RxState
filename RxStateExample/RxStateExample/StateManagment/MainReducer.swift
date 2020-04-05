@@ -22,16 +22,18 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
                 let result: Bool = substate is Store.TasksState
                 return result
             }
-            ) as? (Int, Store.TasksState)
+            )
             else {
                 fatalError("You need to register `Store.TasksState` first")
         }
         
-        // Reduce the `Substate` to get a new `Substate`.
-        tasksState = Store.reduce(state: tasksState, action: action)
-        
-        // Replace the `Substate` in the `App State` with the new `Substate`.
-        state[tasksStateIndex] = tasksState as SubstateType
+        if let verifiedTaskState = tasksState as? Store.TasksState {
+            // Reduce the `Substate` to get a new `Substate`.
+            tasksState = Store.reduce(state: verifiedTaskState, action: action)
+            
+            // Replace the `Substate` in the `App State` with the new `Substate`.
+            state[tasksStateIndex] = tasksState as SubstateType
+        }
         
     case let action as Store.FlowAction:
         guard var (flowStateIndex, flowState) = state
@@ -39,14 +41,16 @@ let mainReducer: MainReducer = { (state: [SubstateType], action: ActionType) -> 
             .first(where: { (_: Int, state: SubstateType) -> Bool in
                 let result: Bool = state is Store.FlowState
                 return result
-            }) as? (Int, Store.FlowState)
+            })
             else {
                 fatalError("You need to register `Store.TasksState` first")
         }
         
-        flowState = Store.reduce(state: flowState, action: action)
-        
-        state[flowStateIndex] = flowState as SubstateType
+        if let verifiedFlowState = flowState as? Store.FlowState {
+            flowState = Store.reduce(state: verifiedFlowState, action: action)
+            
+            state[flowStateIndex] = flowState as SubstateType
+        }
         
     default:
         fatalError("Unknown action type")

@@ -11,7 +11,7 @@ import RxSwift
 
 typealias TaskId = String
 
-struct Task: ModelType, CustomDebugStringConvertible, Equatable {
+struct Task: ModelType, CustomDebugStringConvertible, Hashable {
 
     let id: TaskId
     var summary: String
@@ -39,6 +39,10 @@ struct Task: ModelType, CustomDebugStringConvertible, Equatable {
             + "status = \(status)\n"
 
         return result
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 
     static func ==(lhs: Task, rhs: Task) -> Bool {

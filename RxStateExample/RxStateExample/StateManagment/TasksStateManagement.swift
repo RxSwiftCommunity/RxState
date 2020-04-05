@@ -68,7 +68,8 @@ extension Store {
         case let .updateSummary(summary, id):
             state.updatingSummaryForTasksWithId = nil
             
-            guard let index: Array.Index = state.tasks.index(where: { $0.id == id }) else {
+            
+            guard let index = state.tasks.firstIndex(where: { $0.id == id }) else {
                 fatalError("Invalid task id")
             }
             state.tasks[index].summary = summary
@@ -79,12 +80,12 @@ extension Store {
             return state
             
         case let .toggleTaskStatus(taskStatus, id):
-            guard let togglingTaskStatusForTasksWithIdIndex: Array.Index = state.togglingTaskStatusForTasksWithIds.index(of: id) else {
+            guard let togglingTaskStatusForTasksWithIdIndex = state.togglingTaskStatusForTasksWithIds.firstIndex(of: id) else {
                 fatalError("You haven't dispatched `togglingTaskStatus` Action!")
             }
             state.togglingTaskStatusForTasksWithIds.remove(at: togglingTaskStatusForTasksWithIdIndex)
             
-            guard let index: Array.Index = state.tasks.index(where: { (task: Task) -> Bool in task.id == id }) else {
+            guard let index = state.tasks.firstIndex(where: { (task: Task) -> Bool in task.id == id }) else {
                 fatalError("Invalid task ID")
             }
             state.tasks[index].status = taskStatus

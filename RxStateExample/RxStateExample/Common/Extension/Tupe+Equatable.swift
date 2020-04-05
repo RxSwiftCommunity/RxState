@@ -22,5 +22,5 @@ func == <T1:Equatable, T2: Equatable>(lhs: (T1, T2)?, rhs: (T1, T2)?) -> Bool {
 
 func == <T1:Equatable, T2: Equatable>(lhs: (T1, T2), rhs: (T1, T2)) -> Bool {
     
-    return lhs.0 == lhs.0 && lhs.1 == lhs.1
+    return lhs.0 == rhs.0 && lhs.1 == rhs.1
 }
