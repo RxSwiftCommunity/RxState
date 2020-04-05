@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 * Supports Swift 5
 * The state now is a `BehaviorRelay`, replacing the depricated `Variable`
 * Fixes Bug #15
-* Has updatets for RxStateExample for latest changes
+* Updates for RxStateExample for RxState v. 0.6.0
 
 ## [0.5.0](https://github.com/nazeehshoura/RxState/releases/tag/0.5.0)
 
