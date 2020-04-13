@@ -47,20 +47,9 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
         let addTaskSectionModel = Driver.of(SectionModel(items: [addTaskSectionItemModel]))
         let sectionsModels = Driver.combineLatest([tasksSectionModel, addTaskSectionModel])
         
-        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel>()
-        skinTableViewDataSource(dataSource)
-        
-        let title = TasksTitleTransformer.transtorm(inputs: TasksTitleTransformer.Inputs(store: self.store)).title
-        
-        return TasksViewControllerViewModel.Outputs(
-            sectionsModels: sectionsModels
-            , dataSource: dataSource
-            , title: title
-        )
-    }
-    
-    fileprivate func skinTableViewDataSource(_ dataSource: RxTableViewSectionedReloadDataSource<SectionModel>) {
-        dataSource.configureCell = { _, tableView, _, item in
+//        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(configureCell: (TableViewSectionedDataSource<SectionModel>, UITableView, IndexPath, SectionModel.Item) -> UITableViewCell)
+//
+        let dataSource = RxTableViewSectionedReloadDataSource<SectionModel>(configureCell: { (dataSource, tableView, indexPath, item) -> UITableViewCell in
             switch item {
             case let taskTableViewCellViewModel as TaskTableViewCellViewModel:
                 let cell = TaskTableViewCell.build(withViewModel: taskTableViewCellViewModel, forTableView: tableView)
@@ -73,6 +62,15 @@ struct TasksViewControllerViewModel: TasksViewControllerViewModelType {
             default:
                 fatalError("This item is not supported in the table view")
             }
-        }
+        })
+        
+        let title = TasksTitleTransformer.transtorm(inputs: TasksTitleTransformer.Inputs(store: self.store)).title
+        
+        return TasksViewControllerViewModel.Outputs(
+            sectionsModels: sectionsModels
+            , dataSource: dataSource
+            , title: title
+        )
     }
+    
 }

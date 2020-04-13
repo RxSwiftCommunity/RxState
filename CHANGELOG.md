@@ -9,6 +9,8 @@ All notable changes to this project will be documented in this file.
 * Uses RxCocoa 5.1.1
 * Supports Swift 5
 * The state now is a `BehaviorRelay`, replacing the depricated `Variable`
+* Fixes Bug #15
+* Updates for RxStateExample for RxState v. 0.6.0
 
 ## [0.5.0](https://github.com/nazeehshoura/RxState/releases/tag/0.5.0)
 

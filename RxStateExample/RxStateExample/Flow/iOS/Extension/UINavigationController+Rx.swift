@@ -17,11 +17,12 @@ extension Reactive where Base: UINavigationController {
         return Observable.create { observable -> Disposable in
             CATransaction.begin()
             CATransaction.setCompletionBlock({ 
-                observable.on(.next())
+                observable.on(.next({}()))
                 observable.on(.completed)
             })
             self.base.pushViewController(viewController, animated: animated)
             CATransaction.commit()
+            
             return Disposables.create {}
         }
         .asDriver(onErrorJustReturn: ()) // Will never happen since there's no error throwing in the Observable creation.
@@ -32,7 +33,7 @@ extension Reactive where Base: UINavigationController {
         return Observable.create { observable -> Disposable in
             CATransaction.begin()
             CATransaction.setCompletionBlock({
-                observable.on(.next())
+                observable.on(.next({}()))
                 observable.on(.completed)
             })
             self.base.popViewController(animated: animated)
@@ -47,7 +48,7 @@ extension Reactive where Base: UINavigationController {
         return Observable.create { observable -> Disposable in
             CATransaction.begin()
             CATransaction.setCompletionBlock({
-                observable.on(.next())
+                observable.on(.next({}()))
                 observable.on(.completed)
             })
             self.base.setViewControllers(viewControllers, animated: animated)

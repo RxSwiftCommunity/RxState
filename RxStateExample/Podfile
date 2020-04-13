@@ -1,12 +1,12 @@
 def common_pods
     pod 'RxState', :path => "../"
-    pod 'RxSwift', '3.5.0'
-    pod 'RxCocoa', '3.5.0'
-    pod 'RxOptional', '3.1.3'
+    pod 'RxSwift', '~>5.1'
+    pod 'RxCocoa', '~>5.1'
+    pod 'RxOptional', '~>4.1'
 end
 
 def common_test_pods
-    pod 'RxTest', '3.4.1'
+    pod 'RxTest', '~>5.1'
 end
 
 
@@ -14,7 +14,7 @@ target 'RxStateExample-iOS' do
   platform :ios, '9.0'
   use_frameworks!
 
-  pod 'RxDataSources', '1.0.3'
+  pod 'RxDataSources', '~>4.0'
   common_pods
 end
 

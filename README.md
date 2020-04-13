@@ -165,7 +165,7 @@ pod 'RxState'
 
 Create a ```Package.Swift``` file in your project's root folder.
 
-Added following content into the ```Package.swift``` file
+Add following content into the ```Package.swift``` file
 
 ```Swift
 // swift-tools-version:5.0

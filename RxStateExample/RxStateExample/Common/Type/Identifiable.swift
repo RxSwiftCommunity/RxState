@@ -20,13 +20,13 @@ extension Identifiable {
 }
 
 extension Equatable where Self: Identifiable {
-    static func ==(lhs: Self, rhs: Self) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
 extension Collection where Self.Iterator.Element: Identifiable {
     func index(of element: Self.Iterator.Element) -> Self.Index? {
-        return index { $0.id == element.id }
+        return firstIndex { $0.id == element.id }
     }
 }

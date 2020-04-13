@@ -22,10 +22,8 @@ extension Store {
             let result = "ErrorStateManager.state\n"
                 .appending("silentError = \(String(describing: silentError.debugDescription))\n")
                 .appending("presentableError = \(String(describing: presentableError.debugDescription))\n")
-            
             return result
         }
-        
     }
     
     enum ErrorAction: ActionType {
