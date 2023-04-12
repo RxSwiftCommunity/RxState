@@ -33,7 +33,7 @@ extension Store {
     }
     
     static func reduce(state: Store.ErrorState, action: Store.ErrorAction) -> Store.ErrorState {
-        switch sction {
+        switch action {
         case let .addPresentError(error):
             var state = state
             state.presentableError = error
