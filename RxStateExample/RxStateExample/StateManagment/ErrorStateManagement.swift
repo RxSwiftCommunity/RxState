@@ -32,8 +32,8 @@ extension Store {
         case addSilentError(silentError: Error)
     }
     
-    static func reduce(state: Store.ErrorState, sction: Store.ErrorAction) -> Store.ErrorState {
-        switch sction {
+    static func reduce(state: Store.ErrorState, action: Store.ErrorAction) -> Store.ErrorState {
+        switch action {
         case let .addPresentError(error):
             var state = state
             state.presentableError = error
